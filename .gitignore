@@ -1,0 +1,31 @@
+node_modules
+dist
+dist-ssr
+.DS_Store
+*.local
+# Cargo : la racine est désormais un workspace (target partagé à la racine).
+/target
+src-tauri/target
+
+# generated
+*.tsbuildinfo
+src-tauri/gen
+
+# Local env (analytics keys)
+.env.local
+.env.*.local
+
+# Tauri updater signing private key (NEVER commit)
+.tauri/
+
+# Éditeurs / OS
+.vscode/
+.idea/
+*.log
+
+# Documentation interne (non publiée). PRIVACY.md et README.md restent publics
+# (PRIVACY.md est lié depuis l'app ; README est la page d'accueil du dépôt).
+/ARCHITECTURE.md
+/COMPLIANCE.md
+/ROADMAP.md
+src/modules/pi/ROADMAP.md

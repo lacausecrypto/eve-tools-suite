@@ -1,0 +1,29 @@
+[workspace]
+members = ["src-tauri", "crates/pbh-core"]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+authors = ["EVE Tools Suite contributors"]
+
+# Dépendances partagées par les membres du workspace. `pbh-core` (moteur d'intel
+# du module Pirate) les hérite ; le `src-tauri` garde ses propres deps directes.
+# TLS unifié sur **rustls** (cohérent avec le proxy ESI de la suite, sans OpenSSL).
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "sync"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "gzip", "rustls-tls"] }
+async-trait = "0.1"
+thiserror = "1"
+rusqlite = { version = "0.31", features = ["bundled"] }
+tracing = "0.1"
+
+# Les profils doivent vivre à la racine du workspace.
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true

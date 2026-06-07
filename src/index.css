@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Thème homogène « Fleur-de-lis » (repris du Mining Fleet Manager) :
+       surfaces quasi-noires, accents rouge cramoisi + bleu acier. */
+    --background: 230 16% 5%;
+    --foreground: 210 20% 96%;
+    --card: 228 14% 8%;
+    --card-foreground: 210 20% 96%;
+    --popover: 228 16% 7%;
+    --popover-foreground: 210 20% 96%;
+    --primary: 0 78% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214 40% 17%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 228 12% 13%;
+    --muted-foreground: 220 10% 64%;
+    --accent: 214 52% 22%;
+    --accent-foreground: 210 40% 97%;
+    --destructive: 0 72% 46%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 211 78% 56%;
+    --success-foreground: 0 0% 100%;
+    --border: 225 12% 16%;
+    --input: 225 12% 16%;
+    --ring: 0 78% 53%;
+    --fleur: 213 78% 58%;
+    --fc: 270 70% 62%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  /* Sélection de texte cohérente avec l'accent primaire. */
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+  /* Scrollbar app-wide discrète (Firefox + WebKit). */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 9999px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(820px 560px at 8% -10%, hsl(0 80% 48% / 0.16), transparent 58%),
+      radial-gradient(720px 520px at 98% -4%, hsl(213 80% 52% / 0.14), transparent 56%),
+      radial-gradient(900px 720px at 50% 120%, hsl(0 72% 42% / 0.1), transparent 62%);
+    pointer-events: none;
+  }
+}
+
+@layer utilities {
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+  .reduce-motion *,
+  .reduce-motion *::before,
+  .reduce-motion *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .glass {
+    background: hsl(var(--card) / 0.6);
+    backdrop-filter: blur(12px);
+  }
+  /* Slider natif stylé (module Mining) */
+  .eve-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 9999px;
+    outline: none;
+    cursor: pointer;
+  }
+  .eve-slider:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .eve-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 9999px;
+    background: var(--thumb, hsl(var(--primary)));
+    border: 2px solid hsl(var(--background));
+    box-shadow: 0 0 0 1px var(--thumb, hsl(var(--primary)));
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  .eve-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+  }
+  .eve-slider::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 9999px;
+    background: var(--thumb, hsl(var(--primary)));
+    border: 2px solid hsl(var(--background));
+    box-shadow: 0 0 0 1px var(--thumb, hsl(var(--primary)));
+    cursor: pointer;
+  }
+  .eve-slider:focus-visible {
+    box-shadow: 0 0 0 2px hsl(var(--ring) / 0.4);
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 9999px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}

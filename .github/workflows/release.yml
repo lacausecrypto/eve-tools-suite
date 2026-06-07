@@ -1,0 +1,75 @@
+# Build, signe et publie une release multi-plateforme (Windows + macOS) avec les
+# artefacts d'auto-update (`latest.json` signé). Déclenché en poussant un tag
+# `vX.Y.Z`. L'updater de l'app pointe sur la « latest release » de ce dépôt.
+#
+# Secrets requis (Settings → Secrets and variables → Actions) :
+#   TAURI_SIGNING_PRIVATE_KEY           contenu de .tauri/eve-tools-updater.key
+#   TAURI_SIGNING_PRIVATE_KEY_PASSWORD  mot de passe de la clé ("" si aucun)
+# (GITHUB_TOKEN est fourni automatiquement.)
+#
+# Note : si l'app n'est PAS à la racine du dépôt, dé-commenter `projectPath`.
+
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos-latest
+            target: aarch64-apple-darwin
+            args: "--target aarch64-apple-darwin"
+          - platform: macos-13
+            target: x86_64-apple-darwin
+            args: "--target x86_64-apple-darwin"
+          - platform: windows-latest
+            target: ""
+            args: ""
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build, sign and publish
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          # projectPath: suite   # ← dé-commenter si l'app est dans un sous-dossier
+          tagName: ${{ github.ref_name }}
+          releaseName: "EVE Tools Suite ${{ github.ref_name }}"
+          releaseBody: "Téléchargez l'installeur correspondant à votre OS ci-dessous. La mise à jour automatique prendra le relais pour les versions suivantes."
+          releaseDraft: true
+          prerelease: false
+          includeUpdaterJson: true
+          args: ${{ matrix.args }}

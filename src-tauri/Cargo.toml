@@ -1,0 +1,45 @@
+[package]
+name = "eve-tools-suite"
+version = "0.1.0"
+description = "EVE Tools Suite — outils tiers EVE Online"
+authors = ["lacausecrypto"]
+edition = "2021"
+
+[lib]
+name = "eve_tools_suite_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+tauri-plugin-sql = { version = "2", features = ["sqlite"] }
+tauri-plugin-clipboard-manager = "2"
+tauri-plugin-global-shortcut = "2"
+tauri-plugin-notification = "2"
+tauri-plugin-process = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+keyring = { version = "3", features = ["apple-native", "windows-native", "sync-secret-service"] }
+tiny_http = "0.12"
+url = "2"
+base64 = "0.22"
+sha2 = "0.10"
+jsonwebtoken = "9"
+rand = "0.8"
+httpdate = "1"
+open = "5"
+tracing = { workspace = true }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Module Pirate : moteur d'intel réutilisé tel quel (logique inchangée).
+pbh-core = { path = "../crates/pbh-core" }
+
+# Auto-update (desktop uniquement) : vérifie GitHub Releases, télécharge et
+# installe les mises à jour signées (clé publique dans tauri.conf.json).
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-updater = "2"
