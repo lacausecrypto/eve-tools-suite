@@ -23,6 +23,7 @@
   <img src="https://img.shields.io/badge/plateforme-Windows%20%7C%20macOS-lightgrey?style=flat-square" alt="Plateforme">
   <img src="https://img.shields.io/badge/conçu%20avec-Tauri%202-24C8DB?style=flat-square&logo=tauri&logoColor=white" alt="Conçu avec Tauri">
   <img src="https://img.shields.io/badge/i18n-EN%20%7C%20FR-blue?style=flat-square" alt="Bilingue">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-green?style=flat-square" alt="Licence MIT"></a>
 </p>
 
 > 🔒 **EULA-safe par conception.** Aucun outil n'interagit avec le client EVE — pas d'injection, lecture mémoire, OCR ni automatisation d'entrées. On lit uniquement le texte que **tu** colles et on interroge les API **publiques** (ESI officielle, zKillboard). Scopes ESI en lecture seule, au plus juste.
