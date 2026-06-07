@@ -32,12 +32,12 @@ jobs:
             target: aarch64-apple-darwin
             args: "--target aarch64-apple-darwin"
             stable: EVE-Tools-Suite-macOS-AppleSilicon.dmg
-            glob: src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
+            find: "*.dmg"
           - platform: windows-latest
             target: ""
             args: ""
             stable: EVE-Tools-Suite-Windows-Setup.exe
-            glob: src-tauri/target/release/bundle/nsis/*-setup.exe
+            find: "*-setup.exe"
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -84,8 +84,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -e
-          src=$(ls ${{ matrix.glob }} | head -1)
+          set -eo pipefail
+          src=$(find src-tauri/target -type f -name "${{ matrix.find }}" | head -1)
+          if [ -z "$src" ]; then
+            echo "::error::installer introuvable (${{ matrix.find }})"; find src-tauri/target -type f \( -name '*.dmg' -o -name '*-setup.exe' \); exit 1
+          fi
           echo "installer: $src → ${{ matrix.stable }}"
           cp "$src" "${{ matrix.stable }}"
           gh release upload "${{ github.ref_name }}" "${{ matrix.stable }}" --clobber --repo "$GITHUB_REPOSITORY"
