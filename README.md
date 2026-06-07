@@ -1,5 +1,9 @@
 <p align="center"><b>🇬🇧 English</b> · <a href="README.fr.md">🇫🇷 Français</a></p>
 
+<p align="center">
+  <a href="https://eve-tools-suite.com"><img src=".github/banner.png" alt="EVE Tools Suite" width="820"></a>
+</p>
+
 <h1 align="center">EVE Tools Suite</h1>
 
 <p align="center">
