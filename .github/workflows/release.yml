@@ -1,13 +1,15 @@
-# Build, signe et publie une release multi-plateforme (Windows + macOS) avec les
-# artefacts d'auto-update (`latest.json` signé). Déclenché en poussant un tag
-# `vX.Y.Z`. L'updater de l'app pointe sur la « latest release » de ce dépôt.
+# Build, signe et publie une release (Windows + macOS Apple Silicon) avec les
+# artefacts d'auto-update (`latest.json` signé) ET des copies à **nom stable**
+# pour des liens de téléchargement permanents (`releases/latest/download/...`).
+# Déclenché en poussant un tag `vX.Y.Z`.
 #
 # Secrets requis (Settings → Secrets and variables → Actions) :
 #   TAURI_SIGNING_PRIVATE_KEY           contenu de .tauri/eve-tools-updater.key
 #   TAURI_SIGNING_PRIVATE_KEY_PASSWORD  mot de passe de la clé ("" si aucun)
 # (GITHUB_TOKEN est fourni automatiquement.)
 #
-# Note : si l'app n'est PAS à la racine du dépôt, dé-commenter `projectPath`.
+# macOS Intel (x86_64) est volontairement absent (runners GitHub rares/lents).
+# Pour le rajouter : remettre une entrée matrix `macos-13` + target x86_64.
 
 name: release
 
@@ -29,12 +31,13 @@ jobs:
           - platform: macos-latest
             target: aarch64-apple-darwin
             args: "--target aarch64-apple-darwin"
-          - platform: macos-13
-            target: x86_64-apple-darwin
-            args: "--target x86_64-apple-darwin"
+            stable: EVE-Tools-Suite-macOS-AppleSilicon.dmg
+            glob: src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
           - platform: windows-latest
             target: ""
             args: ""
+            stable: EVE-Tools-Suite-Windows-Setup.exe
+            glob: src-tauri/target/release/bundle/nsis/*-setup.exe
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -65,11 +68,24 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
-          # projectPath: suite   # ← dé-commenter si l'app est dans un sous-dossier
           tagName: ${{ github.ref_name }}
           releaseName: "EVE Tools Suite ${{ github.ref_name }}"
-          releaseBody: "Téléchargez l'installeur correspondant à votre OS ci-dessous. La mise à jour automatique prendra le relais pour les versions suivantes."
+          releaseBody: "Téléchargez l'installeur correspondant à votre OS ci-dessous. Une fois installée, l'app se met à jour automatiquement (mises à jour signées)."
           releaseDraft: true
           prerelease: false
           includeUpdaterJson: true
           args: ${{ matrix.args }}
+
+      # Copie l'installeur sous un nom STABLE (sans version) et l'attache à la
+      # release → les boutons du README peuvent pointer en permanence sur
+      # `releases/latest/download/<nom stable>` (zéro maintenance par version).
+      - name: Attach stable-named installer
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          src=$(ls ${{ matrix.glob }} | head -1)
+          echo "installer: $src → ${{ matrix.stable }}"
+          cp "$src" "${{ matrix.stable }}"
+          gh release upload "${{ github.ref_name }}" "${{ matrix.stable }}" --clobber --repo "$GITHUB_REPOSITORY"

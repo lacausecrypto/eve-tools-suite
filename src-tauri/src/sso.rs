@@ -29,8 +29,11 @@ const ISSUERS: &[&str] = &["login.eveonline.com", "https://login.eveonline.com"]
 
 /// Cache du JWKS CCP (rarement modifié) le temps de la session.
 static JWKS_CACHE: Mutex<Option<JwkSet>> = Mutex::new(None);
-const USER_AGENT: &str =
-    "EVE Tools Suite/0.1.0 (lacausecrypto@gmail.com; +https://github.com/lacausecrypto/eve-tools-suite)";
+const USER_AGENT: &str = concat!(
+    "EVE Tools Suite/",
+    env!("CARGO_PKG_VERSION"),
+    " (lacausecrypto@gmail.com; +https://github.com/lacausecrypto/eve-tools-suite)"
+);
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct CharacterSession {

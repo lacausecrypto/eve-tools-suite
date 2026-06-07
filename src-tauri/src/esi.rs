@@ -7,8 +7,11 @@ use std::time::UNIX_EPOCH;
 
 /// User-Agent obligatoire (nom/version + contact + source). Doit rester aligné
 /// avec `src/core/app.ts` côté front.
-const USER_AGENT: &str =
-    "EVE Tools Suite/0.1.0 (lacausecrypto@gmail.com; +https://github.com/lacausecrypto/eve-tools-suite)";
+const USER_AGENT: &str = concat!(
+    "EVE Tools Suite/",
+    env!("CARGO_PKG_VERSION"),
+    " (lacausecrypto@gmail.com; +https://github.com/lacausecrypto/eve-tools-suite)"
+);
 const ESI_BASE: &str = "https://esi.evetech.net/latest";
 
 #[derive(Serialize)]

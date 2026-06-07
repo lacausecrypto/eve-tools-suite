@@ -1,6 +1,6 @@
 [package]
 name = "eve-tools-suite"
-version = "0.1.0"
+version = "0.1.1"
 description = "EVE Tools Suite — outils tiers EVE Online"
 authors = ["lacausecrypto"]
 edition = "2021"
