@@ -18,6 +18,12 @@
 </p>
 
 <p align="center">
+  <a href="https://eve-tools-suite.com">
+    <img src="https://img.shields.io/badge/🌐%20Visiter%20le%20site-eve--tools--suite.com-2B8CFF?style=for-the-badge&logoColor=white" alt="Visiter le site">
+  </a>
+</p>
+
+<p align="center">
   <a href="https://github.com/lacausecrypto/eve-tools-suite/releases/latest"><img src="https://img.shields.io/github/v/release/lacausecrypto/eve-tools-suite?style=flat-square&color=success&label=version" alt="Dernière version"></a>
   <a href="https://github.com/lacausecrypto/eve-tools-suite/releases"><img src="https://img.shields.io/github/downloads/lacausecrypto/eve-tools-suite/total?style=flat-square&label=t%C3%A9l%C3%A9chargements" alt="Téléchargements"></a>
   <img src="https://img.shields.io/badge/plateforme-Windows%20%7C%20macOS-lightgrey?style=flat-square" alt="Plateforme">
