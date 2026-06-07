@@ -38,7 +38,8 @@
 |---|---|---|
 | **Windows** | `…_x64-setup.exe` | Windows 10/11 (64-bit) |
 | **macOS (Apple Silicon)** | `…_aarch64.dmg` | M1/M2/M3 |
-| **macOS (Intel)** | `…_x64.dmg` | Intel Macs |
+
+> macOS Intel build coming soon. In the meantime, Intel Macs can build from source (see below).
 
 - **Auto-updates** are built in — once installed, the app checks for new signed releases on launch and updates in one click.
 - **First launch:** the app isn't OS-code-signed yet, so Windows SmartScreen ("unknown publisher") / macOS Gatekeeper may warn. Choose *More info → Run anyway* (Windows) or right-click → *Open* (macOS). Updates are cryptographically signed and verified regardless.

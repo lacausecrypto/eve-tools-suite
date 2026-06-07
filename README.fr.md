@@ -38,7 +38,8 @@
 |---|---|---|
 | **Windows** | `…_x64-setup.exe` | Windows 10/11 (64-bit) |
 | **macOS (Apple Silicon)** | `…_aarch64.dmg` | M1/M2/M3 |
-| **macOS (Intel)** | `…_x64.dmg` | Macs Intel |
+
+> Build macOS Intel à venir. En attendant, les Macs Intel peuvent compiler depuis les sources (voir plus bas).
 
 - **Mises à jour automatiques** intégrées — une fois installée, l'app vérifie les nouvelles versions signées au démarrage et se met à jour en un clic.
 - **Premier lancement :** l'app n'est pas encore signée au niveau OS, donc SmartScreen (« éditeur inconnu ») / Gatekeeper peuvent avertir. Choisis *Informations complémentaires → Exécuter quand même* (Windows) ou clic-droit → *Ouvrir* (macOS). Les mises à jour, elles, sont signées et vérifiées cryptographiquement.
