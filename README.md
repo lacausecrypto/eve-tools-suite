@@ -1,64 +1,116 @@
-# EVE Tools — Suite
+<p align="center"><b>🇬🇧 English</b> · <a href="README.fr.md">🇫🇷 Français</a></p>
 
-Suite **modulaire** d'outils tiers pour **EVE Online**, façon Odoo : un shell unique
-(lanceur d'apps) qui héberge des **modules-outils** indépendants, avec un design
-**shadcn homogène** et un socle commun **conforme aux exigences CCP** (ESI, SSO, EULA).
+<h1 align="center">EVE Tools Suite</h1>
 
-> 🔒 **EULA-safe par conception.** Aucun outil n'interagit avec le client EVE
-> (pas d'injection, lecture mémoire, OCR ni automatisation d'entrées). On lit
-> uniquement le texte que **tu** colles et on interroge les API **publiques**
-> (ESI officielle, zKillboard). Précédent : EveVision.
+<p align="center">
+  <strong>15 third-party tools for EVE Online, in one fast desktop app.</strong><br>
+  Fitting, industry, mining, market, trading, intel, skill planning &amp; more — bilingual (EN/FR), CCP-compliant, EULA-safe.
+</p>
 
-## Outils
+<p align="center">
+  <a href="https://github.com/lacausecrypto/eve-tools-suite/releases/latest">
+    <img src="https://img.shields.io/badge/⬇%20Download-Windows%20(.exe)-0078D6?style=for-the-badge&logo=windows11&logoColor=white" alt="Download for Windows">
+  </a>
+  &nbsp;
+  <a href="https://github.com/lacausecrypto/eve-tools-suite/releases/latest">
+    <img src="https://img.shields.io/badge/⬇%20Download-macOS%20(.dmg)-000000?style=for-the-badge&logo=apple&logoColor=white" alt="Download for macOS">
+  </a>
+</p>
 
-| Outil | Description | Statut |
+<p align="center">
+  <a href="https://github.com/lacausecrypto/eve-tools-suite/releases/latest"><img src="https://img.shields.io/github/v/release/lacausecrypto/eve-tools-suite?style=flat-square&color=success&label=latest" alt="Latest release"></a>
+  <a href="https://github.com/lacausecrypto/eve-tools-suite/releases"><img src="https://img.shields.io/github/downloads/lacausecrypto/eve-tools-suite/total?style=flat-square&label=downloads" alt="Downloads"></a>
+  <img src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS-lightgrey?style=flat-square" alt="Platform">
+  <img src="https://img.shields.io/badge/built%20with-Tauri%202-24C8DB?style=flat-square&logo=tauri&logoColor=white" alt="Built with Tauri">
+  <img src="https://img.shields.io/badge/i18n-EN%20%7C%20FR-blue?style=flat-square" alt="Bilingual">
+</p>
+
+> 🔒 **EULA-safe by design.** No tool ever interacts with the EVE client — no injection, memory reading, OCR, or input automation. It only reads text **you** paste and queries **public** APIs (official ESI, zKillboard). Read-only ESI scopes, least privilege.
+
+---
+
+## ⬇️ Download
+
+**[→ Get the latest release](https://github.com/lacausecrypto/eve-tools-suite/releases/latest)** — pick your file:
+
+| OS | File | Notes |
 |---|---|---|
-| **Mining Fleet Manager** | Sessions de minage en flotte, valorisation Jita, retraitement, paiements. | Stable |
-| **Pirate's Big Helper** | Intel local-chat pour le PvP solo/small-gang (menace, zKill). | Bêta |
-| **EVE PI Sim** | Simulateur de Planetary Industry (decay, équilibrage, ISK/heure). | Bêta |
-| **EVE Academy** | École ludique pour New Eden : cursus structurés (navigation, combat, économie, vie en corp), quiz notés, glossaire, entraînement (reconnaissance des coques + flashcards à répétition espacée), XP/niveaux/badges/série. Intègre le Ship Recognition Trainer. 100 % hors-ligne. | Bêta |
-| **Loss Analyzer** | Post-mortem de killmail (lien zKill/ESI ou pseudo → dernière perte) : qui t'a tué, gang, ISK, fit, « ce qui aurait sauvé le fit ». | Bêta |
-| **Industry & Cost Tracker** | Coût de revient réel (formules EVE : ME, EIV, install, SCC), prix Jita publics, carnet de jobs (ISK en prod, profit attendu/réalisé), valorisation d'inventaire. | Bêta |
-| **Market Browser** | Explorateur de marché multi-hubs (mieux qu'eve-tycoon) : carnet vendeurs/acheteurs, moyennes pondérées 5 %, marge, spread, volumes, sécurité par localisation, filtres, watchlist, historique. 100 % ESI publique. | Bêta |
-| **Trade Co-Pilot** | Trouve où gagner de l'ISK : scanner station-trading (balayage région-wide → profit net/jour = marge × liquidité, frais & taxe déduits) + scanner d'arbitrage inter-hubs (profit/m³, ROI, sauts). Moteur de profit net configurable depuis les skills. 100 % ESI publique. | Bêta |
+| **Windows** | `…_x64-setup.exe` | Windows 10/11 (64-bit) |
+| **macOS (Apple Silicon)** | `…_aarch64.dmg` | M1/M2/M3 |
+| **macOS (Intel)** | `…_x64.dmg` | Intel Macs |
 
-D'autres outils viendront — chacun est un **module** plug-and-play (voir
-[`ARCHITECTURE.md`](ARCHITECTURE.md)). Le plan de chantier complet est dans
-[`ROADMAP.md`](ROADMAP.md).
+- **Auto-updates** are built in — once installed, the app checks for new signed releases on launch and updates in one click.
+- **First launch:** the app isn't OS-code-signed yet, so Windows SmartScreen ("unknown publisher") / macOS Gatekeeper may warn. Choose *More info → Run anyway* (Windows) or right-click → *Open* (macOS). Updates are cryptographically signed and verified regardless.
 
-## Stack
+---
 
-- **Frontend** : React 18 + Vite + TypeScript + Tailwind + composants **shadcn/ui** (Radix).
-- **Desktop** : **Tauri 2** (backend **Rust**) — léger, sûr ; trousseau OS pour les
-  tokens ESI, proxy ESI avec User-Agent conforme.
-- **Modules** : registre + manifeste (`src/core/module`), montés par le shell.
+## 🧰 Tools
 
-## Démarrer
+15 plug-and-play modules under one shell. Most work with **no login** (public ESI); a few add optional, read-only SSO import.
+
+### 🏭 Industry &amp; economy
+| Tool | What it does | Status |
+|---|---|---|
+| **Industry &amp; Cost Tracker** | Real production cost with EVE's true formulas (ME, EIV, install fee, SCC), live Jita prices, job ledger (ISK in production, expected vs realized profit), inventory valuation. | Beta |
+| **Reprocessing &amp; Compression** | Ore → minerals yields (skills/structure/implant aware) and the **optimal compressed mix** for hauling. | Beta |
+| **EVE PI Sim** | Planetary Industry simulator — layout, extractor decay, chain balancing, ISK/hour optimization. | Beta |
+| **Mining Fleet Manager** | Fleet mining sessions, Jita valuation, reprocessing, and fair **ISK split** across members. | Stable |
+
+### 💹 Market &amp; trade
+| Tool | What it does | Status |
+|---|---|---|
+| **Market Browser** | Multi-hub order book (buy/sell), 5% weighted averages, margin, spread, volumes, history, watchlist. 100% public ESI. | Beta |
+| **Trade Co-Pilot** | Where to make ISK: region-wide **station-trading** scanner (net profit/day = margin × liquidity, fees & tax in) + inter-hub **arbitrage** (profit/m³, ROI, jumps). | Beta |
+| **Appraisal** | Appraise any paste — Jita buy/sell value, volume, EIV — across all major hubs. An in-app Evepraisal. | Beta |
+| **LP Converter** | ISK per loyalty point — ranks the best LP-store deals for any corp. | Beta |
+
+### ⚔️ Combat &amp; intel
+| Tool | What it does | Status |
+|---|---|---|
+| **Fit Workshop** | Paste an EFT fit to analyze (EHP by damage profile, cap stability, nav, DPS, stacking) — or **auto-generate** a fit from a hull + role. | Beta |
+| **Loss Analyzer** | Killmail post-mortem (zKill/ESI link or character → latest loss): who killed you, the gang, ISK, fit, and *what would have saved it*. | Beta |
+| **Pirate's Big Helper** | Local-chat intel for solo &amp; small-gang PvP — threat scoring, fit prediction, gang network, all from public zKill/ESI. | Beta |
+| **Abyssal Appraiser** | Mutaplasmid roll quality vs theoretical ranges (god-roll detection) + MutaMarket resale estimate. | Beta |
+
+### 🎓 Progression &amp; learning
+| Tool | What it does | Status |
+|---|---|---|
+| **Skill &amp; Remap Optimizer** | Build a training plan (exact CCP data), see SP &amp; time, and get the **optimal attribute remap** — implants and Alpha/Omega aware. The lightweight EVEMon. | Beta |
+| **Activity Journal** | ISK/hour tracker — session timer, valued loot, drop rates. Replaces the removed in-game Activity Tracker. | Beta |
+| **EVE Academy** | Learn New Eden the fun way: structured courses (navigation, combat, economy, corp life), graded quizzes, glossary, ship-recognition &amp; spaced-repetition drills, XP/levels/badges. 100% offline. | Beta |
+
+---
+
+## ✨ Why this suite
+
+- **One app, 15 tools** — consistent shadcn/Radix UI, shared engine, instant tool switching (tabbed workspace).
+- **Accurate, not hand-wavy** — real EVE formulas (ME/EIV/SCC, reprocessing yields, stacking penalties, weighted-average prices) validated against SDE data and unit-tested.
+- **Bilingual EN/FR**, switchable live.
+- **Works offline** for the local/compute tools (Academy, Fit Workshop math, Reprocessing, Abyssal scoring).
+- **Auto-updating** with cryptographically signed releases.
+
+## 🛡️ Trust &amp; compliance
+
+- **CCP-compliant ESI client** — explicit User-Agent with contact, error-limit aware, respects `expires` caching, `datasource=tranquility`.
+- **Secure SSO** — OAuth2 **PKCE** (public client, no secret), JWT verified against CCP **JWKS** (signature + issuer + audience + expiry). Refresh tokens live only in the **OS keychain**; access tokens never reach the frontend.
+- **Least-privilege scopes** — read-only, requested only when you use an authenticated feature.
+- **Privacy** — anonymous, **opt-in** usage analytics (off by default, EU-hosted, no PII, no EVE data). Full notice: **[PRIVACY.md](PRIVACY.md)**.
+
+## 🛠️ Build from source
+
+Requires Node 20+ and the [Rust toolchain](https://www.rust-lang.org/tools/install) (for the desktop build).
 
 ```bash
 npm install
-
-# App web (dev, sans backend Rust — ESI en direct)
-npm run dev          # http://localhost:5180
-
-# Application desktop (Tauri + Rust : proxy ESI conforme, SSO, keychain)
-npm run tauri:dev
-
-# Build
-npm run build        # frontend
-npm run tauri:build  # installeurs desktop (.dmg / .exe / …)
+npm run tauri:dev     # run the desktop app (Tauri + Rust backend)
+npm run tauri:build   # produce installers (.exe / .dmg)
+npm test              # unit tests (Vitest)
 ```
 
-> Le mode **web** sert au développement de l'UI. Le mode **desktop (Tauri)**
-> active le socle conforme (User-Agent ESI, SSO PKCE, stockage sécurisé).
+`npm run dev` runs the UI alone in a browser (public ESI only) for fast iteration.
 
-## Conformité CCP
+**Stack:** React 18 · Vite · TypeScript · Tailwind + shadcn/ui · Zustand · **Tauri 2** (Rust backend) · SQLite persistence.
 
-La suite est pensée pour être **agréable à certifier** : voir
-[`COMPLIANCE.md`](COMPLIANCE.md) (Developer License Agreement, ESI, SSO PKCE,
-attribution, et la checklist d'enregistrement de l'application chez CCP).
+## 📜 License &amp; attribution
 
-## Licence & attribution
-
-EVE Online et le logo EVE sont des marques déposées de CCP hf. Cette application
-n'est ni affiliée ni approuvée par CCP hf.
+EVE Online and the EVE logo are registered trademarks of CCP hf. All EVE-related materials are property of CCP hf. This application is a third-party tool, **not affiliated with or endorsed by CCP hf.**
