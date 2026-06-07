@@ -24,10 +24,20 @@ export function Dashboard() {
   const normalize = useDashboard((s) => s.normalize);
   const [picker, setPicker] = useState(false);
 
-  // Ajoute les nouveaux widgets et répare les chevauchements (montage/hot-reload).
+  // Ajoute les nouveaux widgets et répare les chevauchements. **Après hydratation
+  // seulement** : sinon `sync` s'exécute avant le rechargement async du store
+  // (instances/known vides) et recrée la disposition par défaut en écrasant celle
+  // sauvegardée par l'utilisateur (course écriture/lecture du stockage).
   useEffect(() => {
-    sync(allWidgets().map((w) => w.gid));
-    normalize();
+    const run = () => {
+      sync(allWidgets().map((w) => w.gid));
+      normalize();
+    };
+    if (useDashboard.persist.hasHydrated()) {
+      run();
+      return;
+    }
+    return useDashboard.persist.onFinishHydration(run);
   }, [sync, normalize]);
 
   return (
