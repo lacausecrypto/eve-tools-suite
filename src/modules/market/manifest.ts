@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import type { ToolModule } from "@/core/module/types";
 import { MarketModule } from "./MarketModule";
+import { marketTour } from "./tour";
 import {
   MarketMoversWidget,
   MarketPricesWidget,
@@ -50,6 +51,7 @@ export const marketManifest: ToolModule = {
     eulaSafe: true,
   },
   component: MarketModule,
+  tour: marketTour,
   widgets: [
     {
       id: "ticker",

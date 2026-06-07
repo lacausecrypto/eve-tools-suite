@@ -3,6 +3,8 @@ import type { ToolModule } from "@/core/module/types";
 import { TradeModule } from "./TradeModule";
 import { TradeFeesWidget, tradeFeesConfig } from "./widgets";
 
+import { tradeTour } from "./tour";
+
 export const tradeManifest: ToolModule = {
   id: "trade",
   name: { fr: "Copilote de Trading", en: "Trade Co-Pilot" },
@@ -32,6 +34,7 @@ export const tradeManifest: ToolModule = {
     eulaSafe: true,
   },
   component: TradeModule,
+  tour: tradeTour,
   widgets: [
     {
       id: "fees",

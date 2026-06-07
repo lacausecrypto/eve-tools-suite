@@ -45,9 +45,9 @@ export function AcademyApp() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
+    <div data-tour="academy.root" className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
       {/* Navigation */}
-      <nav className="mb-5 flex flex-wrap gap-1.5">
+      <nav data-tour="academy.nav" className="mb-5 flex flex-wrap gap-1.5">
         {NAV.map((n) => {
           const Icon = n.icon;
           const active = page === n.id;

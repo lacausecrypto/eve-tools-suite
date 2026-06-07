@@ -117,7 +117,7 @@ export function SkillsApp() {
   }
 
   return (
-    <div className="mx-auto grid w-full max-w-6xl gap-4 px-5 py-5 animate-fade-in lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+    <div data-tour="skills.root" className="mx-auto grid w-full max-w-6xl gap-4 px-5 py-5 animate-fade-in lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
       {/* ----- Configuration ----- */}
       <div className="space-y-4">
         {/* Import & clone */}

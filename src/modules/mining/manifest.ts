@@ -10,6 +10,8 @@ import {
   miningTotalConfig,
 } from "./widgets";
 
+import { miningTour } from "./tour";
+
 export const miningManifest: ToolModule = {
   id: "mining",
   name: { fr: "Gestion de Flotte Minière", en: "Mining Fleet Manager" },
@@ -38,6 +40,7 @@ export const miningManifest: ToolModule = {
     eulaSafe: true,
   },
   component: MiningModule,
+  tour: miningTour,
   widgets: [
     {
       id: "active",

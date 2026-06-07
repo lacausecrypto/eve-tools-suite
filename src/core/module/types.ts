@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import type { LucideIcon } from "lucide-react";
 import type { LocalizedText } from "@/core/i18n";
+import type { ModuleTour } from "@/core/tour/types";
 
 /** Cycle de maturité d'un outil dans la suite. */
 export type ToolStatus = "stable" | "beta" | "soon";
@@ -103,4 +104,6 @@ export interface ToolModule {
   component: ComponentType;
   /** Widgets de dashboard exposés (optionnel) — KPIs/graphes personnalisables. */
   widgets?: ToolWidget[];
+  /** Visite guidée de l'outil (spotlight + démo) — bouton « ? » du shell. */
+  tour?: ModuleTour;
 }

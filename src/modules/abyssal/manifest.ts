@@ -2,6 +2,8 @@ import { Atom } from "lucide-react";
 import type { ToolModule } from "@/core/module/types";
 import { AbyssalModule } from "./AbyssalModule";
 
+import { abyssalTour } from "./tour";
+
 export const abyssalManifest: ToolModule = {
   id: "abyssal",
   name: { fr: "Estimateur Abyssal", en: "Abyssal Appraiser" },
@@ -36,4 +38,5 @@ export const abyssalManifest: ToolModule = {
     eulaSafe: true,
   },
   component: AbyssalModule,
+  tour: abyssalTour,
 };

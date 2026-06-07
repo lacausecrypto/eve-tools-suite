@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Check, Gauge, Pencil, Plus } from "lucide-react";
 import { allWidgets, useDashboard } from "@/core/dashboard";
 import { useT, useLocalized } from "@/core/i18n";
+import { SHELL_ANCHOR } from "@/core/tour/anchors";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -66,6 +67,7 @@ export function Dashboard() {
             variant={editing ? "default" : "outline"}
             size="sm"
             onClick={toggleEdit}
+            data-tour={SHELL_ANCHOR.boardEdit}
           >
             {editing ? (
               <>

@@ -113,7 +113,7 @@ export function RefineApp() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
+    <div data-tour="refine.root" className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
       {/* Onglets */}
       <div className="mb-4 flex rounded-lg border border-border bg-card/40 p-1">
         <Tab active={s.mode === "reprocess"} onClick={() => s.setMode("reprocess")} icon={<Recycle className="h-4 w-4" />}>

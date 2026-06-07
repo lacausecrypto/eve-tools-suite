@@ -14,7 +14,7 @@ export function PiApp() {
   const [mode, setMode] = useState<Mode>("extraction");
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
+    <div data-tour="pi.root" className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
       {/* Sélecteur de mode (segmented control) */}
       <div className="mb-4 inline-flex rounded-lg border border-border/60 bg-background/40 p-0.5">
         <ModeButton

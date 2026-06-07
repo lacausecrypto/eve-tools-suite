@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Database, ShieldCheck, Trash2, Info, UserCircle2 } from "lucide-react";
+import { Compass, Database, ShieldCheck, Trash2, Info, UserCircle2 } from "lucide-react";
 import { useSettings } from "@/core/settings";
+import { useTour } from "@/core/tour/store";
+import { SHELL_TOUR } from "@/shell/tour";
 import { analyticsConfigured, setConsent } from "@/core/analytics";
 import { usePrivacyDialog } from "@/shell/PrivacyDialog";
 import { UpdaterControl } from "@/shell/UpdaterControl";
@@ -133,6 +135,41 @@ export function Settings() {
               disabled={!sso.available()}
             />
           </Row>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base flex items-center gap-2">
+            <Compass className="h-4 w-4 text-fleur" /> {t("settings.tour.title")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
+            {t("settings.tour.desc")}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                s.setOnboardingDone(true);
+                useTour.getState().start(SHELL_TOUR);
+              }}
+            >
+              <Compass className="h-4 w-4" /> {t("settings.tour.replay")}
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                s.resetTours();
+                toast.success(t("settings.tour.reset"));
+              }}
+            >
+              {t("settings.tour.reset")}
+            </Button>
+          </div>
         </CardContent>
       </Card>
 

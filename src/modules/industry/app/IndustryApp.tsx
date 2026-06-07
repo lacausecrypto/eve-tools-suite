@@ -20,8 +20,11 @@ export function IndustryApp() {
   const [mode, setMode] = useState<Mode>("calc");
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
-      <div className="mb-4 inline-flex rounded-lg border border-border/60 bg-background/40 p-0.5">
+    <div data-tour="industry.root" className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
+      <div
+        data-tour="industry.tabs"
+        className="mb-4 inline-flex rounded-lg border border-border/60 bg-background/40 p-0.5"
+      >
         <Tab active={mode === "calc"} onClick={() => setMode("calc")} icon={<CalcIcon className="h-4 w-4" />} label={t("ind.tab.calc")} />
         <Tab active={mode === "tree"} onClick={() => setMode("tree")} icon={<GitBranch className="h-4 w-4" />} label={t("ind.tab.tree")} />
         <Tab active={mode === "ledger"} onClick={() => setMode("ledger")} icon={<NotebookPen className="h-4 w-4" />} label={t("ind.tab.ledger")} />

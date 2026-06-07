@@ -97,7 +97,7 @@ export function AppraisalApp() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
+    <div data-tour="appraisal.root" className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
       <div className="grid gap-4 lg:grid-cols-[minmax(0,360px)_1fr]">
         {/* Saisie */}
         <div className="space-y-3">

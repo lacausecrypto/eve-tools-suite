@@ -2,6 +2,8 @@ import { Receipt } from "lucide-react";
 import type { ToolModule } from "@/core/module/types";
 import { AppraisalModule } from "./AppraisalModule";
 
+import { appraisalTour } from "./tour";
+
 export const appraisalManifest: ToolModule = {
   id: "appraisal",
   name: { fr: "Estimateur de prix", en: "Appraisal" },
@@ -38,4 +40,5 @@ export const appraisalManifest: ToolModule = {
     eulaSafe: true,
   },
   component: AppraisalModule,
+  tour: appraisalTour,
 };

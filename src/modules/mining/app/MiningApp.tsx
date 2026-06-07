@@ -53,7 +53,7 @@ export function MiningApp() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-6 animate-fade-in">
+    <div data-tour="mining.root" className="mx-auto w-full max-w-6xl px-6 py-6 animate-fade-in">
       <div className="mb-3 flex items-center justify-end gap-2">
         {hasActive && (
           <Badge variant="success" className="hidden sm:inline-flex gap-1.5">

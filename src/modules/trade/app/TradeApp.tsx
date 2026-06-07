@@ -43,7 +43,7 @@ export function TradeApp() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-5 py-5 animate-fade-in">
+    <div data-tour="trade.root" className="mx-auto w-full max-w-7xl px-5 py-5 animate-fade-in">
       {/* Barre d'onglets + frais */}
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <div className="flex rounded-lg border border-border bg-card/40 p-1">

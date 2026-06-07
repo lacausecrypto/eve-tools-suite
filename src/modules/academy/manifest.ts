@@ -1,6 +1,7 @@
 import { Award, Brain, Flame, GraduationCap, Target, Trophy } from "lucide-react";
 import type { ToolModule } from "@/core/module/types";
 import { AcademyModule } from "./AcademyModule";
+import { academyTour } from "./tour";
 import {
   AcademyBadgesWidget,
   AcademyFlashcardsWidget,
@@ -43,6 +44,7 @@ export const academyManifest: ToolModule = {
     eulaSafe: true,
   },
   component: AcademyModule,
+  tour: academyTour,
   widgets: [
     {
       id: "level",

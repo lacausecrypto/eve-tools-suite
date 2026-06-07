@@ -3,6 +3,8 @@ import type { ToolModule } from "@/core/module/types";
 import { PirateModule } from "./PirateModule";
 import { PirateWatchlistWidget } from "./widgets";
 
+import { pirateTour } from "./tour";
+
 export const pirateManifest: ToolModule = {
   id: "pirate",
   name: { fr: "L'Assistant du Pirate", en: "Pirate's Big Helper" },
@@ -31,6 +33,7 @@ export const pirateManifest: ToolModule = {
     eulaSafe: true,
   },
   component: PirateModule,
+  tour: pirateTour,
   widgets: [
     {
       id: "watchlist",

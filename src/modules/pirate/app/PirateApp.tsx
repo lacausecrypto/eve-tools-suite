@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { listen } from "@tauri-apps/api/event";
 import { isTauri } from "@/core/runtime";
 import { useT } from "@/core/i18n";
+import { usePirateInput } from "./store";
 import {
   Star,
   X,
@@ -249,7 +250,8 @@ function applyTags(
 
 export function PirateApp() {
   const t = useT();
-  const [pasted, setPasted] = useState("");
+  const pasted = usePirateInput((s) => s.pasted);
+  const setPasted = usePirateInput((s) => s.setPasted);
   const [pilots, setPilots] = useState<PilotIntel[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -502,7 +504,7 @@ export function PirateApp() {
 
   return (
     <TooltipProvider delayDuration={100}>
-      <div className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
+      <div data-tour="pirate.root" className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
         {/* Barre d'action du module (le shell fournit la marque) :
             synthèse des menaces à gauche, watchlist à droite. */}
         <div className="mb-3 flex flex-wrap items-center gap-2">

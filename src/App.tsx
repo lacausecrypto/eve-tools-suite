@@ -6,9 +6,12 @@ import { Workspace } from "@/shell/Workspace";
 import { ConsentDialog } from "@/shell/ConsentDialog";
 import { PrivacyDialog } from "@/shell/PrivacyDialog";
 import { UpdateBanner } from "@/shell/UpdateBanner";
+import { TourOverlay } from "@/shell/TourOverlay";
+import { OnboardingInvite } from "@/shell/OnboardingInvite";
 import { Toaster } from "@/components/ui/toaster";
 import "@/modules"; // enregistre tous les modules-outils
 import "@/shell/coreWidgets"; // enregistre les widgets transverses (personnage…)
+import "@/shell/tour"; // enregistre les messages du tour + le tour d'accueil
 
 export default function App() {
   const reduceMotion = useSettings((s) => s.reduceMotion);
@@ -50,6 +53,8 @@ export default function App() {
       <PrivacyDialog />
       <UpdateBanner />
       <Toaster />
+      <TourOverlay />
+      <OnboardingInvite />
     </div>
   );
 }

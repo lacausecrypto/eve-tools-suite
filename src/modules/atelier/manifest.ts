@@ -1,6 +1,7 @@
 import { Hammer } from "lucide-react";
 import type { ToolModule } from "@/core/module/types";
 import { AtelierModule } from "./AtelierModule";
+import { atelierTour } from "./tour";
 
 export const atelierManifest: ToolModule = {
   id: "atelier",
@@ -36,4 +37,5 @@ export const atelierManifest: ToolModule = {
     eulaSafe: true,
   },
   component: AtelierModule,
+  tour: atelierTour,
 };

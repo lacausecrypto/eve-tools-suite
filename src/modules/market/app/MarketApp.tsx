@@ -10,7 +10,10 @@ import { MarketView } from "./components/MarketView";
 export function MarketApp() {
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="flex h-[calc(100vh-7rem)] min-h-[32rem] animate-fade-in">
+      <div
+        data-tour="market.root"
+        className="flex h-[calc(100vh-7rem)] min-h-[32rem] animate-fade-in"
+      >
         <Sidebar />
         <MarketView />
       </div>

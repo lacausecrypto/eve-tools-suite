@@ -7,6 +7,7 @@ import { useLocalized, useT } from "@/core/i18n";
 import { sso } from "@/core/sso/session";
 import { portraitUrl } from "@/core/images";
 import { AccountDialog } from "@/shell/AccountDialog";
+import { SHELL_ANCHOR } from "@/core/tour/anchors";
 import { cn } from "@/lib/utils";
 
 /** Rail latéral (façon Odoo) : favoris épinglés + Apps + Réglages + Compte. */
@@ -39,6 +40,7 @@ export function Sidebar() {
         active={activeId === "dashboard"}
         onClick={openDashboard}
         label={t("board.title")}
+        anchor={SHELL_ANCHOR.dashboardBtn}
       >
         <Gauge className="h-5 w-5" />
       </RailButton>
@@ -46,6 +48,7 @@ export function Sidebar() {
         active={activeId === "tools"}
         onClick={openTools}
         label={t("nav.apps")}
+        anchor={SHELL_ANCHOR.toolsBtn}
       >
         <LayoutGrid className="h-5 w-5" />
       </RailButton>
@@ -75,12 +78,14 @@ export function Sidebar() {
         active={activeId === "settings"}
         onClick={openSettings}
         label={t("nav.settings")}
+        anchor={SHELL_ANCHOR.settingsBtn}
       >
         <SettingsIcon className="h-5 w-5" />
       </RailButton>
 
       <button
         onClick={() => setAccountOpen(true)}
+        data-tour={SHELL_ANCHOR.accountBtn}
         disabled={!sso.available()}
         title={
           sso.available() ? t("account.tooltip.available") : t("account.tooltip.desktop")
@@ -110,12 +115,14 @@ function RailButton({
   onClick,
   label,
   accent,
+  anchor,
   children,
 }: {
   active: boolean;
   onClick: () => void;
   label: string;
   accent?: string;
+  anchor?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -123,6 +130,7 @@ function RailButton({
       onClick={onClick}
       title={label}
       aria-label={label}
+      data-tour={anchor}
       className={cn(
         "relative grid size-10 place-items-center rounded-xl outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring",
         active

@@ -11,6 +11,7 @@ import {
 import { listModules } from "@/core/module/registry";
 import { useWorkspace } from "@/core/workspace";
 import { useT, useLocalized } from "@/core/i18n";
+import { SHELL_ANCHOR } from "@/core/tour/anchors";
 import type { ToolModule } from "@/core/module/types";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -37,6 +38,8 @@ export function ToolsCatalog() {
 
   const pinnedMods = filtered.filter((m) => pinned.includes(m.id));
   const others = filtered.filter((m) => !pinned.includes(m.id));
+  // Première carte affichée → ancre du tour (spotlight de taille raisonnable).
+  const firstId = (pinnedMods[0] ?? others[0])?.id;
 
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-8 animate-fade-in">
@@ -67,7 +70,7 @@ export function ToolsCatalog() {
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {pinnedMods.map((m) => (
-              <ToolCard key={m.id} mod={m} pinned />
+              <ToolCard key={m.id} mod={m} pinned anchor={m.id === firstId ? SHELL_ANCHOR.toolCard : undefined} />
             ))}
           </div>
         </section>
@@ -81,7 +84,7 @@ export function ToolsCatalog() {
         )}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {others.map((m) => (
-            <ToolCard key={m.id} mod={m} pinned={false} />
+            <ToolCard key={m.id} mod={m} pinned={false} anchor={m.id === firstId ? SHELL_ANCHOR.toolCard : undefined} />
           ))}
         </div>
         {filtered.length === 0 && (
@@ -94,7 +97,7 @@ export function ToolsCatalog() {
   );
 }
 
-function ToolCard({ mod, pinned }: { mod: ToolModule; pinned: boolean }) {
+function ToolCard({ mod, pinned, anchor }: { mod: ToolModule; pinned: boolean; anchor?: string }) {
   const t = useT();
   const loc = useLocalized();
   const openModule = useWorkspace((s) => s.openModule);
@@ -105,6 +108,7 @@ function ToolCard({ mod, pinned }: { mod: ToolModule; pinned: boolean }) {
 
   return (
     <Card
+      data-tour={anchor}
       role="button"
       tabIndex={disabled ? -1 : 0}
       aria-disabled={disabled}

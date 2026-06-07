@@ -2,6 +2,8 @@ import { Gift } from "lucide-react";
 import type { ToolModule } from "@/core/module/types";
 import { LpModule } from "./LpModule";
 
+import { lpTour } from "./tour";
+
 export const lpManifest: ToolModule = {
   id: "lp",
   name: { fr: "Convertisseur LP", en: "LP Converter" },
@@ -34,4 +36,5 @@ export const lpManifest: ToolModule = {
     eulaSafe: true,
   },
   component: LpModule,
+  tour: lpTour,
 };

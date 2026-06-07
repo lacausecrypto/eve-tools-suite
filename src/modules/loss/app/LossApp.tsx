@@ -4,6 +4,7 @@ import { useT } from "@/core/i18n";
 import { isTauri } from "@/core/runtime";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useLossInput } from "./store";
 import {
   analyzeKillmail,
   analyzeLatest,
@@ -26,7 +27,8 @@ type Status =
  */
 export function LossApp() {
   const t = useT();
-  const [input, setInput] = useState("");
+  const input = useLossInput((s) => s.input);
+  const setInput = useLossInput((s) => s.setInput);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
 
   async function run() {
@@ -63,7 +65,7 @@ export function LossApp() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-5 py-5 animate-fade-in">
+    <div data-tour="loss.root" className="mx-auto w-full max-w-5xl px-5 py-5 animate-fade-in">
       {/* Barre de saisie */}
       <div className="flex flex-col gap-2 sm:flex-row">
         <Input

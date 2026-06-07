@@ -61,7 +61,7 @@ export function LpApp() {
   }, [status, profitableOnly, minVolume]);
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
+    <div data-tour="lp.root" className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
       {/* Configuration */}
       <div className="mb-4 rounded-xl border border-border bg-card/40 p-4">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

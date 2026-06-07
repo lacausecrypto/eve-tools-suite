@@ -2,6 +2,8 @@ import { Timer } from "lucide-react";
 import type { ToolModule } from "@/core/module/types";
 import { ActivityModule } from "./ActivityModule";
 
+import { activityTour } from "./tour";
+
 export const activityManifest: ToolModule = {
   id: "activity",
   name: { fr: "Journal d'Activité", en: "Activity Journal" },
@@ -36,4 +38,5 @@ export const activityManifest: ToolModule = {
     eulaSafe: true,
   },
   component: ActivityModule,
+  tour: activityTour,
 };

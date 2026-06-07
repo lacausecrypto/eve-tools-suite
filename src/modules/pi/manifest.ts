@@ -12,6 +12,8 @@ import {
   piPortfolioConfig,
 } from "./widgets";
 
+import { piTour } from "./tour";
+
 export const piManifest: ToolModule = {
   id: "pi",
   name: { fr: "Simulateur PI", en: "EVE PI Sim" },
@@ -42,6 +44,7 @@ export const piManifest: ToolModule = {
     eulaSafe: true,
   },
   component: PiModule,
+  tour: piTour,
   widgets: [
     {
       id: "portfolio",

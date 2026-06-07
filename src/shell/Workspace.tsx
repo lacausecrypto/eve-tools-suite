@@ -9,6 +9,7 @@ import { ToolsCatalog } from "./ToolsCatalog";
 import { Settings } from "./Settings";
 import { ModuleBoundary } from "./ModuleBoundary";
 import { ComplianceFooter } from "./ComplianceFooter";
+import { TourFab } from "./TourFab";
 
 /**
  * Espace de travail multi-onglets : rail de favoris (gauche), barre d'onglets
@@ -36,6 +37,7 @@ export function Workspace() {
               <TabContent tab={tab} />
             </div>
           ))}
+          <TourFab />
         </main>
         <ComplianceFooter />
       </div>

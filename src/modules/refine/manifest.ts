@@ -2,6 +2,8 @@ import { Recycle } from "lucide-react";
 import type { ToolModule } from "@/core/module/types";
 import { RefineModule } from "./RefineModule";
 
+import { refineTour } from "./tour";
+
 export const refineManifest: ToolModule = {
   id: "refine",
   name: { fr: "Retraitement & Compression", en: "Reprocessing & Compression" },
@@ -35,4 +37,5 @@ export const refineManifest: ToolModule = {
     eulaSafe: true,
   },
   component: RefineModule,
+  tour: refineTour,
 };

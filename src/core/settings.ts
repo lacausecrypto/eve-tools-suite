@@ -20,11 +20,20 @@ interface SettingsState {
   notifications: boolean;
   /** Consentement à l'analytics produit (opt-in strict). `unset` → demander. */
   analyticsConsent: AnalyticsConsent;
+  /** Le tour d'accueil (shell) a-t-il déjà été proposé au 1er lancement ? */
+  onboardingDone: boolean;
+  /** Ids des tours déjà vus (shell + outils) — évite de re-proposer. */
+  seenTours: string[];
   setLanguage: (l: Language) => void;
   setTimeDisplay: (t: TimeDisplay) => void;
   setReduceMotion: (b: boolean) => void;
   setNotifications: (b: boolean) => void;
   setAnalyticsConsent: (c: AnalyticsConsent) => void;
+  setOnboardingDone: (b: boolean) => void;
+  /** Marque un tour comme vu (idempotent). */
+  markTourSeen: (id: string) => void;
+  /** Réinitialise la liste des tours vus (et re-proposera l'accueil). */
+  resetTours: () => void;
 }
 
 /**
@@ -39,11 +48,17 @@ export const useSettings = create<SettingsState>()(
       reduceMotion: false,
       notifications: false,
       analyticsConsent: "unset",
+      onboardingDone: false,
+      seenTours: [],
       setLanguage: (language) => set({ language }),
       setTimeDisplay: (timeDisplay) => set({ timeDisplay }),
       setReduceMotion: (reduceMotion) => set({ reduceMotion }),
       setNotifications: (notifications) => set({ notifications }),
       setAnalyticsConsent: (analyticsConsent) => set({ analyticsConsent }),
+      setOnboardingDone: (onboardingDone) => set({ onboardingDone }),
+      markTourSeen: (id) =>
+        set((s) => (s.seenTours.includes(id) ? s : { seenTours: [...s.seenTours, id] })),
+      resetTours: () => set({ seenTours: [], onboardingDone: false }),
     }),
     {
       name: "settings",

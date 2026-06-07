@@ -11,6 +11,8 @@ import {
   skillRemapConfig,
 } from "./widgets";
 
+import { skillsTour } from "./tour";
+
 export const skillsManifest: ToolModule = {
   id: "skills",
   name: { fr: "Optimiseur de Compétences", en: "Skill & Remap Optimizer" },
@@ -41,6 +43,7 @@ export const skillsManifest: ToolModule = {
     eulaSafe: true,
   },
   component: SkillsModule,
+  tour: skillsTour,
   widgets: [
     {
       id: "plan",

@@ -2,6 +2,7 @@ import { BarChart3, Factory, TrendingUp } from "lucide-react";
 import type { ToolModule } from "@/core/module/types";
 import { ESI_SCOPES } from "@/core/app";
 import { IndustryModule } from "./IndustryModule";
+import { industryTour } from "./tour";
 import {
   IndustryOverviewWidget,
   IndustryProductionWidget,
@@ -48,6 +49,7 @@ export const industryManifest: ToolModule = {
     eulaSafe: true,
   },
   component: IndustryModule,
+  tour: industryTour,
   widgets: [
     {
       id: "production",

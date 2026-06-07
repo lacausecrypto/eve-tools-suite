@@ -2,6 +2,8 @@ import { HeartCrack } from "lucide-react";
 import type { ToolModule } from "@/core/module/types";
 import { LossModule } from "./LossModule";
 
+import { lossTour } from "./tour";
+
 export const lossManifest: ToolModule = {
   id: "loss",
   name: { fr: "Analyseur de Pertes", en: "Loss Analyzer" },
@@ -33,4 +35,5 @@ export const lossManifest: ToolModule = {
     eulaSafe: true,
   },
   component: LossModule,
+  tour: lossTour,
 };

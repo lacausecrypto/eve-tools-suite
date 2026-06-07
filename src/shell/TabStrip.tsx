@@ -8,6 +8,7 @@ import {
 import { getModule } from "@/core/module/registry";
 import { useWorkspace, type Tab } from "@/core/workspace";
 import { useLocalized, useT } from "@/core/i18n";
+import { SHELL_ANCHOR } from "@/core/tour/anchors";
 import { cn } from "@/lib/utils";
 
 /** Barre d'onglets façon navigateur : outils ouverts, switch, fermeture, « + ». */
@@ -20,7 +21,10 @@ export function TabStrip() {
   const openDashboard = useWorkspace((s) => s.openDashboard);
 
   return (
-    <div className="flex h-11 shrink-0 items-stretch gap-1 overflow-x-auto border-b border-border/60 bg-background/80 px-2 backdrop-blur scrollbar-thin">
+    <div
+      data-tour={SHELL_ANCHOR.tabStrip}
+      className="flex h-11 shrink-0 items-stretch gap-1 overflow-x-auto border-b border-border/60 bg-background/80 px-2 backdrop-blur scrollbar-thin"
+    >
       {tabs.map((tab) => (
         <TabButton
           key={tab.id}
