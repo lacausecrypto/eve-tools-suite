@@ -30,19 +30,7 @@
 
 ---
 
-## ⬇️ Download
-
-**[→ Get the latest release](https://github.com/lacausecrypto/eve-tools-suite/releases/latest)** — pick your file:
-
-| OS | File | Notes |
-|---|---|---|
-| **Windows** | `…_x64-setup.exe` | Windows 10/11 (64-bit) |
-| **macOS (Apple Silicon)** | `…_aarch64.dmg` | M1/M2/M3 |
-
-> macOS Intel build coming soon. In the meantime, Intel Macs can build from source (see below).
-
-- **Auto-updates** are built in — once installed, the app checks for new signed releases on launch and updates in one click.
-- **First launch:** the app isn't OS-code-signed yet, so Windows SmartScreen ("unknown publisher") / macOS Gatekeeper may warn. Choose *More info → Run anyway* (Windows) or right-click → *Open* (macOS). Updates are cryptographically signed and verified regardless.
+> ⬆️ **Auto-updating & signed.** Use a download button above — installs in one click, then the app updates itself automatically (signed releases). On first launch, Windows SmartScreen / macOS Gatekeeper may warn ("unknown publisher") since the app isn't OS-code-signed yet — choose *More info → Run anyway* (Windows) or right-click → *Open* (macOS). macOS Intel build coming soon (build from source meanwhile).
 
 ---
 

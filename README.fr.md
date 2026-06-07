@@ -30,19 +30,7 @@
 
 ---
 
-## ⬇️ Téléchargement
-
-**[→ Dernière version](https://github.com/lacausecrypto/eve-tools-suite/releases/latest)** — choisis ton fichier :
-
-| OS | Fichier | Notes |
-|---|---|---|
-| **Windows** | `…_x64-setup.exe` | Windows 10/11 (64-bit) |
-| **macOS (Apple Silicon)** | `…_aarch64.dmg` | M1/M2/M3 |
-
-> Build macOS Intel à venir. En attendant, les Macs Intel peuvent compiler depuis les sources (voir plus bas).
-
-- **Mises à jour automatiques** intégrées — une fois installée, l'app vérifie les nouvelles versions signées au démarrage et se met à jour en un clic.
-- **Premier lancement :** l'app n'est pas encore signée au niveau OS, donc SmartScreen (« éditeur inconnu ») / Gatekeeper peuvent avertir. Choisis *Informations complémentaires → Exécuter quand même* (Windows) ou clic-droit → *Ouvrir* (macOS). Les mises à jour, elles, sont signées et vérifiées cryptographiquement.
+> ⬆️ **Auto-update & signé.** Clique un bouton de téléchargement ci-dessus — installation en un clic, puis l'app se met à jour automatiquement (releases signées). Au premier lancement, SmartScreen (Windows) / Gatekeeper (macOS) peuvent avertir (« éditeur inconnu ») car l'app n'est pas encore signée au niveau OS — choisis *Informations complémentaires → Exécuter quand même* (Windows) ou clic-droit → *Ouvrir* (macOS). Build macOS Intel à venir (compiler depuis les sources en attendant).
 
 ---
 
