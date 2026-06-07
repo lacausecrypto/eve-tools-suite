@@ -85,10 +85,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -eo pipefail
-          # -print -quit stops at the first match (no `| head` SIGPIPE under pipefail).
-          src=$(find src-tauri/target -type f -name "${{ matrix.find }}" -print -quit)
+          # Workspace Cargo (crates/pbh-core) → la sortie va dans `target/` à la
+          # racine, PAS `src-tauri/target/`. `-print -quit` = 1er match sans SIGPIPE.
+          src=$(find target -type f -name "${{ matrix.find }}" -print -quit)
           if [ -z "$src" ]; then
-            echo "::error::installer introuvable (${{ matrix.find }})"; find src-tauri/target -type f \( -name '*.dmg' -o -name '*-setup.exe' \); exit 1
+            echo "::error::installer introuvable (${{ matrix.find }})"; find target -type f \( -name '*.dmg' -o -name '*-setup.exe' \) 2>/dev/null; exit 1
           fi
           echo "installer: $src → ${{ matrix.stable }}"
           cp "$src" "${{ matrix.stable }}"
