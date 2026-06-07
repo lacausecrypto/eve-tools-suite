@@ -8,11 +8,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/lacausecrypto/eve-tools-suite/releases/latest">
+  <a href="https://github.com/lacausecrypto/eve-tools-suite/releases/download/v0.1.0/EVE.Tools.Suite_0.1.0_x64-setup.exe">
     <img src="https://img.shields.io/badge/⬇%20Télécharger-Windows%20(.exe)-0078D6?style=for-the-badge&logo=windows11&logoColor=white" alt="Télécharger pour Windows">
   </a>
   &nbsp;
-  <a href="https://github.com/lacausecrypto/eve-tools-suite/releases/latest">
+  <a href="https://github.com/lacausecrypto/eve-tools-suite/releases/download/v0.1.0/EVE.Tools.Suite_0.1.0_aarch64.dmg">
     <img src="https://img.shields.io/badge/⬇%20Télécharger-macOS%20(.dmg)-000000?style=for-the-badge&logo=apple&logoColor=white" alt="Télécharger pour macOS">
   </a>
 </p>
