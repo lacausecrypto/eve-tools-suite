@@ -85,10 +85,26 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -eo pipefail
-          src=$(find src-tauri/target -type f -name "${{ matrix.find }}" | head -1)
+          # -print -quit stops at the first match (no `| head` SIGPIPE under pipefail).
+          src=$(find src-tauri/target -type f -name "${{ matrix.find }}" -print -quit)
           if [ -z "$src" ]; then
             echo "::error::installer introuvable (${{ matrix.find }})"; find src-tauri/target -type f \( -name '*.dmg' -o -name '*-setup.exe' \); exit 1
           fi
           echo "installer: $src → ${{ matrix.stable }}"
           cp "$src" "${{ matrix.stable }}"
           gh release upload "${{ github.ref_name }}" "${{ matrix.stable }}" --clobber --repo "$GITHUB_REPOSITORY"
+
+  # Tous les builds OK → on publie le brouillon et on le marque « latest »
+  # (sinon la release reste en draft et nécessite une publication manuelle).
+  publish:
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release edit "${{ github.ref_name }}" \
+            --repo "$GITHUB_REPOSITORY" --draft=false --latest
