@@ -1,5 +1,5 @@
 // AUTO-GÉNÉRÉ depuis le SDE (invTraits/invTypes/invGroups, catégorie Ship).
-// Bonus de coque RÉELS issus des traits — distingue bonus de rôle (forfait) et par niveau.
+// Bonus de vaisseau RÉELS issus des traits — distingue bonus de rôle (forfait) et par niveau.
 import type { WeaponSystem } from "./catalog";
 
 export interface HullBonusRaw {
@@ -16,7 +16,7 @@ export interface HullBonusRaw {
   hpRole?: number;
 }
 
-/** Toutes les coques publiées (catégorie Ship) pour l’autocomplétion. */
+/** Toutes les vaisseaux publiées (catégorie Ship) pour l’autocomplétion. */
 export const HULL_NAMES: string[] = [
   "Abaddon", "Absolution", "Adrestia", "Aeon", "Algos", "Alligator", "Amarr Shuttle", "Anathema", "Anshar",
   "Apocalypse", "Apocalypse Imperial Issue", "Apocalypse Navy Issue", "Apostle", "Apotheosis", "Arazu",
@@ -71,7 +71,7 @@ export const HULL_NAMES: string[] = [
   "Zirnitra",
 ];
 
-/** Bonus par coque (clé = nom en minuscules). */
+/** Bonus par vaisseau (clé = nom en minuscules). */
 export const HULL_BONUS: Record<string, HullBonusRaw> = {
   "abaddon": { weapon: "laser", dmgPerLvl: 7.5, layer: "armor", resistPerLvl: 4.0, hpLayer: "shield", hpRole: 100.0 },
   "absolution": { weapon: "laser", dmgPerLvl: 20.0, layer: "armor", resistPerLvl: 4.0 },

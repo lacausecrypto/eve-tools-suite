@@ -1,6 +1,6 @@
 /**
- * **Générateur de fit** — heuristique par rôle. À partir d'un besoin (coque,
- * rôle, tank, système d'arme, portée) et des caractéristiques de la coque
+ * **Générateur de fit** — heuristique par rôle. À partir d'un besoin (vaisseau,
+ * rôle, tank, système d'arme, portée) et des caractéristiques de la vaisseau
  * (slots, hardpoints, drones, CPU/grille via ESI), il compose un loadout
  * complet, l'assemble en EFT, puis l'analyse. Une **boucle de faisabilité**
  * corrige les dépassements CPU/grille (rigs ACR/POU, modules d'aide, allègement
@@ -74,21 +74,21 @@ function hullSize(hull: EsiType): Size {
 
 function resolveSystem(need: GenNeed, hull: EsiType, size: Size): WeaponSystem {
   if (need.weapon !== "auto") return need.weapon;
-  // 1) Signal le plus fiable : le système d'arme bonusé par les traits de coque.
+  // 1) Signal le plus fiable : le système d'arme bonusé par les traits de vaisseau.
   const bonused = bonusWeapon(hull.name);
   if (bonused) {
-    // Vérifie que la coque a bien le hardpoint/soute correspondant.
+    // Vérifie que la vaisseau a bien le hardpoint/soute correspondant.
     if (bonused === "drone" && at(hull, ATTR.droneCapacity) > 0) return "drone";
     if (bonused === "missile" && at(hull, ATTR.launcherHardpoints) > 0) return "missile";
     if (bonused !== "drone" && bonused !== "missile" && at(hull, ATTR.turretHardpoints) > 0) return bonused;
   }
-  // 2) Repli heuristique (coque non répertoriée) : hardpoints + soute à drones.
+  // 2) Repli heuristique (vaisseau non répertoriée) : hardpoints + soute à drones.
   const turrets = at(hull, ATTR.turretHardpoints);
   const launchers = at(hull, ATTR.launcherHardpoints);
   const droneBW = at(hull, ATTR.droneBandwidth);
   const droneBay = at(hull, ATTR.droneCapacity);
   const droneFlight = DRONES[size].volume * 5;
-  // Coque à drones marquée : large bande passante, peu de hardpoints.
+  // Vaisseau à drones marquée : large bande passante, peu de hardpoints.
   if (droneBW > 0 && droneBay >= droneFlight * 0.8 && turrets + launchers <= 2) return "drone";
   if (launchers > turrets) return "missile";
   if (turrets > 0) return "hybrid";
@@ -98,7 +98,7 @@ function resolveSystem(need: GenNeed, hull: EsiType, size: Size): WeaponSystem {
 
 function resolveTank(need: GenNeed, hull: EsiType): "armor" | "shield" {
   if (need.tank !== "auto") return need.tank;
-  // Si la coque a un bonus de tank (résist/PV) sur une couche, on la suit.
+  // Si la vaisseau a un bonus de tank (résist/PV) sur une couche, on la suit.
   const layer = bonusTankLayer(hull.name);
   if (layer) return layer;
   return need.role === "kite" || need.role === "tackle" || need.role === "mining" || need.role === "explore"
@@ -106,16 +106,16 @@ function resolveTank(need: GenNeed, hull: EsiType): "armor" | "shield" {
     : "armor";
 }
 
-/** Type de coque (combat / minage / industriel). */
+/** Type de vaisseau (combat / minage / industriel). */
 export function hullKind(hull: EsiType): "combat" | "mining" | "industrial" | "unsupported" {
   return HULL_KIND[hull.name.toLowerCase()] ?? "combat";
 }
 
-/** Compose un loadout complet (pur) à partir des stats de coque. */
+/** Compose un loadout complet (pur) à partir des stats de vaisseau. */
 export function buildLoadout(need: GenNeed, hull: EsiType): Loadout {
-  // Router selon le **rôle réel** de la coque : un Hulk se monte en minage, pas
+  // Router selon le **rôle réel** de la vaisseau : un Hulk se monte en minage, pas
   // en DPS ; un cargo en transport. Le générateur de combat ne s'applique qu'aux
-  // coques de combat.
+  // vaisseaux de combat.
   const kind = hullKind(hull);
   if (kind === "mining") return buildMiningLoadout(hull);
   if (kind === "industrial") return buildHaulerLoadout(hull);

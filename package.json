@@ -1,7 +1,7 @@
 {
   "name": "eve-tools-suite",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "EVE Tools — suite modulaire d'outils tiers pour EVE Online (façon Odoo)",
   "author": "lacausecrypto",

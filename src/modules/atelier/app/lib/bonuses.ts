@@ -1,5 +1,5 @@
 /**
- * Bonus de coque — convertit les traits **réels** du SDE (`data/hulls.ts`) en
+ * Bonus de vaisseau — convertit les traits **réels** du SDE (`data/hulls.ts`) en
  * multiplicateurs applicables (DPS, résonance, PV) à un niveau de compétence
  * donné. Distingue bonus de **rôle** (forfaitaire, ×1) et bonus par **niveau**
  * (×niveau).
@@ -14,19 +14,19 @@ function rofFactor(pct: number | undefined, levels: number): number {
   return r > 0 && r < 100 ? 1 / (1 - r / 100) : 1;
 }
 
-/** Système d'arme bonusé par la coque (pour le choix « auto »), si connu. */
+/** Système d'arme bonusé par la vaisseau (pour le choix « auto »), si connu. */
 export function bonusWeapon(hullName: string): WeaponSystem | undefined {
   return HULL_BONUS[hullName.toLowerCase()]?.weapon;
 }
 
-/** Couche de tank bonusée par la coque (résist ou PV), si connue. */
+/** Couche de tank bonusée par la vaisseau (résist ou PV), si connue. */
 export function bonusTankLayer(hullName: string): "armor" | "shield" | undefined {
   const b = HULL_BONUS[hullName.toLowerCase()];
   return b?.layer ?? b?.hpLayer;
 }
 
 /**
- * Multiplicateurs de bonus de coque à `level` (5 = niveau V). `null` si la coque
+ * Multiplicateurs de bonus de vaisseau à `level` (5 = niveau V). `null` si la vaisseau
  * n'a aucun trait pertinent connu.
  */
 export function hullBonusFor(hullName: string, level = 5): HullBonus | null {

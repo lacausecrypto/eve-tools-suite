@@ -116,11 +116,11 @@ export interface FitCheck {
 export interface Assumption {
   key: string;
   vars?: MsgVars;
-  /** Notes de bonus de coque structurées (formatées/jointes côté composant). */
+  /** Notes de bonus de vaisseau structurées (formatées/jointes côté composant). */
   notes?: HullBonusNote[];
 }
 
-/** Note de bonus de coque, structurée (formatée et traduite côté composant). */
+/** Note de bonus de vaisseau, structurée (formatée et traduite côté composant). */
 export interface HullBonusNote {
   /** `dps` (% dégâts), `resist` (% résist) ou `hp` (% PV). */
   type: "dps" | "resist" | "hp";
@@ -147,7 +147,7 @@ export interface FitAnalysis {
   items: FitItem[];
 }
 
-/** Bonus de coque résolus en multiplicateurs (cf. `lib/bonuses.ts`). */
+/** Bonus de vaisseau résolus en multiplicateurs (cf. `lib/bonuses.ts`). */
 export interface HullBonus {
   weapon?: import("../data/catalog").WeaponSystem;
   /** Multiplicateur de DPS sur le système d'arme bonusé. */
@@ -164,13 +164,13 @@ export interface HullBonus {
   notes: HullBonusNote[];
 }
 
-/** Options de calcul (compétences supposées, profil de dégâts, bonus de coque). */
+/** Options de calcul (compétences supposées, profil de dégâts, bonus de vaisseau). */
 export interface AnalyzeOptions {
   /** Applique les bonus de PV universels niveau V (Bouclier/Armure/Méca +25 %). */
   allFiveHp: boolean;
   /** Profil de dégâts pour l'EHP effectif. */
   profile: DamageProfile;
-  /** Bonus de coque (appliqués si présents) — DPS/EHP affinés par les traits. */
+  /** Bonus de vaisseau (appliqués si présents) — DPS/EHP affinés par les traits. */
   hullBonus?: HullBonus | null;
 }
 

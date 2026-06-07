@@ -22,12 +22,12 @@ export const TRACKS: Track[] = [
         summary: "Qui tu es dans New Eden, et comment lire ton écran.",
         minutes: 6,
         blocks: [
-          { t: "p", text: "Tu es un capsuleer : un pilote quasi-immortel enfermé dans une capsule au cœur de son vaisseau. Quand la coque explose, tu t'éjectes en capsule (pod) ; si la capsule explose à son tour, ta conscience se réveille dans un nouveau clone à ta station médicale. Tu ne perds jamais tes compétences à la mort — seulement le vaisseau, son fit, sa cargaison, et les implants si tu es 'podé'." },
+          { t: "p", text: "Tu es un capsuleer : un pilote quasi-immortel enfermé dans une capsule au cœur de son vaisseau. Quand le vaisseau explose, tu t'éjectes en capsule (pod) ; si la capsule explose à son tour, ta conscience se réveille dans un nouveau clone à ta station médicale. Tu ne perds jamais tes compétences à la mort — seulement le vaisseau, son fit, sa cargaison, et les implants si tu es 'podé'." },
           { t: "h", text: "Les trois anneaux : ta vie" },
           { t: "ul", items: [
             "Bouclier (shield) : se régénère seul lentement ; première couche touchée.",
             "Armure (armor) : ne se régénère pas seule (sauf module/drone) ; deuxième couche.",
-            "Structure (hull) : la coque elle-même ; à 0 %, tu exploses.",
+            "Structure (hull) : la structure du vaisseau ; à 0 %, tu exploses.",
           ] },
           { t: "h", text: "Repères d'interface" },
           { t: "ul", items: [
@@ -110,7 +110,7 @@ export const TRACKS: Track[] = [
             ["0.4 → 0.1 (Low-sec)", "Pas de CONCORD ; sentinelles de portes/stations seulement. PvP libre, statut suspect/criminel."],
             ["0.0 et moins (Null-sec)", "Aucune loi. Souveraineté, gros gangs, meilleurs revenus mais danger permanent."],
           ] },
-          { t: "p", text: "Ton propre statut de sécurité (security status) baisse quand tu tires sur d'autres joueurs en low/null ; trop bas, les sentinelles et CONCORD te tirent dessus même en passant. On le remonte en tuant des rats ('tags' / ratting)." },
+          { t: "p", text: "Ton propre statut de sécurité (security status) baisse quand tu tires sur d'autres joueurs en low/null ; trop bas, les sentinelles et CONCORD te tirent dessus même en passant. On le remonte en faisant du ratting (tuer des rats) en low/null, ou en rendant des security tags (Clone Soldier) à CONCORD." },
           { t: "warn", text: "CONCORD venge, il ne prévient pas. En high-sec, un ganker bien préparé te tue avant l'intervention si la valeur de ta cargaison dépasse le coût de ses vaisseaux. Ne transporte jamais une fortune dans un vaisseau fragile." },
           { t: "p", text: "Les wormholes (W-space) n'ont pas de Local peuplé : tu ne vois pas qui est là. Le d-scan devient ta seule alerte. C'est l'espace le plus dangereux… et parmi les plus rentables." },
           { t: "tip", text: "Apprends à lire le statut d'un système (couleur 1.0 vert → 0.0 rouge) avant de sauter. Un seul saut en low-sec change tout." },
@@ -118,7 +118,7 @@ export const TRACKS: Track[] = [
         questions: [
           { q: "Dans quel espace CONCORD intervient-il ?", options: ["Null-sec", "Low-sec", "High-sec (0.5+)", "Wormholes"], answer: 2 },
           { q: "Pourquoi le high-sec n'est pas 100 % sûr ?", options: ["CONCORD venge mais n'empêche pas les premiers dégâts", "Il n'y a pas de CONCORD", "Les portes explosent", "Le warp est désactivé"], answer: 0 },
-          { q: "Comment remonter un security status trop bas ?", options: ["Acheter au marché", "Tuer des rats (ratting / tags)", "Miner", "Attendre la maintenance"], answer: 1 },
+          { q: "Comment remonter un security status trop bas ?", options: ["Acheter au marché", "Faire du ratting ou rendre des security tags", "Miner", "Attendre la maintenance"], answer: 1 },
         ],
       },
       {
@@ -133,19 +133,19 @@ export const TRACKS: Track[] = [
             ["Bas (low)", "Tank armure, modules de dégâts, capacitor, agilité, extension de cargo."],
             ["Rigs", "3 améliorations permanentes (avec un malus, ex. -vitesse), liées au calibrage."],
           ] },
-          { t: "p", text: "Chaque module consomme du CPU et de la PG (powergrid), budgétés par la coque. Si tu dépasses, le module ne s'active pas. Les modules existent en variantes : Tech I (bon marché), Tech II (meilleur, prérequis skills), Faction/Storyline, Deadspace/Officer (très chers)." },
+          { t: "p", text: "Chaque module consomme du CPU et de la PG (powergrid), budgétés par le vaisseau. Si tu dépasses, le module ne s'active pas. Les modules existent en variantes : Tech I (bon marché), Tech II (meilleur, prérequis skills), Faction/Storyline, Deadspace/Officer (très chers)." },
           { t: "h", text: "Le capacitor" },
           { t: "ul", items: [
             "Il alimente armes actives, réparateurs, propulsion, EWAR.",
             "Un fit 'cap-stable' tient indéfiniment ; sinon tu as une durée avant panne sèche.",
             "Sans cap : plus de rep, plus de prop, plus de tackle — la mort.",
           ] },
-          { t: "tip", text: "Règle d'or : tanke sur l'axe de ta coque (bonus). Bouclier → mids ; armure → lows. Mélanger les deux dilue ton EHP et gaspille des slots." },
+          { t: "tip", text: "Règle d'or : tanke sur l'axe de ton vaisseau (bonus). Bouclier → mids ; armure → lows. Mélanger les deux dilue ton EHP et gaspille des slots." },
           { t: "warn", text: "Évite de 'blinger' un vaisseau d'apprentissage : un fit T2 propre vaut mieux qu'un fit deadspace que tu perdras en apprenant. EFT/Pyfa permettent de simuler avant d'acheter." },
         ],
         questions: [
           { q: "Où monte-t-on typiquement le tank bouclier ?", options: ["Slots hauts", "Slots médians", "Slots bas", "Rigs"], answer: 1 },
-          { q: "Que budgétise une coque pour ses modules ?", options: ["ISK et SP", "CPU et powergrid", "Warp et align", "EM et thermique"], answer: 1 },
+          { q: "Que budgétise un vaisseau pour ses modules ?", options: ["ISK et SP", "CPU et powergrid", "Warp et align", "EM et thermique"], answer: 1 },
           { q: "Que se passe-t-il quand ton capacitor tombe à zéro ?", options: ["Rien", "Modules actifs (rep, prop, tackle) s'arrêtent", "Tu gagnes de la vitesse", "Ton bouclier double"], answer: 1 },
         ],
       },
@@ -183,7 +183,7 @@ export const TRACKS: Track[] = [
         ],
         questions: [
           { q: "Quel est le trou de résistance naturel du bouclier ?", options: ["Explosif", "Cinétique", "Thermique", "EM"], answer: 3 },
-          { q: "Contre une coque à tank armure, privilégie…", options: ["EM", "Explosif", "des drones légers", "rien, vise le bouclier"], answer: 1, explain: "L'armure résiste le moins à l'Explosif (10 % de base)." },
+          { q: "Contre un vaisseau à tank armure, privilégie…", options: ["EM", "Explosif", "des drones légers", "rien, vise le bouclier"], answer: 1, explain: "L'armure résiste le moins à l'Explosif (10 % de base)." },
           { q: "Pourquoi ne pas sur-empiler la même résistance ?", options: ["Ça coûte du cap", "Pénalité d'empilement (stacking)", "Ça réduit la vitesse", "C'est interdit par CONCORD"], answer: 1 },
         ],
       },
@@ -198,7 +198,7 @@ export const TRACKS: Track[] = [
           { t: "ul", items: [
             "Buffer (passif) : gros tampon d'EHP (extenders/plaques + résistances) pour encaisser le burst — idéal en gang avec des logis qui te réparent.",
             "Actif : réparateur d'armure / booster de bouclier qui restaure des PV par cycle — idéal en solo/PvE, mais limité par le capacitor.",
-            "Le tank passif bouclier (sans module actif) existe sur certaines coques Caldari à forte régén.",
+            "Le tank passif bouclier (sans module actif) existe sur certains vaisseaux Caldari à forte régén.",
           ] },
           { t: "kv", title: "Modules clés", rows: [
             ["Bouclier", "Shield Extender (buffer), Shield Booster (actif), Hardener (résist)."],
@@ -210,7 +210,7 @@ export const TRACKS: Track[] = [
         ],
         questions: [
           { q: "L'EHP dépend de…", options: ["la vitesse seulement", "PV bruts ET résistances", "du cap uniquement", "de la signature"], answer: 1 },
-          { q: "Quel tank dépend le plus du capacitor ?", options: ["Buffer passif", "Tank actif (réparateur/booster)", "Les rigs", "La coque nue"], answer: 1 },
+          { q: "Quel tank dépend le plus du capacitor ?", options: ["Buffer passif", "Tank actif (réparateur/booster)", "Les rigs", "Le vaisseau nu"], answer: 1 },
           { q: "Quel module donne des résistances sur les trois couches ?", options: ["Shield Extender", "Damage Control", "Steel Plates", "Heat Sink"], answer: 1 },
         ],
       },
@@ -258,7 +258,7 @@ export const TRACKS: Track[] = [
         questions: [
           { q: "Qu'est-ce qui fait rater une tourelle sur une cible rapide proche ?", options: ["L'EHP", "Une transversale élevée vs ton tracking", "Le capacitor", "La signature de ton vaisseau"], answer: 1 },
           { q: "Comment réduire la transversale d'une cible ?", options: ["Mettre un MWD", "La webber / s'aligner sur elle", "Augmenter ta signature", "Tirer en explosif"], answer: 1 },
-          { q: "Les missiles appliquent leurs dégâts selon…", options: ["le tracking", "la vitesse/rayon d'explosion vs la sig de la cible", "la couleur de la coque", "le cap restant"], answer: 1 },
+          { q: "Les missiles appliquent leurs dégâts selon…", options: ["le tracking", "la vitesse/rayon d'explosion vs la sig de la cible", "la couleur du vaisseau", "le cap restant"], answer: 1 },
         ],
       },
       {
@@ -603,7 +603,7 @@ export const TRACKS: Track[] = [
         summary: "Tracer un cap au lieu de papillonner.",
         minutes: 6,
         blocks: [
-          { t: "p", text: "Un bon plan suit un objectif (ex. 'piloter un Hurricane bien fitté en PvP') et remonte ses prérequis : coque, armes, tank, support cap/nav/fitting. Mieux vaut un objectif net qu'une file au hasard." },
+          { t: "p", text: "Un bon plan suit un objectif (ex. 'piloter un Hurricane bien fitté en PvP') et remonte ses prérequis : vaisseau, armes, tank, support cap/nav/fitting. Mieux vaut un objectif net qu'une file au hasard." },
           { t: "ol", items: [
             "Choisis un objectif concret (un vaisseau + un rôle).",
             "Liste les prérequis du fit visé (skills d'armes, tank, support).",
@@ -822,7 +822,7 @@ export const TRACKS: Track[] = [
   {
     id: "vaisseaux-doctrines",
     title: "Vaisseaux & doctrines",
-    subtitle: "Classes, tech, rôles, capitaux, choisir sa coque",
+    subtitle: "Classes, tech, rôles, capitaux, choisir son vaisseau",
     level: "Intermédiaire",
     icon: Ship,
     accent: "hsl(var(--fc))",
@@ -844,7 +844,7 @@ export const TRACKS: Track[] = [
             ["Supercarrier / Titan", "Super-capitaux : endgame d'alliance, énormément d'ISK."],
           ] },
           { t: "p", text: "Plus c'est gros, plus la signature et l'inertie augmentent : un battleship encaisse mais touche mal les frégates rapides (d'où l'intérêt des webs/drones). Les petits vaisseaux sont fragiles mais agiles et difficiles à toucher." },
-          { t: "tip", text: "Le contre d'une grosse coque, c'est souvent plus petit et rapide (sous le tracking) — et inversement. Le 'rock-paper-scissors' des tailles structure tout le PvP." },
+          { t: "tip", text: "Le contre d'un gros vaisseau, c'est souvent plus petit et rapide (sous le tracking) — et inversement. Le 'rock-paper-scissors' des tailles structure tout le PvP." },
         ],
         questions: [
           { q: "Un battleship a du mal à toucher…", options: ["un autre battleship", "une frégate rapide proche", "une structure", "un astéroïde"], answer: 1 },
@@ -877,7 +877,7 @@ export const TRACKS: Track[] = [
       {
         id: "roles",
         title: "Rôles tactiques en flotte",
-        summary: "Chaque coque a un job.",
+        summary: "Chaque vaisseau a un job.",
         minutes: 7,
         blocks: [
           { t: "kv", title: "Rôles clés", rows: [
@@ -922,7 +922,7 @@ export const TRACKS: Track[] = [
       {
         id: "choisir",
         title: "Choisir le bon vaisseau",
-        summary: "La coque suit l'objectif, pas l'inverse.",
+        summary: "Le vaisseau suit l'objectif, pas l'inverse.",
         minutes: 6,
         blocks: [
           { t: "ol", items: [
@@ -932,11 +932,11 @@ export const TRACKS: Track[] = [
             "Adapte le fit au contexte (dégâts de la faction PvE, méta PvP local)." ,
           ] },
           { t: "p", text: "Évite le piège du 'plus gros = mieux'. Le bon vaisseau est celui que tu maîtrises, que tu peux te permettre de perdre, et qui colle à l'objectif du moment." },
-          { t: "tip", text: "Entraîne ta reconnaissance des coques (sous-page Entraînement) : savoir lire un vaisseau ennemi — senseur, arme, tank — te dit s'il faut engager ou fuir." },
+          { t: "tip", text: "Entraîne ta reconnaissance des vaisseaux (sous-page Entraînement) : savoir lire un vaisseau ennemi — senseur, arme, tank — te dit s'il faut engager ou fuir." },
         ],
         questions: [
           { q: "Le meilleur vaisseau est…", options: ["toujours le plus gros", "celui adapté à l'objectif et que tu peux perdre", "le plus cher", "le plus rapide"], answer: 1 },
-          { q: "Première question avant de choisir une coque ?", options: ["Sa couleur", "L'activité visée", "Son prix de revente", "Son nom"], answer: 1 },
+          { q: "Première question avant de choisir un vaisseau ?", options: ["Sa couleur", "L'activité visée", "Son prix de revente", "Son nom"], answer: 1 },
         ],
       },
     ],

@@ -10,7 +10,7 @@ import { ShipCard } from "./ShipCard";
 type RaceFilter = Race | "all";
 type ClassFilter = HullClass | "all";
 
-/** Codex / flashcards : parcours filtrable des coques, indices masquables. */
+/** Codex / flashcards : parcours filtrable des vaisseaux, indices masquables. */
 export function Codex() {
   const t = useT();
   const [race, setRace] = useState<RaceFilter>("all");

@@ -1,12 +1,12 @@
 /**
- * Dataset de coques pour le Ship Recognition Trainer.
+ * Dataset de vaisseaux pour le Ship Recognition Trainer.
  *
  * Provenance : EVE Static Data Export (SDE) — table `invTypes` (typeID), tel que
  * publié par CCP et indexé par Fuzzwork. Les `typeId` servent uniquement à
  * charger le rendu officiel via `images.evetech.net` (CDN CCP). Données 100 %
  * statiques : aucun appel ESI, aucune interaction avec le client (EULA-safe).
  *
- * Portée volontaire : **coques d'empire T1**, frégate → cuirassé, les quatre
+ * Portée volontaire : **vaisseaux d'empire T1**, frégate → cuirassé, les quatre
  * races. On exclut T2/T3/faction/pirate pour que chaque attribut dérivé
  * (senseur par race, trou de résistance par tank) reste exact sans exception.
  *
@@ -21,9 +21,9 @@ export interface Ship {
   name: string;
   race: Race;
   class: HullClass;
-  /** Système d'arme principal (bonifié par la coque). */
+  /** Système d'arme principal (bonifié par la vaisseau). */
   weapon: Weapon;
-  /** Tank bonifié/typique de la coque (résistances ou HP). */
+  /** Tank bonifié/typique de la vaisseau (résistances ou HP). */
   tank: Tank;
   /** Rôle court (FR) affiché sur la fiche. */
   role: string;
@@ -100,7 +100,7 @@ export const CLASS_LABEL: Record<HullClass, string> = {
   Battleship: "Cuirassé",
 };
 
-/** Recherche d'une coque par typeId (pour l'UI). */
+/** Recherche d'une vaisseau par typeId (pour l'UI). */
 export function shipById(typeId: number): Ship | undefined {
   return SHIPS.find((s) => s.typeId === typeId);
 }

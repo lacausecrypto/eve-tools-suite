@@ -2,7 +2,7 @@
  * Traductions du module Pirate (« L'Assistant du Pirate »). Clés préfixées
  * « pirate. ». Enregistrées à l'import du module (avant le premier rendu).
  *
- * Les noms propres EVE (factions, vaisseaux, systèmes, classes de coques issues
+ * Les noms propres EVE (factions, vaisseaux, systèmes, classes de vaisseaux issues
  * de l'ESI/SDE) ne sont PAS traduits — seule la prose descriptive l'est.
  */
 import { registerMessages } from "@/core/i18n";
@@ -67,7 +67,7 @@ const fr = {
   "pirate.row.predictFit": "Prédire le fit depuis les pertes récentes",
   "pirate.row.cyno": "CYNO",
   "pirate.row.suspectedCyno": "Cyno suspecté",
-  "pirate.row.notableHull": "Classe de coque notable qu'il pilote",
+  "pirate.row.notableHull": "Classe de vaisseau notable qu'il pilote",
   "pirate.row.kills": "{n} kills",
 
   // Panneau de fit — états

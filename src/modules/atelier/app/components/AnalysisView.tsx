@@ -26,7 +26,7 @@ const DMG_COLOR: Record<DamageType, string> = {
   exp: "bg-amber-500",
 };
 
-/** Joint et localise des notes de bonus de coque structurées. */
+/** Joint et localise des notes de bonus de vaisseau structurées. */
 function formatNotes(notes: HullBonusNote[], t: T): string {
   return notes
     .map((n) => {
@@ -37,7 +37,7 @@ function formatNotes(notes: HullBonusNote[], t: T): string {
     .join(", ");
 }
 
-/** Localise une hypothèse (les notes de coque sont formatées séparément). */
+/** Localise une hypothèse (les notes de vaisseau sont formatées séparément). */
 function formatAssumption(s: Assumption, t: T): string {
   if (s.key === "hullBonus" && s.notes) return t("atelier.assumption.hullBonus", { notes: formatNotes(s.notes, t) });
   return t("atelier.assumption." + s.key, s.vars);

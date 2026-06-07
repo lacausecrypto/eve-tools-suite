@@ -102,7 +102,7 @@ export const LESSON_MEDIA: Record<string, Block[]> = {
   industrie: [
     {
       t: "gallery",
-      caption: "Minéraux en entrée → coque en sortie.",
+      caption: "Minéraux en entrée → vaisseau en sortie.",
       items: [
         { typeId: 34, label: "Tritanium" },
         { typeId: 587, label: "Rifter", variant: "render" },
@@ -218,7 +218,7 @@ export const LESSON_MEDIA: Record<string, Block[]> = {
   choisir: [
     {
       t: "gallery",
-      caption: "La coque suit l'objectif.",
+      caption: "Le vaisseau suit l'objectif.",
       items: [
         { typeId: 33468, label: "Astero (explo)", variant: "render" },
         { typeId: 626, label: "Vexor (PvE)", variant: "render" },

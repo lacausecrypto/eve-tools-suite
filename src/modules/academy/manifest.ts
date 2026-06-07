@@ -23,7 +23,7 @@ export const academyManifest: ToolModule = {
     fr:
       "Une école pour New Eden : cursus structurés du débutant à l'avancé " +
       "(navigation, combat, économie, vie en corp), quiz notés, glossaire du jargon, " +
-      "et un hub d'entraînement ludique — reconnaissance des coques + flashcards à " +
+      "et un hub d'entraînement ludique — reconnaissance des vaisseaux + flashcards à " +
       "répétition espacée. Gagne de l'XP, monte en niveau, débloque des badges et " +
       "entretiens ta série quotidienne. 100 % local & hors-ligne.",
     en:

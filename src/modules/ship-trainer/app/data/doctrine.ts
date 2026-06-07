@@ -1,11 +1,11 @@
 /**
  * Doctrine raciale d'EVE Online — la base « apprenable » du Ship Recognition
  * Trainer. Ces tables encodent des **règles de conception canoniques** d'EVE
- * (vraies pour toutes les coques d'empire T1), ce qui rend l'entraînement
+ * (vraies pour toutes les vaisseaux d'empire T1), ce qui rend l'entraînement
  * rigoureux : les faits dérivés (type de senseur, trou de résistance) ne sont
- * jamais inventés par coque, ils découlent de la mécanique du jeu.
+ * jamais inventés par vaisseau, ils découlent de la mécanique du jeu.
  *
- * ⚠️ Portée : empires T1 uniquement. Les coques pirates/faction (Guristas,
+ * ⚠️ Portée : empires T1 uniquement. Les vaisseaux pirates/faction (Guristas,
  * Angel, navy issue…) brisent volontairement ces règles (senseurs hybrides,
  * armes croisées) — on les exclut du dataset pour garder chaque déduction exacte.
  */
@@ -19,15 +19,15 @@ export type Race = "Amarr" | "Caldari" | "Gallente" | "Minmatar";
  */
 export type SensorType = "Radar" | "Gravimetric" | "Magnetometric" | "Ladar";
 
-/** Système d'arme principal d'une coque (déclaré par coque, jamais deviné). */
+/** Système d'arme principal d'une vaisseau (déclaré par vaisseau, jamais deviné). */
 export type Weapon =
   | "Energy" // Lasers (tourelles d'énergie)
   | "Hybrid" // Railguns / Blasters
   | "Missile" // Lanceurs
   | "Projectile" // Autocanons / Artillerie
   | "Drone" // Drones bonifiés
-  | "EWAR" // Coque de guerre électronique (pas d'arme bonifiée)
-  | "Logistics"; // Coque de soutien (réparation/cap)
+  | "EWAR" // Vaisseau de guerre électronique (pas d'arme bonifiée)
+  | "Logistics"; // Vaisseau de soutien (réparation/cap)
 
 /** Type de tank principal. */
 export type Tank = "Armor" | "Shield";
@@ -35,7 +35,7 @@ export type Tank = "Armor" | "Shield";
 /** Les quatre types de dégâts d'EVE. */
 export type Damage = "EM" | "Thermal" | "Kinetic" | "Explosive";
 
-/** Classe de coque (taille / rôle). */
+/** Classe de vaisseau (taille / rôle). */
 export type HullClass =
   | "Frigate"
   | "Destroyer"
@@ -45,7 +45,7 @@ export type HullClass =
 
 /**
  * Résistances de **base** d'un bouclier (mécanique EVE, identique sur toutes les
- * coques). Le bouclier est nu en EM → c'est son « trou » naturel.
+ * vaisseaux). Le bouclier est nu en EM → c'est son « trou » naturel.
  */
 export const SHIELD_BASE_RESISTS: Record<Damage, number> = {
   EM: 0,
@@ -80,7 +80,7 @@ export function resistHole(tank: Tank): Damage {
 /** Profil de doctrine d'un empire. */
 export interface Doctrine {
   race: Race;
-  /** Senseur — **certain** pour toute coque d'empire. */
+  /** Senseur — **certain** pour toute vaisseau d'empire. */
   sensor: SensorType;
   /** Arme la plus emblématique de l'empire (généralisation pédagogique). */
   signatureWeapon: Weapon;
@@ -121,7 +121,7 @@ export const DOCTRINE: Record<Race, Doctrine> = {
   Minmatar: {
     race: "Minmatar",
     sensor: "Ladar",
-    // Tank Minmatar = volontairement mixte (bouclier OU armure selon la coque) ;
+    // Tank Minmatar = volontairement mixte (bouclier OU armure selon la vaisseau) ;
     // « Shield » ici est une généralisation pédagogique seulement.
     signatureWeapon: "Projectile",
     typicalTank: "Shield",
@@ -130,7 +130,7 @@ export const DOCTRINE: Record<Race, Doctrine> = {
   },
 };
 
-/** Senseur d'une coque, dérivé de sa race (source unique de vérité). */
+/** Senseur d'une vaisseau, dérivé de sa race (source unique de vérité). */
 export function sensorOf(race: Race): SensorType {
   return DOCTRINE[race].sensor;
 }
@@ -146,7 +146,7 @@ export const SENSORS: SensorType[] = [
   "Ladar",
 ];
 
-/** Les cinq vrais systèmes d'arme (hors coques EWAR/Logi). */
+/** Les cinq vrais systèmes d'arme (hors vaisseaux EWAR/Logi). */
 export const WEAPON_SYSTEMS: Weapon[] = [
   "Energy",
   "Hybrid",

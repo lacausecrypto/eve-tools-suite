@@ -143,7 +143,7 @@ export function analyzeNetwork(characterId: number): Promise<NetworkAnalysis> {
 
 /**
  * Prédit le fit probable d'un pilote depuis ses pertes zKillboard récentes,
- * avec repli sur la doctrine corpo/alliance pour les coques jamais perdues.
+ * avec repli sur la doctrine corpo/alliance pour les vaisseaux jamais perdues.
  */
 export function predictFit(
   characterId: number,
@@ -189,7 +189,7 @@ export const allianceLogoUrl = (id: number, size = 32) =>
   `https://images.evetech.net/alliances/${id}/logo?size=${size}`;
 export const shipIconUrl = (typeId: number, size = 32) =>
   `https://images.evetech.net/types/${typeId}/icon?size=${size}`;
-/** Rendu 3D haute résolution d'une coque (aperçu au survol). */
+/** Rendu 3D haute résolution d'une vaisseau (aperçu au survol). */
 export const shipRenderUrl = (typeId: number, size = 256) =>
   `https://images.evetech.net/types/${typeId}/render?size=${size}`;
 /** Les modules partagent le même endpoint type-icon que les vaisseaux. */

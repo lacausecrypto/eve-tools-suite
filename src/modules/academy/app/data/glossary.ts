@@ -33,7 +33,7 @@ export const GLOSSARY: Term[] = [
   { term: "Carebear", short: "", def: "Joueur orienté PvE, évitant le PvP.", tags: ["meta"] },
   { term: "Suspect", short: "", def: "Statut rendant attaquable sans intervention CONCORD pendant 15 min.", tags: ["meta"] },
   { term: "Concord", short: "CONCORD", def: "Police PNJ du high-sec : venge les agressions illégales (n'empêche pas le burst).", tags: ["meta"] },
-  { term: "Hull", short: "", def: "La coque / le vaisseau. 'Into hull' = plus de bouclier ni armure.", tags: ["base"] },
+  { term: "Hull", short: "", def: "Le vaisseau lui-même, et sa structure (3ᵉ couche de PV). 'Into hull' = bouclier et armure épuisés, on tape la structure.", tags: ["base"] },
   { term: "Fit", short: "fitting", def: "L'ensemble des modules montés sur un vaisseau.", tags: ["base"] },
   { term: "Bling", short: "", def: "Modules faction/deadspace très chers ; fit 'blingy'.", tags: ["meta"] },
   { term: "Awox", short: "", def: "Trahir/tuer des membres de sa propre corp.", tags: ["meta"] },

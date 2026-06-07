@@ -12,7 +12,7 @@
 export const APP = {
   name: "EVE Tools Suite",
   slug: "eve-tools-suite",
-  version: "0.1.1",
+  version: "0.1.2",
   /** Contact obligatoire dans le User-Agent ESI (CCP). À renseigner. */
   contactEmail: "lacausecrypto@gmail.com",
   repository: "https://github.com/lacausecrypto/eve-tools-suite",

@@ -2,7 +2,7 @@
  * Catalogue de modules pour le **générateur de fit**. Tous les noms sont des
  * noms de types EVE **exacts**, validés contre le SDE (`invTypes`, types publiés)
  * afin que l'ESI les résolve sans échec. Les variantes par taille (S/M/L) suivent
- * la taille de coque (attribut `rigSize`).
+ * la taille de vaisseau (attribut `rigSize`).
  */
 
 export type Size = "S" | "M" | "L";
@@ -14,7 +14,7 @@ type BySize<T = string> = Record<Size, T>;
 /** Définition d'un système d'arme (par portée). */
 export interface WeaponDef {
   hardpoint: "turret" | "launcher";
-  /** Module d'arme par taille de coque. */
+  /** Module d'arme par taille de vaisseau. */
   weapon: BySize;
   /** Charge/munition par taille. */
   charge: BySize;
@@ -92,7 +92,7 @@ export const WEAPONS: Record<Exclude<WeaponSystem, "drone">, Record<WeaponRange,
   },
 };
 
-/** Drones par taille de coque (vol. m³ indicatif pour estimer la quantité). */
+/** Drones par taille de vaisseau (vol. m³ indicatif pour estimer la quantité). */
 export const DRONES: BySize<{ name: string; volume: number }> = {
   S: { name: "Hobgoblin II", volume: 5 },
   M: { name: "Hammerhead II", volume: 10 },

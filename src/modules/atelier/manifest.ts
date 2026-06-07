@@ -11,7 +11,7 @@ export const atelierManifest: ToolModule = {
   },
   description: {
     fr:
-      "Génère automatiquement un fit complet selon ton besoin (coque, rôle, " +
+      "Génère automatiquement un fit complet selon ton besoin (vaisseau, rôle, " +
       "tank, arme, portée) — ajusté pour être montable (CPU/grille) — ou colle " +
       "un fit EFT à décortiquer. Analyse complète : EHP et résistances par " +
       "couche (pénalités d'empilement), stabilité du condensateur, navigation, " +

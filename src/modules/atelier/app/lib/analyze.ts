@@ -4,11 +4,11 @@
  * DPS et contrôles de cohérence.
  *
  * Honnêteté : les valeurs sont calculées à partir des attributs dogma des
- * **modules et de la coque**. Les bonus de **compétences** et les **bonus de
- * rôle de coque** (traits) ne sont pas appliqués (sauf option PV niveau V
+ * **modules et de la vaisseau**. Les bonus de **compétences** et les **bonus de
+ * rôle de vaisseau** (traits) ne sont pas appliqués (sauf option PV niveau V
  * universelle). Les nombres sont donc exacts pour les modules eux-mêmes et de
  * très bons indicateurs comparatifs ; ils peuvent différer de quelques % du jeu
- * pour les coques à bonus. Cela est indiqué dans `assumptions`.
+ * pour les vaisseaux à bonus. Cela est indiqué dans `assumptions`.
  */
 import { ATTR, DAMAGE_ATTR, DAMAGE_TYPES, EFFECT_SLOT, RESONANCE, type DamageType } from "./attrs";
 import { combineResonance } from "./stacking";
@@ -85,8 +85,8 @@ function layer(
     const mults = resonanceModules
       .map((m) => m.attrs[resAttr])
       .filter((v): v is number => v != null && v !== 1);
-    // Bonus de coque (rôle/niveau) appliqué après l'empilement des modules,
-    // sans pénalité d'empilement (les bonus de coque ne s'empilent pas).
+    // Bonus de vaisseau (rôle/niveau) appliqué après l'empilement des modules,
+    // sans pénalité d'empilement (les bonus de vaisseau ne s'empilent pas).
     const finalResonance = Math.max(0, baseRes * combineResonance(mults) * hullResoMult);
     resist[d] = 1 - finalResonance;
     weightedResonance += profile[d] * finalResonance;
@@ -227,7 +227,7 @@ function computeFitting(ship: EsiType, items: FitItem[], opts: AnalyzeOptions): 
   const used = (slot: Slot) => items.filter((i) => i.slot === slot).reduce((n, i) => n + i.qty, 0);
 
   // Compétences de fitting niveau V (sinon tout fit T2 paraît surchargé) :
-  //   CPU Management +25 % CPU coque · Power Grid Management +25 % grille coque
+  //   CPU Management +25 % CPU vaisseau · Power Grid Management +25 % grille vaisseau
   //   Weapon Upgrades −25 % CPU des armes · Advanced Weapon Upgrades −25 % grille des armes
   const skills = opts.allFiveHp;
   const shipCpuMul = skills ? 1.25 : 1;
@@ -351,7 +351,7 @@ function computeDps(items: FitItem[]): DpsResult {
 }
 
 /**
- * Applique le bonus de DPS de la coque au **canal** correspondant (drones, ou
+ * Applique le bonus de DPS de la vaisseau au **canal** correspondant (drones, ou
  * tourelles+missiles), uniquement si le fit emploie effectivement ce type d'arme.
  */
 function applyHullDps(dps: DpsResult, hb: import("./types").HullBonus | null, items: FitItem[]): void {

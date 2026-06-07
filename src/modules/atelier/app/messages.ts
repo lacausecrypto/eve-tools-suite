@@ -12,7 +12,7 @@ const fr = {
 
   // ── GeneratorView — formulaire ──
   "atelier.need": "Besoin",
-  "atelier.field.hull": "Coque",
+  "atelier.field.hull": "Vaisseau",
   "atelier.field.role": "Rôle / activité",
   "atelier.field.tank": "Tank",
   "atelier.field.range": "Portée",
@@ -23,7 +23,7 @@ const fr = {
   "atelier.tank.shield": "Bouclier",
   "atelier.range.close": "Rapprochée",
   "atelier.range.long": "Longue",
-  "atelier.weapon.auto": "Auto (selon la coque)",
+  "atelier.weapon.auto": "Auto (selon le vaisseau)",
   "atelier.weapon.hybrid": "Hybride (blaster/rail)",
   "atelier.weapon.projectile": "Projectile (AC/artillerie)",
   "atelier.weapon.laser": "Laser (pulse/beam)",
@@ -31,7 +31,7 @@ const fr = {
   "atelier.weapon.drone": "Drones",
   "atelier.btn.generate": "Générer le fit",
   "atelier.gen.helper":
-    "En mode Auto, l'arme et le tank suivent les bonus réels de la coque. Le générateur compose un fit T2 cohérent puis l'ajuste pour qu'il soit montable (CPU/grille). Options niveau V & profil de dégâts partagées avec l'onglet Analyser.",
+    "En mode Auto, l'arme et le tank suivent les bonus réels du vaisseau. Le générateur compose un fit T2 cohérent puis l'ajuste pour qu'il soit montable (CPU/grille). Options niveau V & profil de dégâts partagées avec l'onglet Analyser.",
   "atelier.gen.save": "Sauvegarder ce fit",
   "atelier.gen.copy": "Copier l'EFT",
   "atelier.gen.copied": "Copié",
@@ -39,7 +39,7 @@ const fr = {
   "atelier.gen.loading": "Composition & ajustement du fit…",
   "atelier.saved.title": "Fits sauvegardés",
   "atelier.intro.gen":
-    "Décris ton besoin (coque, rôle, tank, arme, portée) et obtiens un fit complet généré automatiquement : armes, tank, propulsion, rigs et drones, ajusté pour être montable. Analyse-le, copie l'EFT vers le jeu, sauvegarde-le.",
+    "Décris ton besoin (vaisseau, rôle, tank, arme, portée) et obtiens un fit complet généré automatiquement : armes, tank, propulsion, rigs et drones, ajusté pour être montable. Analyse-le, copie l'EFT vers le jeu, sauvegarde-le.",
   "atelier.badge.roles": "8 rôles",
   "atelier.badge.weapons": "5 systèmes d'arme",
   "atelier.badge.fitable": "Montable garanti (CPU/grille)",
@@ -68,21 +68,21 @@ const fr = {
   "atelier.mitig.rigRemoved": "Rig retiré (calibration)",
 
   // ── Erreurs ──
-  "atelier.err.eftFormat": "Format EFT invalide : la première ligne doit être [Coque, Nom du fit].",
-  "atelier.err.hullNotFound": "Coque introuvable : « {name} ».",
-  "atelier.err.notAHull": "« {name} » n'est pas une coque exploitable.",
-  "atelier.err.unsupported": "« {name} » n'est pas géré par le générateur (capital, navette ou coque spéciale).",
+  "atelier.err.eftFormat": "Format EFT invalide : la première ligne doit être [Vaisseau, Nom du fit].",
+  "atelier.err.hullNotFound": "Vaisseau introuvable : « {name} ».",
+  "atelier.err.notAHull": "« {name} » n'est pas un vaisseau exploitable.",
+  "atelier.err.unsupported": "« {name} » n'est pas géré par le générateur (capital, navette ou vaisseau spécial).",
   "atelier.err.genOffline": "Génération indisponible hors application desktop (ESI direct bloqué par le navigateur en dev).",
   "atelier.err.analyzeOffline": "Analyse indisponible hors application desktop (ESI direct bloqué par le navigateur en dev).",
 
   // ── AnalyzerView ──
   "atelier.eft.title": "Fit EFT",
-  "atelier.eft.placeholder": "[Coque, Nom du fit]\nModule…\nModule, Munition…\nDrone II x5",
+  "atelier.eft.placeholder": "[Vaisseau, Nom du fit]\nModule…\nModule, Munition…\nDrone II x5",
   "atelier.btn.analyze": "Analyser",
   "atelier.btn.example": "Exemple",
   "atelier.btn.save": "Sauvegarder",
   "atelier.assumptions.title": "Hypothèses",
-  "atelier.opt.skills": "Compétences & bonus de coque (niveau V)",
+  "atelier.opt.skills": "Compétences & bonus de vaisseau (niveau V)",
   "atelier.opt.skills.sub": "PV +25 % + bonus de traits (dégâts/résist)",
   "atelier.opt.profile": "Profil de dégâts (EHP effectif)",
   "atelier.analyze.loading": "Résolution des types & calcul…",
@@ -165,11 +165,11 @@ const fr = {
   "atelier.assumptions.calcTitle": "Hypothèses de calcul",
   "atelier.assumption.skillsV": "Compétences niveau V appliquées : PV +25 % ; encombrement (CPU/grille +25 %, armes −25 %).",
   "atelier.assumption.skills0": "Compétences niveau 0 — CPU/grille bruts (un fit T2 paraîtra surchargé sans compétences).",
-  "atelier.assumption.hullBonus": "Bonus de coque appliqués (niveau V) : {notes}.",
-  "atelier.assumption.noHullBonus": "Bonus de rôle de coque non appliqués (coque non répertoriée ou option niveau V désactivée).",
-  "atelier.assumption.dps": "DPS = volée × cadence × munition (bonus de coque inclus si répertoriés ; compétences d'arme non modélisées).",
+  "atelier.assumption.hullBonus": "Bonus de vaisseau appliqués (niveau V) : {notes}.",
+  "atelier.assumption.noHullBonus": "Bonus de rôle de vaisseau non appliqués (vaisseau non répertorié ou option niveau V désactivée).",
+  "atelier.assumption.dps": "DPS = volée × cadence × munition (bonus de vaisseau inclus si répertoriés ; compétences d'arme non modélisées).",
 
-  // ── Notes de bonus de coque (structurées) ──
+  // ── Notes de bonus de vaisseau (structurées) ──
   "atelier.note.dps": "+{pct} % dégâts {weapon}",
   "atelier.note.resist": "+{pct} % résist {layer}",
   "atelier.note.hp": "+{pct} % PV {layer}",

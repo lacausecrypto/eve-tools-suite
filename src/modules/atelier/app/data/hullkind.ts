@@ -1,4 +1,4 @@
-// AUTO-GÉNÉRÉ depuis le SDE (invGroups/invTraits) : type de coque.
+// AUTO-GÉNÉRÉ depuis le SDE (invGroups/invTraits) : type de vaisseau.
 // combat par défaut (absent) ; sinon mining / industrial / unsupported.
 
 export type HullKind = "mining" | "industrial" | "unsupported";

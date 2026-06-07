@@ -22,7 +22,7 @@ export const allianceLogoUrl = (allianceId: number, size = 32) =>
 export const typeIconUrl = (typeId: number, size = 32) =>
   `${BASE}/types/${typeId}/icon?size=${size}`;
 
-/** Rendu 3D haute résolution d'une coque. */
+/** Rendu 3D haute résolution d'une vaisseau. */
 export const typeRenderUrl = (typeId: number, size = 256) =>
   `${BASE}/types/${typeId}/render?size=${size}`;
 

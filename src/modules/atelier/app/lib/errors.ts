@@ -1,6 +1,6 @@
 /**
  * Petit utilitaire pour distinguer les **erreurs applicatives** de l'Atelier
- * (EFT invalide, coque introuvable, coque non gérée…) des erreurs réseau/ESI.
+ * (EFT invalide, vaisseau introuvable, vaisseau non gérée…) des erreurs réseau/ESI.
  * Hors application desktop, l'ESI direct est bloqué : on n'affiche le message
  * tel quel que pour nos propres erreurs (déjà localisées via `t()`).
  */

@@ -30,7 +30,7 @@ export const QUIZ_MODES: QuizMode[] = [
 
 /** Une option de réponse (déjà rendue en chaîne affichable). */
 export interface QuizOption {
-  /** Valeur brute (nom de coque, race, senseur, arme ou dégât). */
+  /** Valeur brute (nom de vaisseau, race, senseur, arme ou dégât). */
   value: string;
   /** Vrai si c'est la bonne réponse. */
   correct: boolean;
@@ -39,11 +39,11 @@ export interface QuizOption {
 /** Une question générée. */
 export interface QuizQuestion {
   mode: QuizMode;
-  /** Coque sujet (toujours présente — `resist` s'appuie sur son tank). */
+  /** Vaisseau sujet (toujours présente — `resist` s'appuie sur son tank). */
   subject: Ship;
-  /** Affiche-t-on le rendu 3D de la coque ? (identify/race : oui, et utile partout) */
+  /** Affiche-t-on le rendu 3D de la vaisseau ? (identify/race : oui, et utile partout) */
   showRender: boolean;
-  /** Doit-on masquer le nom de la coque ? (vrai pour `identify` et `race`) */
+  /** Doit-on masquer le nom de la vaisseau ? (vrai pour `identify` et `race`) */
   hideName: boolean;
   /** Options mélangées. */
   options: QuizOption[];
@@ -109,7 +109,7 @@ function buildOptions(rng: Rng, answer: string, distract: string[]): QuizOption[
   return shuffle(opts, rng);
 }
 
-/** Coques utilisables pour le quiz « arme » (vrai système d'arme uniquement). */
+/** Vaisseaux utilisables pour le quiz « arme » (vrai système d'arme uniquement). */
 const WEAPON_SUBJECTS = SHIPS.filter((s) =>
   (WEAPON_SYSTEMS as Weapon[]).includes(s.weapon),
 );
@@ -209,7 +209,7 @@ export function makeQuestion(mode: QuizMode, rng: Rng = Math.random): QuizQuesti
 
 /**
  * Génère une session de `count` questions tirées parmi `modes`. Évite de répéter
- * deux fois de suite la même coque (confort), sans garantir l'unicité globale.
+ * deux fois de suite la même vaisseau (confort), sans garantir l'unicité globale.
  */
 export function makeSession(
   modes: QuizMode[],

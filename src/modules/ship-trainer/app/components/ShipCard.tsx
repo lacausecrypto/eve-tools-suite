@@ -21,7 +21,7 @@ const DMG_KEY: Record<Damage, string> = {
 };
 
 /**
- * Flashcard d'une coque : rendu officiel + attributs dérivés. `revealed`
+ * Flashcard d'une vaisseau : rendu officiel + attributs dérivés. `revealed`
  * contrôle l'affichage des indices (mode étude). Clic = bascule locale.
  */
 export function ShipCard({

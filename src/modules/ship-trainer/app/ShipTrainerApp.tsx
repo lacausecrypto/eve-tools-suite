@@ -8,7 +8,7 @@ import { Quiz } from "./components/Quiz";
 type Tab = "codex" | "quiz";
 
 /**
- * Ship Recognition Trainer — apprends à reconnaître les coques d'EVE et leur
+ * Ship Recognition Trainer — apprends à reconnaître les vaisseaux d'EVE et leur
  * doctrine (senseur, arme, tank, trou de résistance). 100 % local & hors-ligne :
  * données SDE statiques + rendus du CDN officiel. Aucune interaction client.
  */

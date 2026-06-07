@@ -1,11 +1,11 @@
 /**
  * Parseur **EFT** (le format texte standard d'export de fit EVE). Pur, sans
- * réseau : il ne fait que séparer la coque, les modules (+ charge éventuelle),
+ * réseau : il ne fait que séparer la vaisseau, les modules (+ charge éventuelle),
  * les drones et la cargaison. Le slot réel de chaque module est déduit plus tard
  * via les effets dogma (`analyze.ts`).
  *
  * Format :
- *   [Coque, Nom du fit]
+ *   [Vaisseau, Nom du fit]
  *   Module bas
  *
  *   Module moyen, Munition          ← module + charge séparés par ", "
@@ -29,7 +29,7 @@ export interface ParsedFit {
 const HEADER = /^\[(.+?),\s*(.*)\]$/;
 const QTY = /^(.*?)\s+x(\d+)$/i;
 
-/** Parse un texte EFT. Renvoie `null` si l'en-tête `[Coque, Nom]` est absent. */
+/** Parse un texte EFT. Renvoie `null` si l'en-tête `[Vaisseau, Nom]` est absent. */
 export function parseEft(text: string): ParsedFit | null {
   const raw = text.split(/\r?\n/);
   let header: RegExpMatchArray | null = null;
@@ -81,7 +81,7 @@ export function parseEft(text: string): ParsedFit | null {
   return { shipName, fitName, lines };
 }
 
-/** Noms de types distincts à résoudre (coque + modules + charges + drones). */
+/** Noms de types distincts à résoudre (vaisseau + modules + charges + drones). */
 export function typeNames(fit: ParsedFit): string[] {
   const set = new Set<string>([fit.shipName]);
   for (const l of fit.lines) {

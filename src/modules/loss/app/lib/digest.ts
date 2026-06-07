@@ -72,8 +72,8 @@ export function isPod(pm: PostMortem): boolean {
 }
 
 /**
- * Trou de résistance naturel de la coque de la victime — **factuel** quand la
- * coque figure dans le dataset du Ship Trainer (sinon `null`). Synergie inter-modules.
+ * Trou de résistance naturel de la vaisseau de la victime — **factuel** quand la
+ * vaisseau figure dans le dataset du Ship Trainer (sinon `null`). Synergie inter-modules.
  */
 export function victimResistHole(
   pm: PostMortem,

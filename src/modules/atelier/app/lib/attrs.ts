@@ -6,7 +6,7 @@
 
 /** IDs d'attributs dogma utilisés par l'Atelier. */
 export const ATTR = {
-  // — Coque : points de vie —
+  // — Vaisseau : points de vie —
   shieldCapacity: 263,
   armorHP: 265,
   structureHP: 9,
@@ -53,7 +53,7 @@ export const ATTR = {
   droneCapacity: 283,
 
   // — Encombrement (fitting) —
-  cpuOutput: 48, // « CPU Output » de la coque (49 = « CPU Load », à ne pas confondre)
+  cpuOutput: 48, // « CPU Output » de la vaisseau (49 = « CPU Load », à ne pas confondre)
   cpuUsage: 50,
   pgOutput: 11,
   pgUsage: 30,
@@ -61,9 +61,9 @@ export const ATTR = {
   medSlots: 13,
   lowSlots: 12,
   rigSlots: 1137,
-  calibration: 1132, // capacité d'amélioration de la coque
+  calibration: 1132, // capacité d'amélioration de la vaisseau
   calibrationCost: 1153, // coût d'un rig
-  // Bonus d'encombrement portés par certains modules/rigs (sortie coque) :
+  // Bonus d'encombrement portés par certains modules/rigs (sortie vaisseau) :
   cpuOutputMul: 202, // Co-Processor — multiplicateur (ex. 1.10)
   pgOutputMul: 145, // Reactor Control Unit / PDS — multiplicateur (ex. 1.15)
   cpuOutputPct: 424, // rig Processor Overclocking Unit — pourcentage (ex. 9.6)

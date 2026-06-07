@@ -13,7 +13,7 @@ export function penalty(i: number): number {
 /**
  * Combine une liste de **multiplicateurs de résonance** (chacun < 1 améliore la
  * résist) en appliquant la pénalité d'empilement, et renvoie le multiplicateur
- * de résonance résultant (à appliquer à la résonance de base de la coque).
+ * de résonance résultant (à appliquer à la résonance de base de la vaisseau).
  *
  * result = Π (1 + (m_k − 1) · p_k),  trié par |m_k − 1| décroissant.
  */

@@ -9,7 +9,7 @@
 import { invoke } from "@/core/runtime";
 import { track } from "@/core/analytics";
 
-/** Emplacement d'un module sur la coque (issu du `flag` d'inventaire EVE). */
+/** Emplacement d'un module sur la vaisseau (issu du `flag` d'inventaire EVE). */
 export type Slot = "high" | "mid" | "low" | "rig" | "subsystem" | "drone" | "other";
 
 /** Classe de gang du côté qui t'a tué. */

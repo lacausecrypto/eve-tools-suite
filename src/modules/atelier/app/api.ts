@@ -96,7 +96,7 @@ export interface LoadResult {
 
 /**
  * Pipeline complet : parse EFT → résout les ids → charge les types → place les
- * modules → analyse. Lève si l'en-tête EFT est invalide ou la coque introuvable.
+ * modules → analyse. Lève si l'en-tête EFT est invalide ou la vaisseau introuvable.
  */
 export async function loadFit(text: string, opts: AnalyzeOptions): Promise<LoadResult> {
   track("fit_analyzed");
@@ -118,7 +118,7 @@ export async function loadFit(text: string, opts: AnalyzeOptions): Promise<LoadR
   if (!ship) throw new Error(t("atelier.err.hullNotFound", { name: fit.shipName }));
 
   const items = placeItems(byName, fit.lines);
-  // Bonus de coque appliqués au niveau V (cohérent avec l'option PV niveau V).
+  // Bonus de vaisseau appliqués au niveau V (cohérent avec l'option PV niveau V).
   const hullBonus = opts.allFiveHp ? hullBonusFor(ship.name) : null;
   const analysis = analyzeFit(ship, fit.fitName, items, { ...opts, hullBonus });
   return { analysis, unresolved };
