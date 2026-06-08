@@ -25,6 +25,10 @@
   <a href="https://eve-tools-suite.com">
     <img src="https://img.shields.io/badge/🌐%20Visiter%20le%20site-eve--tools--suite.com-2B8CFF?style=for-the-badge&logoColor=white" alt="Visiter le site">
   </a>
+  &nbsp;
+  <a href="https://discord.gg/jmPKrr28C5">
+    <img src="https://img.shields.io/badge/💬%20Rejoindre%20le-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Rejoindre le Discord">
+  </a>
 </p>
 
 <p align="center">
@@ -51,23 +55,23 @@
 ### 🏭 Industrie &amp; économie
 | Outil | Description | Statut |
 |---|---|---|
-| **Industrie &amp; Coûts** | Coût de revient réel avec les vraies formules EVE (ME, EIV, install, surtaxe SCC), prix Jita en direct, carnet de jobs (ISK en prod, profit attendu vs réalisé), valorisation d'inventaire. | Bêta |
-| **Retraitement &amp; Compression** | Rendements minerai → minéraux (skills/structure/implant) et **mix compressé optimal** pour le transport. | Bêta |
-| **Simulateur PI** | Simulateur de Planetary Industry — layout, decay des extracteurs, équilibrage des chaînes, optimisation ISK/heure. | Bêta |
+| **Industrie &amp; Coûts** | Coût de revient réel avec les vraies formules EVE (ME, EIV, install, surtaxe SCC), prix Jita en direct, carnet de jobs (ISK en prod, profit attendu vs réalisé), valorisation d'inventaire. | Stable |
+| **Retraitement &amp; Compression** | Rendements minerai → minéraux (skills/structure/implant) et **mix compressé optimal** pour le transport. | Stable |
+| **Simulateur PI** | Simulateur de Planetary Industry — layout, decay des extracteurs, équilibrage des chaînes, optimisation ISK/heure. | Stable |
 | **Gestion de Flotte Minière** | Sessions de minage en flotte, valorisation Jita, retraitement, et **répartition ISK** équitable entre membres. | Stable |
 
 ### 💹 Marché &amp; trading
 | Outil | Description | Statut |
 |---|---|---|
-| **Explorateur de Marché** | Carnet multi-hubs (achat/vente), moyennes pondérées 5%, marge, spread, volumes, historique, watchlist. 100% ESI publique. | Bêta |
-| **Copilote de Trading** | Où gagner de l'ISK : scanner **station-trading** région-wide (profit net/jour = marge × liquidité, frais &amp; taxe déduits) + **arbitrage** inter-hubs (profit/m³, ROI, sauts). | Bêta |
-| **Estimateur de prix** | Estime n'importe quel collage — valeur Jita achat/vente, volume, EIV — sur tous les grands hubs. Un Evepraisal intégré. | Bêta |
-| **Convertisseur LP** | ISK par point de loyauté — classe les meilleures offres des LP stores. | Bêta |
+| **Explorateur de Marché** | Carnet multi-hubs (achat/vente), moyennes pondérées 5%, marge, spread, volumes, historique, watchlist. 100% ESI publique. | Stable |
+| **Copilote de Trading** | Où gagner de l'ISK : scanner **station-trading** région-wide (profit net/jour = marge × liquidité, frais &amp; taxe déduits) + **arbitrage** inter-hubs (profit/m³, ROI, sauts). | Stable |
+| **Estimateur de prix** | Estime n'importe quel collage — valeur Jita achat/vente, volume, EIV — sur tous les grands hubs. Un Evepraisal intégré. | Stable |
+| **Convertisseur LP** | ISK par point de loyauté — classe les meilleures offres des LP stores. | Stable |
 
 ### ⚔️ Combat &amp; intel
 | Outil | Description | Statut |
 |---|---|---|
-| **Atelier de Fit** | Colle un fit EFT pour l'analyser (EHP par profil de dégâts, stabilité cap, nav, DPS, stacking) — ou **génère** un fit auto depuis une coque + un rôle. | Bêta |
+| **Atelier de Fit** | Colle un fit EFT pour l'analyser (EHP par profil de dégâts, stabilité cap, nav, DPS, stacking) — ou **génère** un fit auto depuis un vaisseau + un rôle. | Stable |
 | **Analyseur de Pertes** | Post-mortem de killmail (lien zKill/ESI ou perso → dernière perte) : qui t'a tué, le gang, l'ISK, le fit, et *ce qui aurait sauvé le fit*. | Bêta |
 | **L'Assistant du Pirate** | Intel local-chat pour le PvP solo &amp; small-gang — score de menace, prédiction de fit, réseau de gang, depuis zKill/ESI publics. | Bêta |
 | **Estimateur Abyssal** | Qualité des rolls mutaplasmides vs plages théoriques (détection god-roll) + estimation de revente MutaMarket. | Bêta |
@@ -77,7 +81,7 @@
 |---|---|---|
 | **Optimiseur de Compétences** | Construis un plan d'entraînement (données CCP exactes), vois SP &amp; temps, et obtiens le **remap d'attributs optimal** — implants et Alpha/Omega gérés. L'EVEMon léger. | Bêta |
 | **Journal d'Activité** | Suivi ISK/heure — chrono de session, butin valorisé, taux de drop. Remplace l'Activity Tracker retiré du jeu. | Bêta |
-| **Académie EVE** | Apprends New Eden en t'amusant : cursus structurés (navigation, combat, économie, vie en corp), quiz notés, glossaire, reconnaissance de coques &amp; flashcards à répétition espacée, XP/niveaux/badges. 100% hors-ligne. | Bêta |
+| **Académie EVE** | Apprends New Eden en t'amusant : cursus structurés (navigation, combat, économie, vie en corp), quiz notés, glossaire, reconnaissance de coques &amp; flashcards à répétition espacée, XP/niveaux/badges. 100% hors-ligne. | Stable |
 
 ---
 

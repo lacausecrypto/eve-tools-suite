@@ -70,7 +70,7 @@ jobs:
         with:
           tagName: ${{ github.ref_name }}
           releaseName: "EVE Tools Suite ${{ github.ref_name }}"
-          releaseBody: "Téléchargez l'installeur correspondant à votre OS ci-dessous. Une fois installée, l'app se met à jour automatiquement (mises à jour signées)."
+          releaseBody: "Download the installer for your OS below. Once installed, the app auto-updates (cryptographically signed updates)."
           releaseDraft: true
           prerelease: false
           includeUpdaterJson: true
@@ -109,3 +109,41 @@ jobs:
         run: |
           gh release edit "${{ github.ref_name }}" \
             --repo "$GITHUB_REPOSITORY" --draft=false --latest
+
+      # Annonce la release sur Discord (embed propre). Le webhook est un SECRET
+      # repo (`DISCORD_WEBHOOK`) — jamais en clair. Sans secret (forks), on skip.
+      - name: Notify Discord
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          TAG: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -eo pipefail
+          if [ -z "$DISCORD_WEBHOOK" ]; then echo "No DISCORD_WEBHOOK secret — skipping."; exit 0; fi
+          notes=$(gh release view "$TAG" --repo "$REPO" --json body -q .body | head -c 1500)
+          dl="https://github.com/$REPO/releases/latest/download"
+          site="https://eve-tools-suite.com"
+          payload=$(jq -n \
+            --arg title "🚀 EVE Tools Suite $TAG" \
+            --arg url "https://github.com/$REPO/releases/tag/$TAG" \
+            --arg desc "$notes" \
+            --arg win "[⬇ Windows (.exe)]($dl/EVE-Tools-Suite-Windows-Setup.exe)" \
+            --arg mac "[⬇ macOS (.dmg)]($dl/EVE-Tools-Suite-macOS-AppleSilicon.dmg)" \
+            --arg site "$site" \
+            '{
+              username: "EVE Tools Suite",
+              avatar_url: ($site + "/cube.png"),
+              embeds: [{
+                title: $title, url: $url, description: $desc, color: 2854143,
+                thumbnail: { url: ($site + "/cube.png") },
+                fields: [
+                  { name: "Download", value: ($win + "\n" + $mac) },
+                  { name: "Links", value: ("[Website](" + $site + ") · [Changelog](" + $site + "#changelog)") }
+                ],
+                footer: { text: "Auto-updates if already installed" }
+              }]
+            }')
+          code=$(curl -sS -o /dev/null -w "%{http_code}" -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK")
+          echo "Discord webhook → HTTP $code"
+          case "$code" in 2*) : ;; *) echo "::warning::Discord notify returned $code" ;; esac

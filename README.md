@@ -25,6 +25,10 @@
   <a href="https://eve-tools-suite.com">
     <img src="https://img.shields.io/badge/🌐%20Visit%20the%20website-eve--tools--suite.com-2B8CFF?style=for-the-badge&logoColor=white" alt="Visit the website">
   </a>
+  &nbsp;
+  <a href="https://discord.gg/jmPKrr28C5">
+    <img src="https://img.shields.io/badge/💬%20Join%20the-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join the Discord">
+  </a>
 </p>
 
 <p align="center">
@@ -51,23 +55,23 @@
 ### 🏭 Industry &amp; economy
 | Tool | What it does | Status |
 |---|---|---|
-| **Industry &amp; Cost Tracker** | Real production cost with EVE's true formulas (ME, EIV, install fee, SCC), live Jita prices, job ledger (ISK in production, expected vs realized profit), inventory valuation. | Beta |
-| **Reprocessing &amp; Compression** | Ore → minerals yields (skills/structure/implant aware) and the **optimal compressed mix** for hauling. | Beta |
-| **EVE PI Sim** | Planetary Industry simulator — layout, extractor decay, chain balancing, ISK/hour optimization. | Beta |
+| **Industry &amp; Cost Tracker** | Real production cost with EVE's true formulas (ME, EIV, install fee, SCC), live Jita prices, job ledger (ISK in production, expected vs realized profit), inventory valuation. | Stable |
+| **Reprocessing &amp; Compression** | Ore → minerals yields (skills/structure/implant aware) and the **optimal compressed mix** for hauling. | Stable |
+| **EVE PI Sim** | Planetary Industry simulator — layout, extractor decay, chain balancing, ISK/hour optimization. | Stable |
 | **Mining Fleet Manager** | Fleet mining sessions, Jita valuation, reprocessing, and fair **ISK split** across members. | Stable |
 
 ### 💹 Market &amp; trade
 | Tool | What it does | Status |
 |---|---|---|
-| **Market Browser** | Multi-hub order book (buy/sell), 5% weighted averages, margin, spread, volumes, history, watchlist. 100% public ESI. | Beta |
-| **Trade Co-Pilot** | Where to make ISK: region-wide **station-trading** scanner (net profit/day = margin × liquidity, fees & tax in) + inter-hub **arbitrage** (profit/m³, ROI, jumps). | Beta |
-| **Appraisal** | Appraise any paste — Jita buy/sell value, volume, EIV — across all major hubs. An in-app Evepraisal. | Beta |
-| **LP Converter** | ISK per loyalty point — ranks the best LP-store deals for any corp. | Beta |
+| **Market Browser** | Multi-hub order book (buy/sell), 5% weighted averages, margin, spread, volumes, history, watchlist. 100% public ESI. | Stable |
+| **Trade Co-Pilot** | Where to make ISK: region-wide **station-trading** scanner (net profit/day = margin × liquidity, fees & tax in) + inter-hub **arbitrage** (profit/m³, ROI, jumps). | Stable |
+| **Appraisal** | Appraise any paste — Jita buy/sell value, volume, EIV — across all major hubs. An in-app Evepraisal. | Stable |
+| **LP Converter** | ISK per loyalty point — ranks the best LP-store deals for any corp. | Stable |
 
 ### ⚔️ Combat &amp; intel
 | Tool | What it does | Status |
 |---|---|---|
-| **Fit Workshop** | Paste an EFT fit to analyze (EHP by damage profile, cap stability, nav, DPS, stacking) — or **auto-generate** a fit from a hull + role. | Beta |
+| **Fit Workshop** | Paste an EFT fit to analyze (EHP by damage profile, cap stability, nav, DPS, stacking) — or **auto-generate** a fit from a hull + role. | Stable |
 | **Loss Analyzer** | Killmail post-mortem (zKill/ESI link or character → latest loss): who killed you, the gang, ISK, fit, and *what would have saved it*. | Beta |
 | **Pirate's Big Helper** | Local-chat intel for solo &amp; small-gang PvP — threat scoring, fit prediction, gang network, all from public zKill/ESI. | Beta |
 | **Abyssal Appraiser** | Mutaplasmid roll quality vs theoretical ranges (god-roll detection) + MutaMarket resale estimate. | Beta |
@@ -77,7 +81,7 @@
 |---|---|---|
 | **Skill &amp; Remap Optimizer** | Build a training plan (exact CCP data), see SP &amp; time, and get the **optimal attribute remap** — implants and Alpha/Omega aware. The lightweight EVEMon. | Beta |
 | **Activity Journal** | ISK/hour tracker — session timer, valued loot, drop rates. Replaces the removed in-game Activity Tracker. | Beta |
-| **EVE Academy** | Learn New Eden the fun way: structured courses (navigation, combat, economy, corp life), graded quizzes, glossary, ship-recognition &amp; spaced-repetition drills, XP/levels/badges. 100% offline. | Beta |
+| **EVE Academy** | Learn New Eden the fun way: structured courses (navigation, combat, economy, corp life), graded quizzes, glossary, ship-recognition &amp; spaced-repetition drills, XP/levels/badges. 100% offline. | Stable |
 
 ---
 
