@@ -138,7 +138,7 @@ export function SessionView() {
           </div>
 
           <div className="mt-4 flex flex-wrap items-center gap-4">
-            <div className="font-mono text-4xl font-bold tabular-nums tracking-tight">{fmtClock(elapsed)}</div>
+            <div data-tour="activity.timer" className="font-mono text-4xl font-bold tabular-nums tracking-tight">{fmtClock(elapsed)}</div>
             <div className="flex gap-2">
               {running ? (
                 <Button variant="outline" onClick={pauseTimer}>
@@ -201,7 +201,7 @@ export function SessionView() {
             </div>
           </div>
           <Textarea
-            value={lootText}
+            data-tour="activity.loot" value={lootText}
             onChange={(e) => setLootText(e.target.value)}
             placeholder={t("activity.loot.ph")}
             className="h-24 resize-none font-mono text-xs"
@@ -252,7 +252,7 @@ export function SessionView() {
         <EntryCard kind="income" title={t("activity.income.title")} presets={def.incomePresets} accent="text-success" onAdd={addEntry} onRemove={removeEntry} entries={current.income} parseIsk={parseIsk} t={t} />
         <EntryCard kind="costs" title={t("activity.costs.title")} presets={def.costPresets} accent="text-destructive" onAdd={addEntry} onRemove={removeEntry} entries={current.costs} parseIsk={parseIsk} t={t} />
 
-        <Button className="w-full" onClick={finishSession} disabled={elapsed < 1 && current.loot.length === 0}>
+        <Button data-tour="activity.finish" className="w-full" onClick={finishSession} disabled={elapsed < 1 && current.loot.length === 0}>
           <Save className="h-4 w-4" /> {t("activity.finish")}
         </Button>
         <p className="text-[11px] text-muted-foreground/70">{t("activity.finish.note")}</p>

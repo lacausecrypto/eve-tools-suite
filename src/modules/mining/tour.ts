@@ -3,7 +3,6 @@ import { snapshot } from "@/core/tour/demo";
 import type { ModuleTour } from "@/core/tour/types";
 import { useStore } from "./app/store/useStore";
 
-/** Visite guidée du Mining Fleet Manager (membres + session d'exemple). */
 export const miningTour: ModuleTour = {
   id: "mining",
   demo: () => {
@@ -16,27 +15,27 @@ export const miningTour: ModuleTour = {
     return restore;
   },
   steps: [
-    { anchor: "mining.root", titleKey: "tour.mining.s1.title", bodyKey: "tour.mining.s1.body" },
-    { anchor: "mining.root", titleKey: "tour.mining.s2.title", bodyKey: "tour.mining.s2.body" },
-    { anchor: "mining.root", titleKey: "tour.mining.s3.title", bodyKey: "tour.mining.s3.body" },
+    { anchor: "mining.newSession", titleKey: "tour.mining.new.title", bodyKey: "tour.mining.new.body" },
+    { anchor: "mining.session", titleKey: "tour.mining.loot.title", bodyKey: "tour.mining.loot.body" },
+    { anchor: "mining.session", titleKey: "tour.mining.split.title", bodyKey: "tour.mining.split.body" },
   ],
 };
 
 registerMessages({
   fr: {
-    "tour.mining.s1.title": "Flotte de minage",
-    "tour.mining.s1.body": "Ajoute les membres de ta flotte (un exemple est créé) et démarre une session : qui mine, où, pendant combien de temps.",
-    "tour.mining.s2.title": "Valeur extraite",
-    "tour.mining.s2.body": "Importe les diffusions de flotte ou saisis le butin : l'outil le valorise au prix Jita (brut ou compressé).",
-    "tour.mining.s3.title": "Partage équitable",
-    "tour.mining.s3.body": "À la clôture, l'ISK est répartie équitablement entre les participants — avec un pourcentage de rachat corpo réglable.",
+    "tour.mining.new.title": "1. Nouvelle session",
+    "tour.mining.new.body": "Crée une session de minage : nom, type de gisement. Ajoute les membres de ta flotte dans l'onglet Membres (un exemple est déjà créé).",
+    "tour.mining.loot.title": "2. Butin valorisé",
+    "tour.mining.loot.body": "Dans la session active, saisis le butin ou importe les Diffusions de flotte : tout est valorisé au prix Jita (minerai brut ou compressé).",
+    "tour.mining.split.title": "3. Partage équitable",
+    "tour.mining.split.body": "À la clôture, l'ISK est répartie équitablement entre les participants (au prorata de présence ou du minerai), avec un % de rachat corpo réglable.",
   },
   en: {
-    "tour.mining.s1.title": "Mining fleet",
-    "tour.mining.s1.body": "Add your fleet members (a sample is created) and start a session: who mines, where, for how long.",
-    "tour.mining.s2.title": "Extracted value",
-    "tour.mining.s2.body": "Import fleet broadcasts or enter the loot: the tool values it at Jita prices (raw or compressed).",
-    "tour.mining.s3.title": "Fair split",
-    "tour.mining.s3.body": "On close, ISK is split fairly between participants — with an adjustable corp buyback percentage.",
+    "tour.mining.new.title": "1. New session",
+    "tour.mining.new.body": "Create a mining session: name, belt type. Add your fleet members in the Members tab (a sample is already created).",
+    "tour.mining.loot.title": "2. Valued loot",
+    "tour.mining.loot.body": "In the active session, enter loot or import Fleet Broadcasts: everything is valued at Jita prices (raw or compressed ore).",
+    "tour.mining.split.title": "3. Fair split",
+    "tour.mining.split.body": "On close, ISK is split fairly between participants (by presence or by ore), with an adjustable corp buyback %.",
   },
 });

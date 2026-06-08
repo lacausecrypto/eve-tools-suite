@@ -42,7 +42,7 @@ export function Home({ onOpenLesson, onGotoCursus }: { onOpenLesson: (id: string
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+      <div data-tour="academy.stats" className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
         <StatTile label={t("academy.home.stat.lessons")} value={`${completed.size}/${TOTAL_LESSONS}`} />
         <StatTile label={t("academy.home.stat.quizPassed")} value={String(quizPassed)} accent="text-success" />
         <StatTile label={t("academy.home.stat.avgAccuracy")} value={quizValues.length ? pct(avgScore) : "—"} />
@@ -57,7 +57,7 @@ export function Home({ onOpenLesson, onGotoCursus }: { onOpenLesson: (id: string
       {/* Continuer */}
       {next && nextTrack ? (
         <button
-          onClick={() => onOpenLesson(next.id)}
+          data-tour="academy.continue" onClick={() => onOpenLesson(next.id)}
           className="flex w-full items-center gap-4 rounded-xl border border-primary/30 bg-primary/5 p-4 text-left transition-colors hover:border-primary/50"
         >
           <nextTrack.icon className="h-6 w-6 shrink-0" style={{ color: nextTrack.accent }} />
@@ -83,7 +83,7 @@ export function Home({ onOpenLesson, onGotoCursus }: { onOpenLesson: (id: string
             {t("academy.home.seeAll")} <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
-        <div className="grid gap-2 sm:grid-cols-2">
+        <div data-tour="academy.tracks" className="grid gap-2 sm:grid-cols-2">
           {TRACKS.map((tr) => {
             const total = tr.lessons.length;
             const n = tr.lessons.filter((l) => completed.has(l.id)).length;

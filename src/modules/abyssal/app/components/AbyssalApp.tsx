@@ -18,7 +18,7 @@ export function AbyssalApp() {
   const [tab, setTab] = useState<Tab>("evaluate");
   return (
     <div data-tour="abyssal.root" className="mx-auto w-full max-w-5xl px-5 py-5 animate-fade-in">
-      <div className="mb-4 flex rounded-lg border border-border bg-card/40 p-1">
+      <div data-tour="abyssal.tabs" className="mb-4 flex rounded-lg border border-border bg-card/40 p-1">
         <TabBtn active={tab === "evaluate"} onClick={() => setTab("evaluate")} icon={<Zap className="h-4 w-4" />}>
           {t("abyssal.tab.evaluate")}
         </TabBtn>

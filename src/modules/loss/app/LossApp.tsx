@@ -69,6 +69,7 @@ export function LossApp() {
       {/* Barre de saisie */}
       <div className="flex flex-col gap-2 sm:flex-row">
         <Input
+          data-tour="loss.input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
@@ -78,7 +79,7 @@ export function LossApp() {
           className="flex-1"
           spellCheck={false}
         />
-        <Button onClick={run} disabled={!input.trim() || status.kind === "loading"}>
+        <Button data-tour="loss.run" onClick={run} disabled={!input.trim() || status.kind === "loading"}>
           {status.kind === "loading" ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
@@ -90,7 +91,7 @@ export function LossApp() {
       <p className="mt-1.5 text-xs text-muted-foreground">{t("loss.input.hint")}</p>
 
       {/* Corps */}
-      <div className="mt-5">
+      <div data-tour="loss.body" className="mt-5">
         {status.kind === "idle" && <Intro />}
         {status.kind === "loading" && (
           <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground">

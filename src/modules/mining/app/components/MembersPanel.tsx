@@ -96,7 +96,7 @@ export function MembersPanel() {
       <CardContent className="space-y-4">
         <div className="flex gap-2">
           <Input
-            placeholder={t("mining.members.placeholder")}
+            data-tour="mining.members" placeholder={t("mining.members.placeholder")}
             value={name}
             onChange={(e) => {
               setName(e.target.value);

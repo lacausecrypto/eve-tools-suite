@@ -105,7 +105,7 @@ export function AnalyzerView() {
           <Textarea
             value={eft}
             onChange={(e) => setEft(e.target.value)}
-            placeholder={t("atelier.eft.placeholder")}
+            data-tour="atelier.eft" placeholder={t("atelier.eft.placeholder")}
             className="h-64 resize-none font-mono text-xs"
             spellCheck={false}
           />

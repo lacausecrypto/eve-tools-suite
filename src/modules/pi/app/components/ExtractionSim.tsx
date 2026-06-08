@@ -255,7 +255,7 @@ export function ExtractionSim() {
             </CardTitle>
           </CardHeader>
           <CardContent className="pt-0">
-            <div className="grid grid-cols-4 gap-2">
+            <div data-tour="pi.planet" className="grid grid-cols-4 gap-2">
               {PLANETS.map((p) => {
                 const active = planet === p.id;
                 return (
@@ -318,7 +318,7 @@ export function ExtractionSim() {
             <Field label={`${t("pi.heads")} · ${heads}`}>
               <input
                 type="range"
-                className="eve-slider"
+                data-tour="pi.heads" className="eve-slider"
                 min={1}
                 max={MAX_HEADS}
                 value={heads}

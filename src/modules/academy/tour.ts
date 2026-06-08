@@ -3,7 +3,6 @@ import { snapshot } from "@/core/tour/demo";
 import type { ModuleTour } from "@/core/tour/types";
 import { useAcademy } from "./app/store";
 
-/** Visite guidée d'EVE Academy (démo : une leçon complétée → XP). */
 export const academyTour: ModuleTour = {
   id: "academy",
   demo: () => {
@@ -13,26 +12,31 @@ export const academyTour: ModuleTour = {
   },
   steps: [
     { anchor: "academy.nav", titleKey: "tour.academy.nav.title", bodyKey: "tour.academy.nav.body" },
-    { anchor: "academy.root", titleKey: "tour.academy.learn.title", bodyKey: "tour.academy.learn.body" },
-    { anchor: "academy.nav", titleKey: "tour.academy.train.title", bodyKey: "tour.academy.train.body" },
+    { anchor: "academy.stats", titleKey: "tour.academy.stats.title", bodyKey: "tour.academy.stats.body" },
+    { anchor: "academy.continue", titleKey: "tour.academy.continue.title", bodyKey: "tour.academy.continue.body" },
+    { anchor: "academy.tracks", titleKey: "tour.academy.tracks.title", bodyKey: "tour.academy.tracks.body" },
   ],
 };
 
 registerMessages({
   fr: {
-    "tour.academy.nav.title": "Cinq sections",
-    "tour.academy.nav.body": "Accueil, Cursus (leçons), Quiz, Entraînement et Glossaire. 100 % hors-ligne, avec XP, niveaux et badges — une leçon d'exemple vient d'être validée.",
-    "tour.academy.learn.title": "Apprendre par cursus",
-    "tour.academy.learn.body": "Les cursus vont du débutant à l'avancé : capsule, fitting, dégâts & résistances, tank, doctrines… chaque leçon se termine par un quiz.",
-    "tour.academy.train.title": "S'entraîner",
-    "tour.academy.train.body": "Entraînement : reconnaissance des vaisseaux, flashcards à répétition espacée, quiz chrono et mode survie. Idéal pour ancrer les réflexes.",
+    "tour.academy.nav.title": "1. Cinq sections",
+    "tour.academy.nav.body": "Accueil, Cursus (leçons structurées), Quiz, Entraînement et Glossaire. 100 % hors-ligne, avec XP, niveaux et badges.",
+    "tour.academy.stats.title": "2. Ta progression",
+    "tour.academy.stats.body": "Tes statistiques : leçons faites, quiz réussis, précision, cartes révisées et série quotidienne (une leçon d'exemple vient d'être validée).",
+    "tour.academy.continue.title": "3. Continuer",
+    "tour.academy.continue.body": "Reprends directement la prochaine leçon non terminée de ton cursus.",
+    "tour.academy.tracks.title": "4. Cursus",
+    "tour.academy.tracks.body": "Ta progression par cursus (anneaux + niveau de difficulté), du débutant à l'avancé : capsule, fitting, combat, doctrines…",
   },
   en: {
-    "tour.academy.nav.title": "Five sections",
-    "tour.academy.nav.body": "Home, Curriculum (lessons), Quiz, Training and Glossary. Fully offline, with XP, levels and badges — a sample lesson was just completed.",
-    "tour.academy.learn.title": "Learn by curriculum",
-    "tour.academy.learn.body": "Curricula go from beginner to advanced: capsule, fitting, damage & resists, tank, doctrines… each lesson ends with a quiz.",
-    "tour.academy.train.title": "Train",
-    "tour.academy.train.body": "Training: ship recognition, spaced-repetition flashcards, timed quiz and survival mode. Great for building reflexes.",
+    "tour.academy.nav.title": "1. Five sections",
+    "tour.academy.nav.body": "Home, Curriculum (structured lessons), Quiz, Training and Glossary. Fully offline, with XP, levels and badges.",
+    "tour.academy.stats.title": "2. Your progress",
+    "tour.academy.stats.body": "Your stats: lessons done, quizzes passed, accuracy, cards reviewed and daily streak (a sample lesson was just completed).",
+    "tour.academy.continue.title": "3. Continue",
+    "tour.academy.continue.body": "Jump straight back into the next uncompleted lesson of your track.",
+    "tour.academy.tracks.title": "4. Curricula",
+    "tour.academy.tracks.body": "Your per-track progress (rings + difficulty level), from beginner to advanced: capsule, fitting, combat, doctrines…",
   },
 });

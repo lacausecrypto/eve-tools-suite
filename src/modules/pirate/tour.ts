@@ -5,7 +5,6 @@ import { usePirateInput } from "./app/store";
 
 const DEMO_LOCAL = "Mark726\nChribba\nThe Mittani\nGevlon Goblin\nSion Kumitomo";
 
-/** Visite guidée du Pirate's Big Helper (chat Local d'exemple pré-rempli). */
 export const pirateTour: ModuleTour = {
   id: "pirate",
   demo: () => {
@@ -14,27 +13,27 @@ export const pirateTour: ModuleTour = {
     return restore;
   },
   steps: [
-    { anchor: "pirate.root", titleKey: "tour.pirate.s1.title", bodyKey: "tour.pirate.s1.body" },
-    { anchor: "pirate.root", titleKey: "tour.pirate.s2.title", bodyKey: "tour.pirate.s2.body" },
-    { anchor: "pirate.root", titleKey: "tour.pirate.s3.title", bodyKey: "tour.pirate.s3.body" },
+    { anchor: "pirate.input", titleKey: "tour.pirate.input.title", bodyKey: "tour.pirate.input.body" },
+    { anchor: "pirate.analyze", titleKey: "tour.pirate.analyze.title", bodyKey: "tour.pirate.analyze.body" },
+    { anchor: "pirate.watchlist", titleKey: "tour.pirate.watch.title", bodyKey: "tour.pirate.watch.body" },
   ],
 };
 
 registerMessages({
   fr: {
-    "tour.pirate.s1.title": "Intel du Local",
-    "tour.pirate.s1.body": "Colle ton chat Local (un exemple de pseudos est déjà collé). En desktop, un raccourci capture le Local automatiquement.",
-    "tour.pirate.s2.title": "Profil de menace",
-    "tour.pirate.s2.body": "Chaque pilote est profilé : historique de kills, fit probable, vaisseau favori — pour jauger le danger en solo / petit-gang.",
-    "tour.pirate.s3.title": "Réseau de gang",
-    "tour.pirate.s3.body": "L'outil repère les liens corpo/alliance pour anticiper un gang et décider d'engager ou de fuir.",
+    "tour.pirate.input.title": "1. Le chat Local",
+    "tour.pirate.input.body": "Colle les pseudos du Local (un exemple est rempli). En desktop, un raccourci (Ctrl/Cmd+Shift+L) capture le Local automatiquement.",
+    "tour.pirate.analyze.title": "2. Analyser les menaces",
+    "tour.pirate.analyze.body": "Chaque pilote est profilé : niveau de menace, K/D, sec-status, fit probable et vaisseau favori — pour décider d'engager ou de fuir en solo / petit-gang.",
+    "tour.pirate.watch.title": "3. Watchlist & filtres",
+    "tour.pirate.watch.body": "Tague et suis des pilotes (foe / cyno / spy / friend) dans une watchlist persistante ; filtre la liste pour ne garder que les vraies menaces.",
   },
   en: {
-    "tour.pirate.s1.title": "Local intel",
-    "tour.pirate.s1.body": "Paste your Local chat (sample names already pasted). On desktop, a hotkey captures Local automatically.",
-    "tour.pirate.s2.title": "Threat profile",
-    "tour.pirate.s2.body": "Each pilot is profiled: kill history, likely fit, favorite ship — to gauge danger for solo / small-gang.",
-    "tour.pirate.s3.title": "Gang network",
-    "tour.pirate.s3.body": "The tool spots corp/alliance links to anticipate a gang and decide whether to engage or run.",
+    "tour.pirate.input.title": "1. Local chat",
+    "tour.pirate.input.body": "Paste the Local pilot names (a sample is filled). On desktop, a hotkey (Ctrl/Cmd+Shift+L) captures Local automatically.",
+    "tour.pirate.analyze.title": "2. Analyze threats",
+    "tour.pirate.analyze.body": "Each pilot is profiled: threat level, K/D, sec status, likely fit and favorite ship — to decide whether to engage or run, solo / small-gang.",
+    "tour.pirate.watch.title": "3. Watchlist & filters",
+    "tour.pirate.watch.body": "Tag and track pilots (foe / cyno / spy / friend) in a persistent watchlist; filter the list to keep only real threats.",
   },
 });

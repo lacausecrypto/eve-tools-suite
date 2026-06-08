@@ -5,7 +5,6 @@ import { useRefine } from "./app/store";
 
 const DEMO_ORE = "Veldspar 50000\nScordite 30000\nPlagioclase 15000\nKernite 8000";
 
-/** Visite guidée du Reprocessing & Compression (minerai d'exemple pré-rempli). */
 export const refineTour: ModuleTour = {
   id: "refine",
   demo: () => {
@@ -15,27 +14,37 @@ export const refineTour: ModuleTour = {
     return restore;
   },
   steps: [
-    { anchor: "refine.root", titleKey: "tour.refine.s1.title", bodyKey: "tour.refine.s1.body" },
-    { anchor: "refine.root", titleKey: "tour.refine.s2.title", bodyKey: "tour.refine.s2.body" },
-    { anchor: "refine.root", titleKey: "tour.refine.s3.title", bodyKey: "tour.refine.s3.body" },
+    { anchor: "refine.tabs", titleKey: "tour.refine.tabs.title", bodyKey: "tour.refine.tabs.body" },
+    { anchor: "refine.rate", titleKey: "tour.refine.rate.title", bodyKey: "tour.refine.rate.body" },
+    { anchor: "refine.ore", titleKey: "tour.refine.ore.title", bodyKey: "tour.refine.ore.body" },
+    { anchor: "refine.run", titleKey: "tour.refine.run.title", bodyKey: "tour.refine.run.body" },
+    { anchor: "refine.result", titleKey: "tour.refine.result.title", bodyKey: "tour.refine.result.body" },
   ],
 };
 
 registerMessages({
   fr: {
-    "tour.refine.s1.title": "Raffinage",
-    "tour.refine.s1.body": "Colle ton minerai (exemple déjà rempli). L'outil calcule les minéraux obtenus selon tes compétences et le taux de base de la structure.",
-    "tour.refine.s2.title": "Rendements & valeur",
-    "tour.refine.s2.body": "Tu vois les minéraux produits et leur valeur Jita — pour décider : raffiner sur place, vendre le minerai brut, ou compresser.",
-    "tour.refine.s3.title": "Compression",
-    "tour.refine.s3.body": "En mode Compression, fixe tes objectifs minéraux : l'outil trouve le mélange compressé optimal à transporter.",
+    "tour.refine.tabs.title": "1. Deux modes",
+    "tour.refine.tabs.body": "Retraiter (minerai → minéraux) ou Compresser (trouver le mélange compressé optimal pour atteindre des objectifs minéraux).",
+    "tour.refine.rate.title": "2. Taux & compétences",
+    "tour.refine.rate.body": "Règle le taux de raffinage de base de la structure (NPC 50 %, Athanor, Tatara…) — les boutons préréglés font ça en un clic. Tes 3 compétences de retraitement s'ajoutent juste à côté.",
+    "tour.refine.ore.title": "3. Colle ton minerai",
+    "tour.refine.ore.body": "Une ligne = nom + quantité (exemple pré-rempli). Tu peux coller un scan de cargo entier.",
+    "tour.refine.run.title": "4. Calculer",
+    "tour.refine.run.body": "La suite applique ton taux + compétences et sort les minéraux obtenus avec leur valeur.",
+    "tour.refine.result.title": "5. Rendements & valeur",
+    "tour.refine.result.body": "Minéraux produits, valeur ISK (base achat ou vente), et la comparaison brut vs raffiné pour décider quoi vendre. En mode Compression, c'est le mix compressé optimal qui s'affiche.",
   },
   en: {
-    "tour.refine.s1.title": "Reprocessing",
-    "tour.refine.s1.body": "Paste your ore (sample pre-filled). The tool computes the minerals you get from your skills and the structure's base rate.",
-    "tour.refine.s2.title": "Yields & value",
-    "tour.refine.s2.body": "You see the minerals produced and their Jita value — to decide: refine on site, sell raw ore, or compress.",
-    "tour.refine.s3.title": "Compression",
-    "tour.refine.s3.body": "In Compression mode, set your mineral targets: the tool finds the optimal compressed mix to haul.",
+    "tour.refine.tabs.title": "1. Two modes",
+    "tour.refine.tabs.body": "Reprocess (ore → minerals) or Compress (find the optimal compressed mix to hit mineral targets).",
+    "tour.refine.rate.title": "2. Rate & skills",
+    "tour.refine.rate.body": "Set the structure base refine rate (NPC 50%, Athanor, Tatara…) — the preset buttons do it in one click. Your 3 reprocessing skills add up right next to it.",
+    "tour.refine.ore.title": "3. Paste your ore",
+    "tour.refine.ore.body": "One line = name + quantity (sample pre-filled). You can paste a whole cargo scan.",
+    "tour.refine.run.title": "4. Compute",
+    "tour.refine.run.body": "The suite applies your rate + skills and outputs the minerals produced with their value.",
+    "tour.refine.result.title": "5. Yields & value",
+    "tour.refine.result.body": "Minerals produced, ISK value (buy or sell basis), and a raw-vs-refined comparison to decide what to sell. In Compress mode, the optimal compressed mix shows here.",
   },
 });

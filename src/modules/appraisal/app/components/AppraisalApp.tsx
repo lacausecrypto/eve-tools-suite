@@ -106,19 +106,20 @@ export function AppraisalApp() {
               <Receipt className="h-4 w-4" /> {t("appraisal.input.title")}
             </div>
             <Textarea
+              data-tour="appraisal.input"
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder={t("appraisal.input.placeholder")}
               className="h-56 resize-none font-mono text-xs"
               spellCheck={false}
             />
-            <label className="mt-2 flex items-center justify-between gap-2">
+            <label data-tour="appraisal.vwap" className="mt-2 flex items-center justify-between gap-2">
               <span className="text-xs text-muted-foreground">
                 {t("appraisal.vwap.label")} <span className="text-muted-foreground/70">{t("appraisal.vwap.hint")}</span>
               </span>
               <Switch checked={vwap} onCheckedChange={setVwap} />
             </label>
-            <Button onClick={() => run()} disabled={!text.trim() || status.kind === "loading"} className="mt-2 w-full">
+            <Button data-tour="appraisal.run" onClick={() => run()} disabled={!text.trim() || status.kind === "loading"} className="mt-2 w-full">
               {status.kind === "loading" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
               {t("appraisal.run")}
             </Button>
@@ -147,7 +148,7 @@ export function AppraisalApp() {
         </div>
 
         {/* Résultats */}
-        <div>
+        <div data-tour="appraisal.results">
           {status.kind === "idle" && <Intro />}
           {status.kind === "loading" && (
             <div className="flex h-56 items-center justify-center rounded-xl border border-dashed border-border text-sm text-muted-foreground">

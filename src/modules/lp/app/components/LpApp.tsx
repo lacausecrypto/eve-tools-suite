@@ -65,7 +65,7 @@ export function LpApp() {
       {/* Configuration */}
       <div className="mb-4 rounded-xl border border-border bg-card/40 p-4">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <label className="block lg:col-span-2">
+          <label data-tour="lp.corp" className="block lg:col-span-2">
             <span className="mb-1 block text-xs text-muted-foreground">{t("lp.corp.label")}</span>
             <Input
               value={query}
@@ -82,7 +82,7 @@ export function LpApp() {
           </label>
           <label className="block">
             <span className="mb-1 block text-xs text-muted-foreground">{t("lp.basis.label")}</span>
-            <div className="flex h-9 rounded-md border border-border/60 p-0.5 text-xs">
+            <div data-tour="lp.basis" className="flex h-9 rounded-md border border-border/60 p-0.5 text-xs">
               {(["sell", "buy"] as const).map((b) => (
                 <button
                   key={b}
@@ -97,6 +97,7 @@ export function LpApp() {
           <label className="block">
             <span className="mb-1 block text-xs text-muted-foreground">{t("lp.lpBalance.label")}</span>
             <Input
+              data-tour="lp.balance"
               type="number"
               value={lpBalance || ""}
               onChange={(e) => setLpBalance(Number(e.target.value) || 0)}
@@ -105,7 +106,7 @@ export function LpApp() {
           </label>
         </div>
 
-        <div className="mt-3 flex flex-wrap items-center gap-4 text-xs">
+        <div data-tour="lp.fees" className="mt-3 flex flex-wrap items-center gap-4 text-xs">
           <label className="flex items-center gap-1.5">
             <span className="text-muted-foreground">{t("lp.tax")}</span>
             <Input type="number" value={fees.salesTaxPct} onChange={(e) => setFees({ salesTaxPct: Number(e.target.value) || 0 })} className="h-7 w-16" />

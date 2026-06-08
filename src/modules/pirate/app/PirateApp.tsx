@@ -523,7 +523,7 @@ export function PirateApp() {
           <Button
             variant={showWatchlist ? "default" : "outline"}
             size="sm"
-            onClick={() => setShowWatchlist((v) => !v)}
+            data-tour="pirate.watchlist" onClick={() => setShowWatchlist((v) => !v)}
             className="ml-auto"
           >
             <Star className="size-3.5" />
@@ -603,10 +603,10 @@ export function PirateApp() {
             onKeyDown={onKeydown}
             spellCheck={false}
             className="min-h-24 font-mono text-[13px]"
-            placeholder={t("pirate.input.placeholder")}
+            data-tour="pirate.input" placeholder={t("pirate.input.placeholder")}
           />
           <div className="flex gap-2">
-            <Button onClick={() => analyze()} disabled={loading}>
+            <Button data-tour="pirate.analyze" onClick={() => analyze()} disabled={loading}>
               {loading ? t("pirate.input.analyzing") : t("pirate.input.analyze")}
             </Button>
             <Button variant="outline" onClick={clearAll}>

@@ -3,7 +3,6 @@ import { snapshot } from "@/core/tour/demo";
 import type { ModuleTour } from "@/core/tour/types";
 import { useAbyssal } from "./app/store";
 
-/** Visite guidée de l'Abyssal Appraiser (roll d'exemple sauvegardé). */
 export const abyssalTour: ModuleTour = {
   id: "abyssal",
   demo: () => {
@@ -26,27 +25,32 @@ export const abyssalTour: ModuleTour = {
     return restore;
   },
   steps: [
-    { anchor: "abyssal.root", titleKey: "tour.abyssal.s1.title", bodyKey: "tour.abyssal.s1.body" },
-    { anchor: "abyssal.root", titleKey: "tour.abyssal.s2.title", bodyKey: "tour.abyssal.s2.body" },
-    { anchor: "abyssal.root", titleKey: "tour.abyssal.s3.title", bodyKey: "tour.abyssal.s3.body" },
+    { anchor: "abyssal.tabs", titleKey: "tour.abyssal.tabs.title", bodyKey: "tour.abyssal.tabs.body" },
+    { anchor: "abyssal.link", titleKey: "tour.abyssal.link.title", bodyKey: "tour.abyssal.link.body" },
+    { anchor: "abyssal.evaluate", titleKey: "tour.abyssal.evaluate.title", bodyKey: "tour.abyssal.evaluate.body" },
+    { anchor: "abyssal.saved", titleKey: "tour.abyssal.saved.title", bodyKey: "tour.abyssal.saved.body" },
   ],
 };
 
 registerMessages({
   fr: {
-    "tour.abyssal.s1.title": "Qualité d'un roll",
-    "tour.abyssal.s1.body": "Évalue un module abyssal (colle un lien de chat, ou explore les plages par famille). Un roll d'exemple est déjà sauvegardé.",
-    "tour.abyssal.s2.title": "Plages par attribut",
-    "tour.abyssal.s2.body": "Chaque attribut est comparé à sa plage théorique min–max selon le mutaplasmide : tu vois d'un coup d'œil les bons et mauvais axes.",
-    "tour.abyssal.s3.title": "God-roll & valeur",
-    "tour.abyssal.s3.body": "Un score global repère les god-rolls et une estimation de revente (MutaMarket) te dit si ça vaut le coup de vendre.",
+    "tour.abyssal.tabs.title": "1. Évaluer ou Explorer",
+    "tour.abyssal.tabs.body": "Évaluer : coller un module abyssal pour noter ses rolls. Explorer : voir les plages théoriques min–max par famille de mutaplasmide.",
+    "tour.abyssal.link.title": "2. Le lien du module",
+    "tour.abyssal.link.body": "Colle le lien de chat d'un module muté (clic-droit → Copier, dans le jeu). La suite lit ses attributs réels.",
+    "tour.abyssal.evaluate.title": "3. Évaluer",
+    "tour.abyssal.evaluate.body": "Chaque attribut est comparé à sa plage théorique → un score de qualité global (god-roll détecté) et une estimation de revente.",
+    "tour.abyssal.saved.title": "4. Tes rolls sauvegardés",
+    "tour.abyssal.saved.body": "Les rolls évalués s'enregistrent ici (un exemple est affiché) avec leur estimation MutaMarket — pratique pour comparer ton stock.",
   },
   en: {
-    "tour.abyssal.s1.title": "Roll quality",
-    "tour.abyssal.s1.body": "Appraise an abyssal module (paste a chat link, or explore ranges by family). A sample roll is already saved.",
-    "tour.abyssal.s2.title": "Per-attribute ranges",
-    "tour.abyssal.s2.body": "Each attribute is compared to its theoretical min–max range for the mutaplasmid: you see good and bad axes at a glance.",
-    "tour.abyssal.s3.title": "God-roll & value",
-    "tour.abyssal.s3.body": "An overall score spots god-rolls and a resale estimate (MutaMarket) tells you whether it's worth selling.",
+    "tour.abyssal.tabs.title": "1. Evaluate or Explore",
+    "tour.abyssal.tabs.body": "Evaluate: paste an abyssal module to score its rolls. Explore: see theoretical min–max ranges per mutaplasmid family.",
+    "tour.abyssal.link.title": "2. The module link",
+    "tour.abyssal.link.body": "Paste a mutated module's chat link (right-click → Copy, in game). The suite reads its real attributes.",
+    "tour.abyssal.evaluate.title": "3. Evaluate",
+    "tour.abyssal.evaluate.body": "Each attribute is compared to its theoretical range → an overall quality score (god-roll detected) and a resale estimate.",
+    "tour.abyssal.saved.title": "4. Your saved rolls",
+    "tour.abyssal.saved.body": "Evaluated rolls are saved here (a sample is shown) with their MutaMarket estimate — handy to compare your stock.",
   },
 });

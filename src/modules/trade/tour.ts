@@ -5,7 +5,6 @@ import { useTrade } from "./app/store";
 
 const DEMO_MB = "Tritanium\t500000\nPyerite\t120000\nMexallon\t30000\nIsogen\t8000";
 
-/** Visite guidée du Trade Co-Pilot (liste multibuy d'exemple pré-remplie). */
 export const tradeTour: ModuleTour = {
   id: "trade",
   demo: () => {
@@ -14,27 +13,27 @@ export const tradeTour: ModuleTour = {
     return restore;
   },
   steps: [
-    { anchor: "trade.root", titleKey: "tour.trade.s1.title", bodyKey: "tour.trade.s1.body" },
-    { anchor: "trade.root", titleKey: "tour.trade.s2.title", bodyKey: "tour.trade.s2.body" },
-    { anchor: "trade.root", titleKey: "tour.trade.s3.title", bodyKey: "tour.trade.s3.body" },
+    { anchor: "trade.tabs", titleKey: "tour.trade.tabs.title", bodyKey: "tour.trade.tabs.body" },
+    { anchor: "trade.fees", titleKey: "tour.trade.fees.title", bodyKey: "tour.trade.fees.body" },
+    { anchor: "trade.tabs", titleKey: "tour.trade.profit.title", bodyKey: "tour.trade.profit.body" },
   ],
 };
 
 registerMessages({
   fr: {
-    "tour.trade.s1.title": "Où faire de l'ISK",
-    "tour.trade.s1.body": "Trois modes : station-trading (scanne un hub et classe les meilleurs flips), arbitrage inter-hubs, et multibuy/transport.",
-    "tour.trade.s2.title": "Multibuy chiffré",
-    "tour.trade.s2.body": "Un exemple de liste multibuy est pré-rempli : compare le coût d'achat entre hubs et planifie ton transport (cargo, sauts).",
-    "tour.trade.s3.title": "Profit net & ROI",
-    "tour.trade.s3.body": "Chaque opportunité affiche le profit net (taxes/courtage inclus), le ROI et le nombre de sauts — pour trier les vrais bons plans.",
+    "tour.trade.tabs.title": "1. Quatre modes",
+    "tour.trade.tabs.body": "Scanner station (flips d'un hub), Scanner arbitrage (écarts inter-hubs), Planificateur d'itinéraire, et Panier multibuy (un exemple est rempli).",
+    "tour.trade.fees.title": "2. Tes frais",
+    "tour.trade.fees.body": "Le courtage (%) et la taxe de vente (%) s'appliquent à TOUS les calculs de profit, dans tous les onglets — règle-les une seule fois ici.",
+    "tour.trade.profit.title": "3. Profit net & transport",
+    "tour.trade.profit.body": "Chaque opportunité affiche le profit net (frais inclus), le ROI et le nombre de sauts ; les scanners exportent vers le panier multibuy pour planifier l'achat et le transport.",
   },
   en: {
-    "tour.trade.s1.title": "Where to make ISK",
-    "tour.trade.s1.body": "Three modes: station-trading (scan a hub and rank the best flips), inter-hub arbitrage, and multibuy/hauling.",
-    "tour.trade.s2.title": "Priced multibuy",
-    "tour.trade.s2.body": "A sample multibuy list is pre-filled: compare buy cost across hubs and plan your hauling (cargo, jumps).",
-    "tour.trade.s3.title": "Net profit & ROI",
-    "tour.trade.s3.body": "Each opportunity shows net profit (taxes/broker included), ROI and jump count — to sort the real winners.",
+    "tour.trade.tabs.title": "1. Four modes",
+    "tour.trade.tabs.body": "Station scanner (one-hub flips), Arbitrage scanner (inter-hub spreads), Route planner, and Multibuy basket (a sample is filled).",
+    "tour.trade.fees.title": "2. Your fees",
+    "tour.trade.fees.body": "Broker (%) and sales tax (%) apply to ALL profit calculations, in every tab — set them once here.",
+    "tour.trade.profit.title": "3. Net profit & hauling",
+    "tour.trade.profit.body": "Each opportunity shows net profit (fees included), ROI and jump count; the scanners export to the multibuy basket to plan buying and hauling.",
   },
 });

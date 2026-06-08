@@ -3,7 +3,6 @@ import { snapshot } from "@/core/tour/demo";
 import type { ModuleTour } from "@/core/tour/types";
 import { useLp } from "./app/store";
 
-/** Visite guidée du LP Converter (corpo + solde LP d'exemple). */
 export const lpTour: ModuleTour = {
   id: "lp",
   demo: () => {
@@ -13,27 +12,32 @@ export const lpTour: ModuleTour = {
     return restore;
   },
   steps: [
-    { anchor: "lp.root", titleKey: "tour.lp.s1.title", bodyKey: "tour.lp.s1.body" },
-    { anchor: "lp.root", titleKey: "tour.lp.s2.title", bodyKey: "tour.lp.s2.body" },
-    { anchor: "lp.root", titleKey: "tour.lp.s3.title", bodyKey: "tour.lp.s3.body" },
+    { anchor: "lp.corp", titleKey: "tour.lp.corp.title", bodyKey: "tour.lp.corp.body" },
+    { anchor: "lp.basis", titleKey: "tour.lp.basis.title", bodyKey: "tour.lp.basis.body" },
+    { anchor: "lp.balance", titleKey: "tour.lp.balance.title", bodyKey: "tour.lp.balance.body" },
+    { anchor: "lp.fees", titleKey: "tour.lp.fees.title", bodyKey: "tour.lp.fees.body" },
   ],
 };
 
 registerMessages({
   fr: {
-    "tour.lp.s1.title": "Valoriser tes LP",
-    "tour.lp.s1.body": "Choisis une corporation LP (un exemple est sélectionné). L'outil charge son LP store et classe chaque échange en ISK par point.",
-    "tour.lp.s2.title": "ISK / LP net",
-    "tour.lp.s2.body": "Le classement tient compte du coût d'achat des items, des frais de vente et de la base de prix — pour un ISK/LP réaliste.",
-    "tour.lp.s3.title": "Ton solde",
-    "tour.lp.s3.body": "Renseigne ton solde de LP (ici 150k) pour voir combien rapporte ta réserve avec le meilleur échange.",
+    "tour.lp.corp.title": "1. La corporation",
+    "tour.lp.corp.body": "Choisis une corpo LP (autocomplétion ; un exemple est sélectionné). La suite charge son LP store et tous les échanges possibles.",
+    "tour.lp.basis.title": "2. Base de prix",
+    "tour.lp.basis.body": "Revente en Sell (vente immédiate) ou Buy (ordre d'achat) — ça change le profit, donc le classement ISK/LP.",
+    "tour.lp.balance.title": "3. Ton solde LP",
+    "tour.lp.balance.body": "Saisis ton solde (ici 150k) pour voir combien rapporte ta réserve avec le meilleur échange, et combien de fois tu peux le réaliser.",
+    "tour.lp.fees.title": "4. Frais & filtres",
+    "tour.lp.fees.body": "Affine avec tes taxes/courtage, un volume minimum et « rentables uniquement ». Le tableau en dessous classe chaque offre par ISK net par point de loyauté.",
   },
   en: {
-    "tour.lp.s1.title": "Value your LP",
-    "tour.lp.s1.body": "Pick an LP corporation (one is selected). The tool loads its LP store and ranks each trade by ISK per point.",
-    "tour.lp.s2.title": "Net ISK / LP",
-    "tour.lp.s2.body": "The ranking accounts for item buy cost, sale fees and price basis — for a realistic ISK/LP.",
-    "tour.lp.s3.title": "Your balance",
-    "tour.lp.s3.body": "Enter your LP balance (here 150k) to see what your reserve is worth with the best trade.",
+    "tour.lp.corp.title": "1. The corporation",
+    "tour.lp.corp.body": "Pick an LP corp (autocomplete; a sample is selected). The suite loads its LP store and every possible trade.",
+    "tour.lp.basis.title": "2. Price basis",
+    "tour.lp.basis.body": "Resell at Sell (instant sell) or Buy (buy order) — it changes profit, hence the ISK/LP ranking.",
+    "tour.lp.balance.title": "3. Your LP balance",
+    "tour.lp.balance.body": "Enter your balance (here 150k) to see what your reserve earns with the best trade, and how many times you can run it.",
+    "tour.lp.fees.title": "4. Fees & filters",
+    "tour.lp.fees.body": "Tune with your taxes/broker, a minimum volume and \"profitable only\". The table below ranks each offer by net ISK per loyalty point.",
   },
 });

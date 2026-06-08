@@ -3,7 +3,6 @@ import { snapshot } from "@/core/tour/demo";
 import type { ModuleTour } from "@/core/tour/types";
 import { useLossInput } from "./app/store";
 
-/** Visite guidée du Loss Analyzer (entrée d'exemple pré-remplie). */
 export const lossTour: ModuleTour = {
   id: "loss",
   demo: () => {
@@ -12,27 +11,27 @@ export const lossTour: ModuleTour = {
     return restore;
   },
   steps: [
-    { anchor: "loss.root", titleKey: "tour.loss.s1.title", bodyKey: "tour.loss.s1.body" },
-    { anchor: "loss.root", titleKey: "tour.loss.s2.title", bodyKey: "tour.loss.s2.body" },
-    { anchor: "loss.root", titleKey: "tour.loss.s3.title", bodyKey: "tour.loss.s3.body" },
+    { anchor: "loss.input", titleKey: "tour.loss.input.title", bodyKey: "tour.loss.input.body" },
+    { anchor: "loss.run", titleKey: "tour.loss.run.title", bodyKey: "tour.loss.run.body" },
+    { anchor: "loss.body", titleKey: "tour.loss.body.title", bodyKey: "tour.loss.body.body" },
   ],
 };
 
 registerMessages({
   fr: {
-    "tour.loss.s1.title": "Autopsie de killmail",
-    "tour.loss.s1.body": "Colle un lien zKillboard, un id de killmail ou un pseudo (on cherche sa dernière perte). Un exemple est déjà rempli — clique Analyser.",
-    "tour.loss.s2.title": "Qui, comment, avec qui",
-    "tour.loss.s2.body": "L'outil reconstruit l'engagement : auteurs, taille du gang, valeur ISK détruite/droppée, et le fit reconstitué.",
-    "tour.loss.s3.title": "Ce qui aurait aidé",
-    "tour.loss.s3.body": "Des pistes heuristiques pointent les trous de résistance et ce qui aurait pu sauver le vaisseau (sans simuler le fit).",
+    "tour.loss.input.title": "1. L'entrée",
+    "tour.loss.input.body": "Colle un lien zKillboard, un id de killmail, ou simplement un pseudo de pilote (on récupère sa dernière perte). Un exemple est pré-rempli ; la touche Entrée lance aussi l'analyse.",
+    "tour.loss.run.title": "2. Analyser",
+    "tour.loss.run.body": "La suite récupère le killmail (ESI + zKillboard) et reconstruit l'engagement.",
+    "tour.loss.body.title": "3. Le post-mortem",
+    "tour.loss.body.body": "Ici s'affichent : qui t'a tué, la taille du gang (solo → blob), la valeur détruite/droppée, le fit reconstitué slot par slot, et des pistes sur ce qui aurait pu sauver le vaisseau.",
   },
   en: {
-    "tour.loss.s1.title": "Killmail post-mortem",
-    "tour.loss.s1.body": "Paste a zKillboard link, a killmail id or a name (we find their latest loss). A sample is pre-filled — click Analyze.",
-    "tour.loss.s2.title": "Who, how, with whom",
-    "tour.loss.s2.body": "The tool rebuilds the engagement: attackers, gang size, ISK destroyed/dropped, and the reconstructed fit.",
-    "tour.loss.s3.title": "What would have helped",
-    "tour.loss.s3.body": "Heuristics point out resistance holes and what could have saved the ship (without simulating the fit).",
+    "tour.loss.input.title": "1. The input",
+    "tour.loss.input.body": "Paste a zKillboard link, a killmail id, or just a pilot name (we fetch their latest loss). A sample is pre-filled; Enter also runs it.",
+    "tour.loss.run.title": "2. Analyze",
+    "tour.loss.run.body": "The suite fetches the killmail (ESI + zKillboard) and rebuilds the engagement.",
+    "tour.loss.body.title": "3. The post-mortem",
+    "tour.loss.body.body": "Here you get: who killed you, gang size (solo → blob), ISK destroyed/dropped, the reconstructed fit slot by slot, and hints on what could have saved the ship.",
   },
 });

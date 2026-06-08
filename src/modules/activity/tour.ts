@@ -3,7 +3,6 @@ import { snapshot } from "@/core/tour/demo";
 import type { ModuleTour } from "@/core/tour/types";
 import { useActivity } from "./app/store";
 
-/** Visite guidée de l'Activity Journal (session de ratting d'exemple). */
 export const activityTour: ModuleTour = {
   id: "activity",
   demo: () => {
@@ -19,27 +18,32 @@ export const activityTour: ModuleTour = {
     return restore;
   },
   steps: [
-    { anchor: "activity.root", titleKey: "tour.activity.s1.title", bodyKey: "tour.activity.s1.body" },
-    { anchor: "activity.root", titleKey: "tour.activity.s2.title", bodyKey: "tour.activity.s2.body" },
-    { anchor: "activity.root", titleKey: "tour.activity.s3.title", bodyKey: "tour.activity.s3.body" },
+    { anchor: "activity.tabs", titleKey: "tour.activity.tabs.title", bodyKey: "tour.activity.tabs.body" },
+    { anchor: "activity.timer", titleKey: "tour.activity.timer.title", bodyKey: "tour.activity.timer.body" },
+    { anchor: "activity.loot", titleKey: "tour.activity.loot.title", bodyKey: "tour.activity.loot.body" },
+    { anchor: "activity.finish", titleKey: "tour.activity.finish.title", bodyKey: "tour.activity.finish.body" },
   ],
 };
 
 registerMessages({
   fr: {
-    "tour.activity.s1.title": "Journal d'activité",
-    "tour.activity.s1.body": "Choisis une activité (ratting, abyssal, missions, minage…) et un site. Une session d'exemple est déjà remplie.",
-    "tour.activity.s2.title": "Butin valorisé",
-    "tour.activity.s2.body": "Note ton loot : l'outil le valorise au prix Jita (achat/vente) et agrège la valeur totale de la session.",
-    "tour.activity.s3.title": "ISK / heure",
-    "tour.activity.s3.body": "Lance le chrono : à la clôture, l'outil calcule ton ISK/heure et garde l'historique pour estimer tes taux de drop.",
+    "tour.activity.tabs.title": "1. Session, Historique, Drops",
+    "tour.activity.tabs.body": "Trois vues. Dans la session, choisis ton activité (ratting, abyssal, mission, minage…) et le site juste en dessous.",
+    "tour.activity.timer.title": "2. Le chrono",
+    "tour.activity.timer.body": "Démarrer / Pause / Reset : c'est ce chrono qui transforme ton butin en ISK/heure.",
+    "tour.activity.loot.title": "3. Ton butin",
+    "tour.activity.loot.body": "Colle ton loot (une ligne = objet + quantité ; exemple rempli) : la suite le valorise au prix Jita automatiquement.",
+    "tour.activity.finish.title": "4. Clôturer",
+    "tour.activity.finish.body": "Enregistre la session dans l'historique, qui agrège tes revenus moyens et estime tes taux de drop par activité.",
   },
   en: {
-    "tour.activity.s1.title": "Activity journal",
-    "tour.activity.s1.body": "Pick an activity (ratting, abyssal, missions, mining…) and a site. A sample session is already filled.",
-    "tour.activity.s2.title": "Valued loot",
-    "tour.activity.s2.body": "Log your loot: the tool values it at Jita prices (buy/sell) and aggregates the session's total value.",
-    "tour.activity.s3.title": "ISK / hour",
-    "tour.activity.s3.body": "Start the timer: on close, the tool computes your ISK/hour and keeps history to estimate your drop rates.",
+    "tour.activity.tabs.title": "1. Session, History, Drops",
+    "tour.activity.tabs.body": "Three views. In the session, pick your activity (ratting, abyssal, mission, mining…) and the site just below.",
+    "tour.activity.timer.title": "2. The timer",
+    "tour.activity.timer.body": "Start / Pause / Reset: this timer is what turns your loot into ISK/hour.",
+    "tour.activity.loot.title": "3. Your loot",
+    "tour.activity.loot.body": "Paste your loot (one line = item + quantity; sample filled): the suite values it at Jita prices automatically.",
+    "tour.activity.finish.title": "4. Close it",
+    "tour.activity.finish.body": "Save the session to history, which aggregates your average income and estimates drop rates per activity.",
   },
 });

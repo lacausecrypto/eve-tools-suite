@@ -67,6 +67,7 @@ export function EvaluateView() {
             <Zap className="h-4 w-4" /> {t("abyssal.eval.linkTitle")}
           </div>
           <Textarea
+            data-tour="abyssal.link"
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder={t("abyssal.eval.placeholder")}
@@ -74,7 +75,7 @@ export function EvaluateView() {
             spellCheck={false}
           />
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <Button size="sm" onClick={run} disabled={!text.trim() || status.kind === "loading"}>
+            <Button data-tour="abyssal.evaluate" size="sm" onClick={run} disabled={!text.trim() || status.kind === "loading"}>
               {status.kind === "loading" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
               {t("abyssal.eval.run")}
             </Button>
@@ -97,7 +98,7 @@ export function EvaluateView() {
       </div>
 
       {/* Historique */}
-      <div>
+      <div data-tour="abyssal.saved">
         {saved.length > 0 ? (
           <div className="rounded-xl border border-border bg-card/40 p-3">
             <div className="mb-2 text-sm font-semibold">{t("abyssal.eval.savedTitle")}</div>

@@ -222,7 +222,7 @@ export function Calculator() {
           }
         >
           {/* Essentiels */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div data-tour="industry.recipe" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <Field label={t("ind.calc.output")} className="col-span-2">
               <ItemCombobox
                 value={recipe.outputName}
@@ -279,7 +279,7 @@ export function Calculator() {
             </div>
           )}
 
-          <div className="mt-4 space-y-1.5">
+          <div data-tour="industry.materials" className="mt-4 space-y-1.5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-muted-foreground">{t("ind.calc.materials")}</span>
               <Button variant="ghost" size="sm" onClick={addMat}>
@@ -316,7 +316,7 @@ export function Calculator() {
             <Field label={t("ind.calc.system")} hint={t("ind.calc.system.hint")}>
               <div className="flex gap-1.5">
                 <Input
-                  value={meta.systemName}
+                  data-tour="industry.system" value={meta.systemName}
                   onChange={(e) => setMeta({ systemName: e.target.value })}
                   placeholder="Jita"
                   spellCheck={false}
@@ -368,14 +368,14 @@ export function Calculator() {
           )}
         </Section>
 
-        <Button onClick={calculate} disabled={!canCalc} className="w-full">
+        <Button data-tour="industry.compute" onClick={calculate} disabled={!canCalc} className="w-full">
           {busy === "calc" ? <Loader2 className="h-4 w-4 animate-spin" /> : <CalcIcon className="h-4 w-4" />}
           {t("ind.calc.compute")}
         </Button>
       </div>
 
       {/* ── Colonne résultat ── */}
-      <div className="space-y-4">
+      <div data-tour="industry.result" className="space-y-4">
         {status === "error" && (
           <div className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive">{error}</div>
         )}

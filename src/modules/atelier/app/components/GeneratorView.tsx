@@ -100,7 +100,7 @@ export function GeneratorView() {
               value={need.hull}
               onChange={(e) => set({ hull: e.target.value })}
               onKeyDown={(e) => e.key === "Enter" && run()}
-              placeholder={t("atelier.hull.placeholder")}
+              data-tour="atelier.hull" placeholder={t("atelier.hull.placeholder")}
               list="atelier-hulls"
               spellCheck={false}
             />
@@ -167,7 +167,7 @@ export function GeneratorView() {
             </Select>
           </Field>
 
-          <Button onClick={run} disabled={!need.hull.trim() || status.kind === "loading"} className="w-full">
+          <Button data-tour="atelier.generate" onClick={run} disabled={!need.hull.trim() || status.kind === "loading"} className="w-full">
             {status.kind === "loading" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
             {t("atelier.btn.generate")}
           </Button>

@@ -18,7 +18,7 @@ export function ActivityApp() {
   const [tab, setTab] = useState<Tab>("session");
   return (
     <div data-tour="activity.root" className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
-      <div className="mb-4 flex rounded-lg border border-border bg-card/40 p-1">
+      <div data-tour="activity.tabs" className="mb-4 flex rounded-lg border border-border bg-card/40 p-1">
         <TabBtn active={tab === "session"} onClick={() => setTab("session")} icon={<Timer className="h-4 w-4" />}>
           {t("activity.tab.session")}
         </TabBtn>

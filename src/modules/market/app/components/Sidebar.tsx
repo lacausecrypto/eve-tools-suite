@@ -55,7 +55,7 @@ export function Sidebar() {
             setSearchErr(false);
           }}
           onKeyDown={(e) => e.key === "Enter" && runSearch()}
-          placeholder={t("market.search.placeholder")}
+          data-tour="market.search" placeholder={t("market.search.placeholder")}
           spellCheck={false}
           className="pl-8 pr-8"
         />

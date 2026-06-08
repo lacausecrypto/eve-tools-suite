@@ -121,7 +121,7 @@ export function SkillsApp() {
       {/* ----- Configuration ----- */}
       <div className="space-y-4">
         {/* Import & clone */}
-        <Card>
+        <Card data-tour="skills.character">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2 text-sm">
               <GraduationCap className="h-4 w-4 text-fleur" /> {t("sk.character")}
@@ -170,7 +170,7 @@ export function SkillsApp() {
         </Card>
 
         {/* Attributs & implants */}
-        <Card>
+        <Card data-tour="skills.attributes">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center justify-between text-sm">
               <span className="flex items-center gap-2">
@@ -219,6 +219,7 @@ export function SkillsApp() {
           </CardHeader>
           <CardContent className="pt-0">
             <Input
+              data-tour="skills.search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder={t("sk.search")}
@@ -250,14 +251,14 @@ export function SkillsApp() {
 
       {/* ----- Plan & remap ----- */}
       <div className="space-y-4">
-        <div className="grid grid-cols-3 gap-3">
+        <div data-tour="skills.totals" className="grid grid-cols-3 gap-3">
           <Kpi label={t("sk.total.sp")} value={fmtSp(tSp)} />
           <Kpi label={t("sk.total.time")} value={fmtDuration(currentSeconds)} />
           <Kpi label={t("sk.skills")} value={String(rows.length)} />
         </div>
 
         {/* Remap optimal */}
-        <Card className="border-fleur/40 bg-fleur/5">
+        <Card data-tour="skills.remap" className="border-fleur/40 bg-fleur/5">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2 text-sm">
               <Wand2 className="h-4 w-4 text-fleur" /> {t("sk.remap")}

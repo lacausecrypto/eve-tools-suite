@@ -115,7 +115,7 @@ export function RefineApp() {
   return (
     <div data-tour="refine.root" className="mx-auto w-full max-w-6xl px-5 py-5 animate-fade-in">
       {/* Onglets */}
-      <div className="mb-4 flex rounded-lg border border-border bg-card/40 p-1">
+      <div data-tour="refine.tabs" className="mb-4 flex rounded-lg border border-border bg-card/40 p-1">
         <Tab active={s.mode === "reprocess"} onClick={() => s.setMode("reprocess")} icon={<Recycle className="h-4 w-4" />}>
           {t("refine.tab.reprocess")}
         </Tab>
@@ -135,13 +135,14 @@ export function RefineApp() {
                 <Boxes className="h-4 w-4" /> {t("refine.reprocess.title")}
               </div>
               <Textarea
+                data-tour="refine.ore"
                 value={s.text}
                 onChange={(e) => s.setText(e.target.value)}
                 placeholder={t("refine.reprocess.placeholder")}
                 className="h-56 resize-none font-mono text-xs"
                 spellCheck={false}
               />
-              <Button onClick={runReprocess} disabled={!s.text.trim() || status.kind === "loading"} className="mt-2 w-full">
+              <Button data-tour="refine.run" onClick={runReprocess} disabled={!s.text.trim() || status.kind === "loading"} className="mt-2 w-full">
                 {status.kind === "loading" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
                 {t("refine.reprocess.run")}
               </Button>
@@ -151,7 +152,7 @@ export function RefineApp() {
           )}
         </div>
 
-        <div>
+        <div data-tour="refine.result">
           {status.kind === "idle" && <Intro mode={s.mode} />}
           {status.kind === "loading" && (
             <div className="flex h-56 items-center justify-center rounded-xl border border-dashed border-border text-sm text-muted-foreground">
@@ -178,7 +179,7 @@ function ConfigCard({ rate }: { rate: number }) {
         <div>
           <span className="mb-1 block text-xs text-muted-foreground">{t("refine.config.baseRate")}</span>
           <div className="flex items-center gap-1">
-            <Input type="number" value={s.baseRatePct} onChange={(e) => s.setBaseRate(Number(e.target.value) || 0)} className="h-8 w-20" />
+            <Input data-tour="refine.rate" type="number" value={s.baseRatePct} onChange={(e) => s.setBaseRate(Number(e.target.value) || 0)} className="h-8 w-20" />
             <span className="text-xs text-muted-foreground">%</span>
             <div className="ml-1 flex gap-1">
               {RATE_PRESETS.map((p) => (

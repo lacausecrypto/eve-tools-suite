@@ -67,7 +67,7 @@ export function MiningApp() {
           trigger={
             <Button size="sm">
               <Rocket className="h-4 w-4" />
-              <span className="hidden sm:inline">{t("mining.session.new")}</span>
+              <span data-tour="mining.newSession" className="hidden sm:inline">{t("mining.session.new")}</span>
             </Button>
           }
         />

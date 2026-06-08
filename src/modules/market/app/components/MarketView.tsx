@@ -174,7 +174,7 @@ export function MarketView() {
           <Button
             variant={watched ? "secondary" : "outline"}
             size="sm"
-            onClick={() => toggleWatch(selectedTypeId)}
+            data-tour="market.watch" onClick={() => toggleWatch(selectedTypeId)}
           >
             <Star className={cn("h-4 w-4", watched && "fill-current text-amber-400")} />
             {t("market.action.watch")}
@@ -182,7 +182,7 @@ export function MarketView() {
           <Button
             variant={showHistory ? "secondary" : "outline"}
             size="sm"
-            onClick={() => setShowHistory((s) => !s)}
+            data-tour="market.analyze" onClick={() => setShowHistory((s) => !s)}
           >
             <BarChart3 className="h-4 w-4" />
             {t("market.action.analyze")}

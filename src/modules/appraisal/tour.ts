@@ -5,7 +5,6 @@ import { useAppraisal } from "./app/store";
 
 const DEMO = "Tritanium 50000\nPyerite 12000\nMexallon 3000\nIsogen 800\nNocxium 120";
 
-/** Visite guidée de l'Appraisal (lot d'exemple pré-rempli). */
 export const appraisalTour: ModuleTour = {
   id: "appraisal",
   demo: () => {
@@ -14,27 +13,32 @@ export const appraisalTour: ModuleTour = {
     return restore;
   },
   steps: [
-    { anchor: "appraisal.root", titleKey: "tour.appraisal.s1.title", bodyKey: "tour.appraisal.s1.body" },
-    { anchor: "appraisal.root", titleKey: "tour.appraisal.s2.title", bodyKey: "tour.appraisal.s2.body" },
-    { anchor: "appraisal.root", titleKey: "tour.appraisal.s3.title", bodyKey: "tour.appraisal.s3.body" },
+    { anchor: "appraisal.input", titleKey: "tour.appraisal.input.title", bodyKey: "tour.appraisal.input.body" },
+    { anchor: "appraisal.vwap", titleKey: "tour.appraisal.vwap.title", bodyKey: "tour.appraisal.vwap.body" },
+    { anchor: "appraisal.run", titleKey: "tour.appraisal.run.title", bodyKey: "tour.appraisal.run.body" },
+    { anchor: "appraisal.results", titleKey: "tour.appraisal.results.title", bodyKey: "tour.appraisal.results.body" },
   ],
 };
 
 registerMessages({
   fr: {
-    "tour.appraisal.s1.title": "Estimer un lot",
-    "tour.appraisal.s1.body": "Colle n'importe quoi (inventaire, scan de cargo, contenu de contrat, loot). Un exemple de minéraux est déjà collé ci-dessous.",
-    "tour.appraisal.s2.title": "Valeur multi-hubs",
-    "tour.appraisal.s2.body": "Lance l'estimation : valeur Jita achat/vente, volume total (m³) et EIV, comparables sur les autres hubs majeurs.",
-    "tour.appraisal.s3.title": "Bases & sauvegarde",
-    "tour.appraisal.s3.body": "Choisis la base de prix (achat/vente) et le hub, puis sauvegarde l'estimation pour la retrouver plus tard.",
+    "tour.appraisal.input.title": "1. Colle ton lot",
+    "tour.appraisal.input.body": "Colle ici n'importe quel texte EVE : inventaire, scan de cargo, contenu de contrat, loot. Un exemple est déjà collé — une ligne = un objet (avec sa quantité).",
+    "tour.appraisal.vwap.title": "2. Option VWAP",
+    "tour.appraisal.vwap.body": "Active VWAP pour des prix moyens pondérés par le volume échangé : plus robuste que la moyenne simple, surtout sur les marchés peu liquides.",
+    "tour.appraisal.run.title": "3. Estimer",
+    "tour.appraisal.run.body": "Lance l'estimation : la suite résout chaque objet et calcule sa valeur sur tous les hubs majeurs (Jita, Amarr, Dodixie, Rens, Hek).",
+    "tour.appraisal.results.title": "4. Résultat & détail",
+    "tour.appraisal.results.body": "Valeur totale achat/vente, volume (m³) et EIV s'affichent ici. Choisis le hub de référence, la base (vente/achat/split) pour trier le détail, et copie un résumé partageable.",
   },
   en: {
-    "tour.appraisal.s1.title": "Appraise a batch",
-    "tour.appraisal.s1.body": "Paste anything (inventory, cargo scan, contract contents, loot). A sample mineral list is already pasted below.",
-    "tour.appraisal.s2.title": "Multi-hub value",
-    "tour.appraisal.s2.body": "Run it: Jita buy/sell value, total volume (m³) and EIV, comparable across the other major hubs.",
-    "tour.appraisal.s3.title": "Bases & saving",
-    "tour.appraisal.s3.body": "Pick the price basis (buy/sell) and the hub, then save the appraisal to find it again later.",
+    "tour.appraisal.input.title": "1. Paste your batch",
+    "tour.appraisal.input.body": "Paste any EVE text here: inventory, cargo scan, contract contents, loot. A sample is already pasted — one line = one item (with its quantity).",
+    "tour.appraisal.vwap.title": "2. VWAP option",
+    "tour.appraisal.vwap.body": "Enable VWAP for volume-weighted average prices: more robust than a simple mean, especially on thin markets.",
+    "tour.appraisal.run.title": "3. Appraise",
+    "tour.appraisal.run.body": "Run it: the suite resolves each item and values it across all major hubs (Jita, Amarr, Dodixie, Rens, Hek).",
+    "tour.appraisal.results.title": "4. Result & breakdown",
+    "tour.appraisal.results.body": "Total buy/sell value, volume (m³) and EIV show here. Pick the reference hub, the basis (sell/buy/split) to sort the breakdown, and copy a shareable summary.",
   },
 });

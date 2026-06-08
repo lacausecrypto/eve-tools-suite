@@ -46,7 +46,7 @@ export function TradeApp() {
     <div data-tour="trade.root" className="mx-auto w-full max-w-7xl px-5 py-5 animate-fade-in">
       {/* Barre d'onglets + frais */}
       <div className="mb-4 flex flex-wrap items-center gap-2">
-        <div className="flex rounded-lg border border-border bg-card/40 p-1">
+        <div data-tour="trade.tabs" className="flex rounded-lg border border-border bg-card/40 p-1">
           <TabBtn active={tab === "station"} onClick={() => setTab("station")} icon={<Radar className="h-4 w-4" />}>
             {t("trade.tab.station")}
           </TabBtn>
@@ -75,7 +75,7 @@ export function TradeApp() {
 
         <Popover open={feesOpen} onOpenChange={setFeesOpen}>
           <PopoverTrigger asChild>
-            <button className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-border bg-card/40 px-3 py-2 text-sm hover:bg-muted/40">
+            <button data-tour="trade.fees" className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-border bg-card/40 px-3 py-2 text-sm hover:bg-muted/40">
               <Coins className="h-4 w-4 text-success" />
               <span className="text-muted-foreground">{t("trade.fees.label")}</span>
               <span className="font-medium">{fees.brokerFeePct}%</span>
