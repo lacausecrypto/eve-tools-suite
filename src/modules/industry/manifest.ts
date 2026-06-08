@@ -25,17 +25,17 @@ export const industryManifest: ToolModule = {
       "EVE (Material Efficiency, EIV, coût d'installation, surtaxe SCC), prix Jita " +
       "publics à l'appui ; suit tes jobs dans un carnet (ISK en production, profit " +
       "attendu vs réalisé) ; valorise ton inventaire. Prix publics → aucun login " +
-      "requis. Import ESI des jobs/actifs prêt (M5). Complète Mining + PI.",
+      "requis ; import ESI des jobs, actifs et wallet (coût réel FIFO) avec un perso connecté. Complète Mining + PI.",
     en:
       "Compute the real production cost with EVE's actual formulas (Material " +
       "Efficiency, EIV, job install cost, SCC surcharge) using public Jita prices; " +
       "track jobs in a ledger (ISK in production, expected vs realized profit); " +
-      "value your inventory. Public prices → no login needed. ESI import of " +
-      "jobs/assets wired (M5). Completes Mining + PI.",
+      "value your inventory. Public prices → no login needed. " +
+      "ESI import of jobs, assets and wallet (real FIFO cost) with a connected character. Completes Mining + PI.",
   },
   icon: Factory,
   accent: "hsl(var(--success))",
-  status: "beta",
+  status: "stable",
   version: "0.1.0",
   esi: {
     publicEsi: true,

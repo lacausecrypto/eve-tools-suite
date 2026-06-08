@@ -25,6 +25,7 @@ import { useTrade } from "../store";
 import { runStationScan, type Progress } from "../run";
 import type { ScanToken } from "../api";
 import type { StationDeal } from "../lib/types";
+import { DEFAULT_CAPTURE_PCT } from "../lib/scan";
 import { HUBS, HUB_LIST, type HubId } from "../lib/hubs";
 import { fmtIsk, fmtPct, fmtQty } from "../lib/format";
 import { NumField, ProgressBar } from "./bits";
@@ -161,6 +162,13 @@ export function StationScanner({
           label={t("trade.station.minVol")}
           value={station.minSellVol}
           onChange={(v) => setStation({ minSellVol: v ?? 0 })}
+        />
+        <NumField
+          label={t("trade.station.capture")}
+          value={station.captureSharePct ?? DEFAULT_CAPTURE_PCT}
+          onChange={(v) => setStation({ captureSharePct: Math.min(100, Math.max(0, v ?? 0)) })}
+          suffix="%"
+          hint={t("trade.station.capture.hint")}
         />
       </div>
 

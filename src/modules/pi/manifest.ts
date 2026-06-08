@@ -25,17 +25,17 @@ export const piManifest: ToolModule = {
     fr:
       "Simule ta PI dans le temps, pas juste un calculateur : modèle de decay des " +
       "extracteurs (formule officielle CCP), équilibrage extraction/usines, net " +
-      "ISK/heure avec taxe POCO et ROI. Mono-planète aujourd'hui ; heatmap, " +
-      "multi-planètes/alts et export Templates CCP à venir.",
+      "ISK/heure avec taxe POCO et ROI, plus un portefeuille multi-planètes / multi-alts " +
+      "(ISK/h total, capital investi, rentabilité, planning de récolte). Export/partage en JSON.",
     en:
       "Simulate your PI over time, not just a calculator: extractor decay model " +
       "(official CCP formula), extraction/factory balancing, net ISK/hour with POCO " +
-      "tax and ROI. Single-planet today; heatmap, multi-planet/alt and CCP template " +
-      "export coming next.",
+      "tax and ROI, plus a multi-planet / multi-alt portfolio " +
+      "(total ISK/h, invested capital, payback, harvest schedule). JSON export/share.",
   },
   icon: Orbit,
   accent: "hsl(var(--fc))",
-  status: "beta",
+  status: "stable",
   version: "0.1.0",
   esi: {
     publicEsi: true,

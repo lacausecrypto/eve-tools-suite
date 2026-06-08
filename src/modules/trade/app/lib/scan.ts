@@ -2,8 +2,9 @@
 import { flipProfit } from "./fees";
 import type { FeeConfig, StationAgg, StationDeal, ArbitrageDeal } from "./types";
 
-/** Part réaliste du volume quotidien qu'un flipper peut capter. */
+/** Part réaliste du volume quotidien qu'un flipper peut capter (défaut, en %). */
 export const CAPTURE_SHARE = 0.2;
+export const DEFAULT_CAPTURE_PCT = 20;
 
 export interface StationParams {
   /** Capital disponible (ISK) — plafonne la quantité par opportunité. */
@@ -16,6 +17,8 @@ export interface StationParams {
   maxPrice: number | null;
   /** Volume minimal sur le carnet (vente). */
   minSellVol: number;
+  /** Part du volume quotidien que TU captes (%), réglable selon ta présence. */
+  captureSharePct: number;
 }
 
 export const DEFAULT_STATION_PARAMS: StationParams = {
@@ -24,6 +27,7 @@ export const DEFAULT_STATION_PARAMS: StationParams = {
   minPrice: 100_000,
   maxPrice: null,
   minSellVol: 1,
+  captureSharePct: DEFAULT_CAPTURE_PCT,
 };
 
 /**
@@ -84,9 +88,12 @@ export function finalizeStation(
   const broker = fees.brokerFeePct / 100;
   const buyCost = deal.bestBuy * (1 + broker);
   const maxByBudget = buyCost > 0 ? Math.floor(p.budget / buyCost) : 0;
+  // Part captée réglable par l'utilisateur (repli sur le défaut si non défini,
+  // pour les paramètres persistés avant l'ajout du champ).
+  const capture = (p.captureSharePct ?? DEFAULT_CAPTURE_PCT) / 100;
   const perDayQty = Math.max(
     0,
-    Math.min(Math.floor(CAPTURE_SHARE * dailyVolume), maxByBudget),
+    Math.min(Math.floor(capture * dailyVolume), maxByBudget),
   );
   const dailyIskVolume = dailyVolume * (deal.refPrice ?? deal.bestSell);
   return {

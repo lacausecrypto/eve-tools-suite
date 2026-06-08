@@ -10,6 +10,7 @@ export function NumField({
   placeholder,
   allowNull,
   className,
+  hint,
 }: {
   label: string;
   value: number | null;
@@ -18,6 +19,7 @@ export function NumField({
   placeholder?: string;
   allowNull?: boolean;
   className?: string;
+  hint?: string;
 }) {
   const parse = (s: string): number | null => {
     const cleaned = s.replace(/[\s,]/g, "");
@@ -43,6 +45,7 @@ export function NumField({
           </span>
         )}
       </div>
+      {hint && <span className="mt-1 block text-[10px] leading-tight text-muted-foreground/70">{hint}</span>}
     </label>
   );
 }

@@ -26,7 +26,7 @@ export const tradeManifest: ToolModule = {
   },
   icon: Coins,
   accent: "hsl(var(--success))",
-  status: "beta",
+  status: "stable",
   version: "0.1.0",
   esi: {
     publicEsi: true,

@@ -87,6 +87,10 @@ export function Portfolio() {
     (a, r) => a + (r.kpi.reprogramHours > 0 ? 24 / r.kpi.reprogramHours : 0),
     0,
   );
+  // Capital total immobilisé sur l'ensemble des planètes/alts et retour sur
+  // investissement global du portefeuille (jours pour rentabiliser le setup).
+  const totalInvested = rows.reduce((a, r) => a + (r.setup.setupCostIsk || 0), 0);
+  const paybackDays = totalIsk > 0 ? totalInvested / totalIsk / 24 : Infinity;
 
   // Planning de récolte : setups triés par échéance de programme.
   const harvest = useMemo(
@@ -147,8 +151,13 @@ export function Portfolio() {
       ) : (
         <>
       {/* Agrégats */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         <Kpi label={t("pi.pf.totalIsk")} value={fmtIsk(totalIsk)} accent />
+        <Kpi label={t("pi.pf.invested")} value={fmtIsk(totalInvested)} />
+        <Kpi
+          label={t("pi.pf.payback")}
+          value={Number.isFinite(paybackDays) ? `${fmtNum(paybackDays)} ${t("pi.pf.days")}` : "—"}
+        />
         <Kpi label={t("pi.pf.setups")} value={fmtNum(setups.length)} />
         <Kpi label={t("pi.pf.alts")} value={fmtNum(groups.length)} />
         <Kpi label={t("pi.pf.mgmt")} value={fmtNum(reprogPerDay)} />

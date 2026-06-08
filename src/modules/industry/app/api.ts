@@ -1,10 +1,10 @@
 /**
- * Import ESI **authentifié** (jobs d'industrie + actifs) — prêt pour M5.
+ * Import ESI **authentifié** (jobs d'industrie, actifs, wallet) — câblé dans
+ * l'UI (onglets Carnet & Actifs).
  *
- * Ces appels nécessitent un personnage connecté (SSO) et donc un `CLIENT_ID`
- * d'app enregistrée chez CCP (cf. ROADMAP M5). En l'absence de login, ils lèvent
- * une erreur claire que l'UI rattrape — les flux publics (calculateur, collage
- * d'inventaire) restent pleinement fonctionnels sans login.
+ * Ces appels nécessitent un personnage connecté (SSO). En l'absence de login,
+ * ils lèvent une erreur claire que l'UI rattrape — les flux publics
+ * (calculateur, collage d'inventaire) restent pleinement fonctionnels sans login.
  *
  * Scopes requis : `esi-industry.read_character_jobs.v1`, `esi-assets.read_assets.v1`.
  */
