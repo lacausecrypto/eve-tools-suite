@@ -27,7 +27,7 @@ export const lpManifest: ToolModule = {
   },
   icon: Gift,
   accent: "hsl(var(--primary))",
-  status: "beta",
+  status: "stable",
   version: "0.1.0",
   esi: {
     publicEsi: true,

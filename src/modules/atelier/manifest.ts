@@ -29,7 +29,7 @@ export const atelierManifest: ToolModule = {
   },
   icon: Hammer,
   accent: "hsl(var(--primary))",
-  status: "beta",
+  status: "stable",
   version: "0.1.0",
   esi: {
     publicEsi: true,

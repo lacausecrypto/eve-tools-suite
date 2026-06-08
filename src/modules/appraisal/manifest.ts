@@ -31,7 +31,7 @@ export const appraisalManifest: ToolModule = {
   },
   icon: Receipt,
   accent: "hsl(var(--primary))",
-  status: "beta",
+  status: "stable",
   version: "0.1.0",
   esi: {
     publicEsi: true,
