@@ -112,38 +112,40 @@ jobs:
 
       # Annonce la release sur Discord (embed propre). Le webhook est un SECRET
       # repo (`DISCORD_WEBHOOK`) — jamais en clair. Sans secret (forks), on skip.
-      - name: Notify Discord
+      - name: Notify Discord (EN + FR)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK_FR: ${{ secrets.DISCORD_WEBHOOK_FR }}
           TAG: ${{ github.ref_name }}
           REPO: ${{ github.repository }}
         run: |
           set -eo pipefail
-          if [ -z "$DISCORD_WEBHOOK" ]; then echo "No DISCORD_WEBHOOK secret — skipping."; exit 0; fi
-          notes=$(gh release view "$TAG" --repo "$REPO" --json body -q .body | head -c 1500)
           dl="https://github.com/$REPO/releases/latest/download"
           site="https://eve-tools-suite.com"
-          payload=$(jq -n \
-            --arg title "🚀 EVE Tools Suite $TAG" \
-            --arg url "https://github.com/$REPO/releases/tag/$TAG" \
-            --arg desc "$notes" \
-            --arg win "[⬇ Windows (.exe)]($dl/EVE-Tools-Suite-Windows-Setup.exe)" \
-            --arg mac "[⬇ macOS (.dmg)]($dl/EVE-Tools-Suite-macOS-AppleSilicon.dmg)" \
-            --arg site "$site" \
-            '{
-              username: "EVE Tools Suite",
-              avatar_url: ($site + "/cube.png"),
-              embeds: [{
-                title: $title, url: $url, description: $desc, color: 2854143,
-                thumbnail: { url: ($site + "/cube.png") },
-                fields: [
-                  { name: "Download", value: ($win + "\n" + $mac) },
-                  { name: "Links", value: ("[Website](" + $site + ") · [Changelog](" + $site + "#changelog)") }
-                ],
-                footer: { text: "Auto-updates if already installed" }
-              }]
-            }')
-          code=$(curl -sS -o /dev/null -w "%{http_code}" -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK")
-          echo "Discord webhook → HTTP $code"
-          case "$code" in 2*) : ;; *) echo "::warning::Discord notify returned $code" ;; esac
+          win="[⬇ Windows (.exe)]($dl/EVE-Tools-Suite-Windows-Setup.exe)"
+          mac="[⬇ macOS (.dmg)]($dl/EVE-Tools-Suite-macOS-AppleSilicon.dmg)"
+          dlv=$(printf '%s\n%s' "$win" "$mac")
+          notes_en=$(gh release view "$TAG" --repo "$REPO" --json body -q .body | head -c 1500)
+          notes_fr="Téléchargez l'installeur correspondant à votre OS ci-dessous. Une fois installée, l'app se met à jour automatiquement (mises à jour signées). Nouveautés détaillées sur le site."
+          lkv_en="[Website]($site) · [Changelog]($site#changelog)"
+          lkv_fr="[Site]($site) · [Nouveautés]($site#changelog)"
+          # 1=webhook 2=desc 3=dlName 4=linksName 5=linksVal 6=footer
+          post() {
+            if [ -z "$1" ]; then echo "skip ($3): no webhook secret"; return 0; fi
+            payload=$(jq -n \
+              --arg title "🚀 EVE Tools Suite $TAG" \
+              --arg url "https://github.com/$REPO/releases/tag/$TAG" \
+              --arg desc "$2" --arg dln "$3" --arg dlv "$dlv" \
+              --arg lkn "$4" --arg lkv "$5" --arg ft "$6" --arg av "$site/cube.png" \
+              '{username:"EVE Tools Suite", avatar_url:$av,
+                embeds:[{title:$title, url:$url, description:$desc, color:2854143,
+                  thumbnail:{url:$av},
+                  fields:[{name:$dln, value:$dlv}, {name:$lkn, value:$lkv}],
+                  footer:{text:$ft}}]}')
+            code=$(curl -sS -o /dev/null -w "%{http_code}" -H "Content-Type: application/json" -d "$payload" "$1")
+            echo "$3 webhook → HTTP $code"
+            case "$code" in 2*) : ;; *) echo "::warning::Discord ($3) returned $code" ;; esac
+          }
+          post "$DISCORD_WEBHOOK"    "$notes_en" "Download"    "Links" "$lkv_en" "Auto-updates if already installed"
+          post "$DISCORD_WEBHOOK_FR" "$notes_fr" "Télécharger" "Liens" "$lkv_fr" "Mise à jour automatique si déjà installée"
