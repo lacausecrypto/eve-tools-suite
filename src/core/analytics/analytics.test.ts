@@ -1,7 +1,5 @@
 import { describe, it, expect, beforeAll } from "vitest";
 
-// Shim localStorage minimal : l'env de test est `node` et le store de réglages
-// est persisté (zustand → localStorage). Évite un ReferenceError à l'écriture.
 beforeAll(() => {
   if (typeof globalThis.localStorage === "undefined") {
     const mem = new Map<string, string>();
@@ -11,48 +9,53 @@ beforeAll(() => {
       removeItem: (k: string) => void mem.delete(k),
       clear: () => mem.clear(),
       key: (i: number) => [...mem.keys()][i] ?? null,
-      get length() {
-        return mem.size;
-      },
+      get length() { return mem.size; },
     } as Storage;
   }
 });
 
-import {
-  sanitizeEventProps,
-  analyticsConfigured,
-  track,
-  setConsent,
-} from "@/core/analytics";
+import { sanitizeEventProps, analyticsConfigured, track, setConsent } from "@/core/analytics";
 import { useSettings } from "@/core/settings";
 
-describe("analytics — anonymisation (no-PII)", () => {
-  it("retire les clés sensibles (PII / EVE)", () => {
-    const out = sanitizeEventProps({
-      tool: "mining", // OK
-      members: 3, // OK
-      characterName: "Bob Pilot", // sensible
-      character_id: 12345, // sensible
-      pilot: "Bob", // sensible
-      isk: 1_000_000, // sensible
-      wallet: 5, // sensible
-      email: "a@b.c", // sensible
-      access_token: "secret", // sensible
-      authorization: "Bearer x", // sensible
-      name: "Jita", // suffixe "name" → sensible par prudence
+describe("analytics — allowlist stricte", () => {
+  it("conserve uniquement les enums autorisés", () => {
+    expect(sanitizeEventProps({
+      tool: "mining", platform: "desktop", runtime: "web", source: "launcher",
+      success: true, count: 3,
+    })).toEqual({
+      tool: "mining", platform: "desktop", runtime: "web", source: "launcher",
+      success: true, count: 3,
     });
-    expect(out).toEqual({ tool: "mining", members: 3 });
   });
 
-  it("retire les textes libres longs (>120 car.)", () => {
-    const long = "x".repeat(200);
-    const out = sanitizeEventProps({ tool: "appraisal", blob: long, n: 2 });
-    expect(out).toEqual({ tool: "appraisal", n: 2 });
+  it("rejette les contenus collés même si la clé paraît anodine", () => {
+    const pasted = "Rifter; 125mm Gatling AutoCannon; fit data";
+    expect(sanitizeEventProps({
+      payload: pasted,
+      input: pasted,
+      tool: pasted,
+      notes: "Jita market prices",
+      arbitrary: "short text",
+    })).toEqual({});
   });
 
-  it("conserve les valeurs non-PII (enums, compteurs, booléens)", () => {
-    const out = sanitizeEventProps({ role: "ratting", vwap: true, items: 12 });
-    expect(out).toEqual({ role: "ratting", vwap: true, items: 12 });
+  it("rejette les valeurs d'enum inconnues et les compteurs invalides", () => {
+    expect(sanitizeEventProps({
+      tool: "a player-pasted fit",
+      platform: "my machine name",
+      count: -1,
+      duration_ms: Infinity,
+      success: "yes",
+    })).toEqual({});
+  });
+
+  it("n'accepte pas de propriétés URL libres", () => {
+    expect(sanitizeEventProps({
+      landing_path: "/#download",
+      referrer: "social",
+      $current_url: "https://example.com/?private=1",
+      pasted_fit: "secret fit",
+    })).toEqual({ landing_path: "/#download", referrer: "social" });
   });
 });
 
