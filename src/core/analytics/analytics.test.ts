@@ -28,6 +28,15 @@ describe("analytics — allowlist stricte", () => {
     });
   });
 
+  it("accepte les identifiants réels des modules", () => {
+    const modules = ["mining", "pirate", "pi", "loss", "skills", "industry", "market", "trade", "atelier", "activity", "abyssal", "appraisal", "lp", "refine", "academy"];
+    for (const tool of modules) {
+      expect(sanitizeEventProps({ tool })).toEqual({ tool });
+    }
+    expect(sanitizeEventProps({ language: "fr" })).toEqual({ language: "fr" });
+    expect(sanitizeEventProps({ language: "fr-FR" })).toEqual({});
+  });
+
   it("rejette les contenus collés même si la clé paraît anodine", () => {
     const pasted = "Rifter; 125mm Gatling AutoCannon; fit data";
     expect(sanitizeEventProps({
