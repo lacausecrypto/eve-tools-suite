@@ -16,7 +16,7 @@ const SAFE_PROPERTIES = new Set([
   "success", "source", "count", "items", "duration_ms", "category",
 ]);
 const SAFE_ENUMS: Record<string, Set<string>> = {
-  tool: new Set(["fitting", "industry", "mining", "market", "trading", "intel", "skills", "pi", "appraisal", "lp_converter", "loss_analyzer", "abyssal", "activity_journal", "academy", "unknown"]),
+  tool: new Set(["mining", "pirate", "pi", "loss", "skills", "industry", "market", "trade", "atelier", "activity", "abyssal", "appraisal", "lp", "refine", "academy", "unknown"]),
   platform: new Set(["web", "desktop", "windows", "macos", "linux", "unknown"]),
   runtime: new Set(["web", "desktop"]),
   source: new Set(["landing", "launcher", "deep_link", "unknown"]),
@@ -77,6 +77,7 @@ function applyConsent(granted: boolean): void {
   if (granted) {
     startAnalytics();
     posthog.opt_in_capturing();
+    trackDesktopFirstOpen();
   } else if (started) {
     posthog.opt_out_capturing();
     posthog.reset();
@@ -105,7 +106,15 @@ export function track(event: string, props?: Record<string, unknown>): void {
 
 /** Événements de cycle de vie desktop uniquement, sans identifiant ni contenu utilisateur. */
 export function trackDesktopFirstOpen(): void {
-  if (isTauri()) track("app_first_opened", { platform: "desktop", source: "launcher" });
+  if (!isTauri() || !started || posthog.has_opted_out_capturing()) return;
+  try {
+    const key = "ets:analytics:first-open-tracked";
+    if (localStorage.getItem(key) === "1") return;
+    track("app_first_opened", { platform: "desktop", source: "launcher" });
+    localStorage.setItem(key, "1");
+  } catch (e) {
+    log.warn("first-open marker unavailable", e);
+  }
 }
 
 export function trackWebToolStarted(tool: string): void {
