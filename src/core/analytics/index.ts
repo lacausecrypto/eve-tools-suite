@@ -13,7 +13,7 @@ let started = false;
 
 const SAFE_PROPERTIES = new Set([
   "tool", "platform", "landing_path", "referrer", "runtime", "app_version",
-  "success", "source", "count", "items", "duration_ms", "category",
+  "success", "source", "count", "items", "duration_ms", "category", "language",
 ]);
 const SAFE_ENUMS: Record<string, Set<string>> = {
   tool: new Set(["mining", "pirate", "pi", "loss", "skills", "industry", "market", "trade", "atelier", "activity", "abyssal", "appraisal", "lp", "refine", "academy", "unknown"]),
@@ -23,6 +23,7 @@ const SAFE_ENUMS: Record<string, Set<string>> = {
   landing_path: new Set(["/", "/#download", "/#tools", "/#features", "/download", "/unknown"]),
   referrer: new Set(["direct", "search", "social", "github", "other", "unknown"]),
   category: new Set(["web", "desktop", "tool"]),
+  language: new Set(["fr", "en"]),
 };
 
 export function analyticsConfigured(): boolean {
@@ -117,12 +118,3 @@ export function trackDesktopFirstOpen(): void {
   }
 }
 
-export function trackWebToolStarted(tool: string): void {
-  if (isTauri()) return;
-  track("web_tool_started", { tool: SAFE_ENUMS.tool.has(tool) ? tool : "unknown", platform: "web" });
-}
-
-export function trackWebToolResultSucceeded(tool: string): void {
-  if (isTauri()) return;
-  track("web_tool_result_succeeded", { tool: SAFE_ENUMS.tool.has(tool) ? tool : "unknown", platform: "web", success: true });
-}
