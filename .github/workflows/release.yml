@@ -1,16 +1,15 @@
-# Build, signe et publie une release (Windows + macOS Apple Silicon) avec les
+# Compile et publie une release (Windows + macOS Apple Silicon) avec les signatures
+# de l’updater Tauri, et une signature macOS ad hoc gratuite, avec les
 # artefacts d'auto-update (`latest.json` signé) ET des copies à **nom stable**
 # pour des liens de téléchargement permanents (`releases/latest/download/...`).
 # Déclenché en poussant un tag `vX.Y.Z`.
 #
 # Secrets requis (Settings → Secrets and variables → Actions) :
-#   TAURI_SIGNING_PRIVATE_KEY           contenu de .tauri/eve-tools-updater.key
-#   TAURI_SIGNING_PRIVATE_KEY_PASSWORD  mot de passe de la clé ("" si aucun)
-#   APPLE_CERTIFICATE                   certificat Developer ID Application (.p12) en base64
-#   APPLE_CERTIFICATE_PASSWORD          mot de passe du .p12
-#   APPLE_ID                            compte Apple utilisé pour la notarisation
-#   APPLE_PASSWORD                      mot de passe spécifique à l'app
-#   APPLE_TEAM_ID                       Team ID Apple Developer
+#   TAURI_SIGNING_PRIVATE_KEY           clé PRIVÉE existante de l'updater (ne pas régénérer)
+#   TAURI_SIGNING_PRIVATE_KEY_PASSWORD  mot de passe éventuel
+# Apple Developer/APPLE_CERTIFICATE non requis : macOS est signé ad hoc
+# (« - » dans tauri.conf.json) et non notarisé. Gatekeeper demandera une
+# autorisation explicite aux personnes qui installent le DMG téléchargé.
 # (GITHUB_TOKEN est fourni automatiquement.)
 #
 # macOS Intel (x86_64) est volontairement absent (runners GitHub rares/lents).
@@ -132,37 +131,12 @@ jobs:
             exit 1
           fi
 
-      # Une release macOS non signée/notarisée est refusée par Gatekeeper et
-      # l'identité de ses permissions système (dont Notifications) est instable.
-      - name: Validate macOS signing secrets
-        if: runner.os == 'macOS'
-        shell: bash
-        env:
-          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-        run: |
-          set -euo pipefail
-          for name in APPLE_CERTIFICATE APPLE_CERTIFICATE_PASSWORD APPLE_ID APPLE_PASSWORD APPLE_TEAM_ID; do
-            if [ -z "${!name:-}" ]; then
-              echo "::error::$name is required for a signed and notarized macOS release"
-              exit 1
-            fi
-          done
-
-      - name: Build, sign and publish
+      - name: Build, ad-hoc sign macOS and upload draft artifacts
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
           tagName: ${{ env.RELEASE_TAG }}
           releaseCommitish: ${{ github.sha }}
@@ -178,6 +152,22 @@ jobs:
           prerelease: false
           includeUpdaterJson: true
           args: ${{ matrix.args }}
+
+      # L'identité ad hoc ne nécessite ni abonnement ni secret Apple.
+      # Vérifier qu'un futur changement n'enlève pas silencieusement la signature.
+      - name: Verify ad-hoc macOS application signature
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          set -euo pipefail
+          app=$(find target -type d -path '*/bundle/macos/*.app' -print -quit)
+          if [ -z "$app" ]; then echo "::error::macOS .app not found"; exit 1; fi
+          codesign --verify --deep --strict --verbose=2 "$app"
+          details=$(codesign -dv --verbose=2 "$app" 2>&1)
+          if ! grep -Fq 'Signature=adhoc' <<< "$details"; then
+            echo "::error::Expected ad-hoc macOS signature"; exit 1
+          fi
+          echo "Verified ad-hoc signature: $app"
 
       # Copie l'installeur sous un nom STABLE (sans version) et l'attache à la
       # release → les boutons du README peuvent pointer en permanence sur
@@ -216,6 +206,40 @@ jobs:
             echo "::error::Invalid release tag: $tag"; exit 1
           fi
           echo "RELEASE_TAG=$tag" >> "$GITHUB_ENV"
+
+      - name: Verify both platforms and signed updater metadata
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tag="$RELEASE_TAG"
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets -q '.assets[].name' > release-assets.txt
+          for pattern in \
+            'EVE-Tools-Suite-Windows-Setup.exe' \
+            'EVE-Tools-Suite-macOS-AppleSilicon.dmg' \
+            'EVE.Tools.Suite_0.1.5_x64-setup.exe.sig' \
+            'EVE.Tools.Suite_aarch64.app.tar.gz.sig' \
+            'latest.json'; do
+            if ! grep -Fxq "$pattern" release-assets.txt; then
+              echo "::error::Missing release asset $pattern"; exit 1
+            fi
+          done
+          gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern latest.json --dir "$RUNNER_TEMP"
+          node - "$RUNNER_TEMP/latest.json" "$tag" <<'NODE'
+          const fs = require('fs');
+          const json = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+          const tag = process.argv[3];
+          if (json.version !== tag.slice(1)) throw Error('Unexpected updater version ' + json.version);
+          const platforms = Object.entries(json.platforms || {});
+          for (const name of ['windows-x86_64', 'darwin-aarch64']) {
+            const matches = platforms.filter(([k]) => k === name || k.startsWith(name + '-'));
+            if (!matches.length || !matches.some(([,v]) => typeof v.signature === 'string' && v.signature.length > 0 && typeof v.url === 'string' && v.url.includes('/' + tag + '/'))) {
+              throw Error('Missing signed updater entry for ' + name);
+            }
+          }
+          console.log('Both platforms and updater signatures verified:', platforms.map(([k]) => k).join(', '));
+          NODE
 
       - name: Publish the release
         env:
