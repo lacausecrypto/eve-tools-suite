@@ -248,11 +248,16 @@ jobs:
           set -euo pipefail
           # A preceding unsuccessful run may have created the draft from an older
           # commit. Align the final Git tag with this tested build before publishing.
-          id=$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json databaseId -q .databaseId)
+          id=$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" |
+            jq -r --arg tag "$RELEASE_TAG" '.[] | select(.tag_name == $tag and .draft == true) | .id' | head -n 1)
+          if [[ ! "$id" =~ ^[0-9]+$ ]]; then
+            echo "::error::Draft release not found"; exit 1
+          fi
           gh api --method PATCH "repos/$GITHUB_REPOSITORY/releases/$id" \
-            -f target_commitish="$GITHUB_SHA" >/dev/null
-          gh release edit "$RELEASE_TAG" \
-            --repo "$GITHUB_REPOSITORY" --draft=false --latest
+            -f target_commitish="$GITHUB_SHA" \
+            -F draft=false \
+            -f make_latest=true |
+            jq -e --arg sha "$GITHUB_SHA" '.draft == false and .target_commitish == $sha' >/dev/null
 
       # Annonce la release sur Discord (embed propre). Le webhook est un SECRET
       # repo (`DISCORD_WEBHOOK`) — jamais en clair. Sans secret (forks), on skip.
