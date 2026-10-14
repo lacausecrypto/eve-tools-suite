@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { typeIconUrl } from "@/core/images";
 import { isTauri } from "@/core/runtime";
 import { useT } from "@/core/i18n";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import { AbyssalError, evaluateLink, type EvalResult } from "../api";
 import { qualityLabel } from "../lib/score";
 import { fmtIsk, fmtPct, fmtVal } from "../lib/format";
@@ -31,6 +32,10 @@ export function EvaluateView() {
     try {
       const result = await evaluateLink(text);
       setStatus({ kind: "done", result });
+      void emitNotificationEvent({ type: "abyssal.evaluation.completed", dedupeKey: String(result.itemId), payload: {
+        item: result.resultName, qualityPct: result.score.overall * 100,
+        estimatedValue: result.market?.estimatedValue ?? 0,
+      } });
     } catch (e) {
       const message = isTauri()
         ? e instanceof Error

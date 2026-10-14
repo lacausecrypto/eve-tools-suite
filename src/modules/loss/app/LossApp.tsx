@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AlertCircle, Loader2, Search, Skull } from "lucide-react";
 import { useT } from "@/core/i18n";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import { isTauri } from "@/core/runtime";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -54,6 +55,10 @@ export function LossApp() {
         }
       }
       setStatus({ kind: "done", pm });
+      void emitNotificationEvent({ type: "loss.analysis.completed", dedupeKey: String(pm.killmail_id), payload: {
+        ship: pm.ship_name ?? "—", totalValue: pm.total_value,
+        attackerCount: pm.attacker_count, gangClass: pm.gang_class,
+      } });
     } catch (e) {
       const message = isTauri()
         ? e instanceof Error

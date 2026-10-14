@@ -20,6 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useT } from "@/core/i18n";
 import { typeIconUrl } from "@/core/images";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import { useMarket } from "@/modules/market/app/store";
 import { useTrade } from "../store";
 import {
@@ -139,15 +140,26 @@ export function ArbitrageScanner({
         const result = await runAllHubsArbitrage(strategy, arbSort, station, fees, onProgress, token);
         if (token.cancelled) return setStatus({ kind: "idle" });
         setStatus({ kind: "done", done: { deals: result.deals, multiHub: true, jumps: null } });
+        void emitNotificationEvent({ type: "trade.arbitrage.completed", payload: {
+          opportunityCount: result.deals.length, n: result.deals.length, mode,
+          bestProfit: Math.max(0, ...result.deals.map((deal) => deal.totalNet)),
+          bestRoi: Math.max(0, ...result.deals.map((deal) => deal.roiPct)),
+        } });
       } else {
         const result = await runBulkArbitrage(
           HUBS[arbSrc], HUBS[arbDst], strategy, arbSort, station, fees, onProgress, token,
         );
         if (token.cancelled) return setStatus({ kind: "idle" });
         setStatus({ kind: "done", done: { deals: result.deals, multiHub: false, jumps: result.jumps } });
+        void emitNotificationEvent({ type: "trade.arbitrage.completed", payload: {
+          opportunityCount: result.deals.length, n: result.deals.length, mode,
+          bestProfit: Math.max(0, ...result.deals.map((deal) => deal.totalNet)),
+          bestRoi: Math.max(0, ...result.deals.map((deal) => deal.roiPct)),
+        } });
       }
     } catch (e) {
       setStatus({ kind: "error", message: e instanceof Error ? e.message : String(e) });
+      void emitNotificationEvent({ type: "trade.scan.failed", payload: { scan: "arbitrage" } });
     }
   }
 

@@ -21,7 +21,7 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": "default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: asset: http://asset.localhost https://images.evetech.net; connect-src 'self' ipc: http://ipc.localhost https://esi.evetech.net https://market.fuzzwork.co.uk https://www.fuzzwork.co.uk https://mutamarket.com https://eu.posthog.com https://*.posthog.com; form-action 'none'"
     }
   },
   "bundle": {

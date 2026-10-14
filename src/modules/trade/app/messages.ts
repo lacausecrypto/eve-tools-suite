@@ -26,6 +26,12 @@ const fr = {
   "trade.common.openInMarket": "Ouvrir dans Market Browser",
   "trade.common.toggleAll": "Tout (dé)sélectionner",
   "trade.common.opportunities": "opportunités",
+  "trade.notify.scanComplete.title": "Analyse terminée",
+  "trade.notify.arbitrageComplete.body": "{n} opportunité(s) d'arbitrage trouvée(s).",
+  "trade.notify.stationComplete.body": "{n} opportunité(s) de station trading trouvée(s).",
+  "trade.notify.multibuyComplete.body": "Panier évalué : {n} ligne(s).",
+  "trade.notify.scanFailed.title": "Analyse interrompue",
+  "trade.notify.scanFailed.body": "Reviens dans EVE Tools pour consulter l'erreur.",
 
   // FeeSettings
   "trade.fee.title": "Frais & taxes",
@@ -198,6 +204,12 @@ const en: Record<keyof typeof fr, string> = {
   "trade.common.openInMarket": "Open in Market Browser",
   "trade.common.toggleAll": "(De)select all",
   "trade.common.opportunities": "opportunities",
+  "trade.notify.scanComplete.title": "Analysis complete",
+  "trade.notify.arbitrageComplete.body": "{n} arbitrage opportunity or opportunities found.",
+  "trade.notify.stationComplete.body": "{n} station-trading opportunity or opportunities found.",
+  "trade.notify.multibuyComplete.body": "Basket evaluated: {n} line(s).",
+  "trade.notify.scanFailed.title": "Analysis interrupted",
+  "trade.notify.scanFailed.body": "Return to EVE Tools to review the error.",
 
   // FeeSettings
   "trade.fee.title": "Fees & taxes",

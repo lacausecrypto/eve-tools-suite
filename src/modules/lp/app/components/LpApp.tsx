@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { typeIconUrl } from "@/core/images";
 import { isTauri } from "@/core/runtime";
 import { useT } from "@/core/i18n";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import { loadLpStore, type LpResult } from "../api";
 import { LP_CORPS } from "../data/corps";
 import { useLp } from "../store";
@@ -28,7 +29,12 @@ export function LpApp() {
   async function load(id: number) {
     setStatus({ kind: "loading" });
     try {
-      setStatus({ kind: "done", result: await loadLpStore(id, outBasis, fees) });
+      const result = await loadLpStore(id, outBasis, fees);
+      setStatus({ kind: "done", result });
+      const best = result.offers.reduce((current, offer) => offer.iskPerLp > (current?.iskPerLp ?? -Infinity) ? offer : current, result.offers[0]);
+      void emitNotificationEvent({ type: "lp.store.completed", dedupeKey: `${id}:${outBasis}:${best?.offerId ?? 0}:${best?.iskPerLp ?? 0}`, payload: {
+        offerCount: result.offers.length, bestIskPerLp: best?.iskPerLp ?? 0, bestOffer: best?.name ?? "—",
+      } });
     } catch (e) {
       setStatus({
         kind: "error",

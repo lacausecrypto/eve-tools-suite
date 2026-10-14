@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Compass, Database, ShieldCheck, Trash2, Info, UserCircle2 } from "lucide-react";
-import { useSettings } from "@/core/settings";
+import { useSettings, useSettingsHydrated } from "@/core/settings";
 import { useTour } from "@/core/tour/store";
 import { SHELL_TOUR } from "@/shell/tour";
 import { analyticsConfigured, setConsent } from "@/core/analytics";
@@ -13,7 +13,12 @@ import { APP } from "@/core/app";
 import { toast } from "@/core/toast";
 import { useAccounts } from "@/core/account";
 import { sso } from "@/core/sso/session";
-import { ensureNotificationPermission } from "@/core/notify";
+import {
+  ensureNotificationPermission,
+  getNotificationPermission,
+  notify,
+  type NotificationPermissionState,
+} from "@/core/notify";
 import { useT } from "@/core/i18n";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -47,20 +52,60 @@ export function Settings() {
   const s = useSettings();
   const t = useT();
   const accounts = useAccounts((a) => a.sessions);
+  const settingsHydrated = useSettingsHydrated();
   const [confirmWipe, setConfirmWipe] = useState(false);
+  const [notificationPermission, setNotificationPermission] =
+    useState<NotificationPermissionState>("unsupported");
+
+  useEffect(() => {
+    if (!settingsHydrated) return;
+    let active = true;
+    const refresh = async () => {
+      const permission = await getNotificationPermission();
+      if (!active) return;
+      setNotificationPermission(permission);
+      if (permission !== "granted" && useSettings.getState().notifications) {
+        useSettings.getState().setNotifications(false);
+      }
+    };
+    const onFocus = () => void refresh();
+    void refresh();
+    window.addEventListener("focus", onFocus);
+    return () => {
+      active = false;
+      window.removeEventListener("focus", onFocus);
+    };
+  }, [settingsHydrated]);
 
   async function toggleNotifications(on: boolean) {
     if (on) {
       const granted = await ensureNotificationPermission();
       if (!granted) {
+        setNotificationPermission(await getNotificationPermission());
         toast.error(
           t("settings.notif.denied.title"),
           t("settings.notif.denied.body")
         );
         return;
       }
+      setNotificationPermission("granted");
     }
     s.setNotifications(on);
+  }
+
+  async function testNotification() {
+    const result = await notify(
+      t("settings.notif.test.notification.title"),
+      t("settings.notif.test.notification.body"),
+    );
+    if (result === "sent") {
+      toast.success(t("settings.notif.test.sent"));
+      return;
+    }
+    const permission = await getNotificationPermission();
+    setNotificationPermission(permission);
+    if (permission !== "granted") s.setNotifications(false);
+    toast.error(t("settings.notif.test.failed"));
   }
 
   async function wipe() {
@@ -124,16 +169,28 @@ export function Settings() {
           <Row
             label={t("settings.notifications")}
             hint={
-              sso.available()
+              notificationPermission === "denied"
+                ? t("settings.notif.denied.body")
+                : sso.available()
                 ? t("settings.notifications.hint.on")
                 : t("settings.notifications.hint.off")
             }
           >
-            <Switch
-              checked={s.notifications}
-              onCheckedChange={toggleNotifications}
-              disabled={!sso.available()}
-            />
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!s.notifications || notificationPermission !== "granted"}
+                onClick={testNotification}
+              >
+                {t("settings.notif.test.action")}
+              </Button>
+              <Switch
+                checked={s.notifications}
+                onCheckedChange={toggleNotifications}
+                disabled={!sso.available()}
+              />
+            </div>
           </Row>
         </CardContent>
       </Card>

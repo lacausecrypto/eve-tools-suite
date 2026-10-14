@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/core/toast";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import {
   computeCost,
   type ActivityType,
@@ -167,8 +168,13 @@ export function Calculator() {
       const full = fullRecipe(resolvedOut, materials);
       const prices = await buildRecipePriceMap(full); // VWAP réel
       setOutId(resolvedOut);
-      setResult(computeCost(full, prices, inputs));
+      const calculated = computeCost(full, prices, inputs);
+      setResult(calculated);
       setStatus("done");
+      void emitNotificationEvent({ type: "industry.calculation.completed", dedupeKey: `${recipe.outputName}:${recipe.runs}:${calculated.totalCost}:${calculated.productUnitPrice}`, payload: {
+        item: recipe.outputName, profit: calculated.profit, marginPct: calculated.marginPct,
+        profitPerHour: calculated.profitPerHour,
+      } });
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
       setStatus("error");

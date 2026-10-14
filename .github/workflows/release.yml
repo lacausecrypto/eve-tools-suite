@@ -6,6 +6,11 @@
 # Secrets requis (Settings → Secrets and variables → Actions) :
 #   TAURI_SIGNING_PRIVATE_KEY           contenu de .tauri/eve-tools-updater.key
 #   TAURI_SIGNING_PRIVATE_KEY_PASSWORD  mot de passe de la clé ("" si aucun)
+#   APPLE_CERTIFICATE                   certificat Developer ID Application (.p12) en base64
+#   APPLE_CERTIFICATE_PASSWORD          mot de passe du .p12
+#   APPLE_ID                            compte Apple utilisé pour la notarisation
+#   APPLE_PASSWORD                      mot de passe spécifique à l'app
+#   APPLE_TEAM_ID                       Team ID Apple Developer
 # (GITHUB_TOKEN est fourni automatiquement.)
 #
 # macOS Intel (x86_64) est volontairement absent (runners GitHub rares/lents).
@@ -24,6 +29,7 @@ permissions:
 
 jobs:
   release:
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -42,6 +48,8 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -61,12 +69,47 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
+      - name: Validate updater signing secret
+        shell: bash
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        run: |
+          if [ -z "$TAURI_SIGNING_PRIVATE_KEY" ]; then
+            echo "::error::TAURI_SIGNING_PRIVATE_KEY is required for signed updates"
+            exit 1
+          fi
+
+      # Une release macOS non signée/notarisée est refusée par Gatekeeper et
+      # l'identité de ses permissions système (dont Notifications) est instable.
+      - name: Validate macOS signing secrets
+        if: runner.os == 'macOS'
+        shell: bash
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          set -euo pipefail
+          for name in APPLE_CERTIFICATE APPLE_CERTIFICATE_PASSWORD APPLE_ID APPLE_PASSWORD APPLE_TEAM_ID; do
+            if [ -z "${!name:-}" ]; then
+              echo "::error::$name is required for a signed and notarized macOS release"
+              exit 1
+            fi
+          done
+
       - name: Build, sign and publish
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
           tagName: ${{ github.ref_name }}
           releaseName: "EVE Tools Suite ${{ github.ref_name }}"
@@ -100,6 +143,7 @@ jobs:
   publish:
     needs: release
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: write
     steps:

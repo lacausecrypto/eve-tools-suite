@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useT } from "@/core/i18n";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import { useAccounts } from "@/core/account";
 import { sso } from "@/core/sso/session";
 import { toast } from "@/core/toast";
@@ -103,6 +104,9 @@ export function SkillsApp() {
     try {
       const items = await fetchSkillQueue(active.characterId);
       importQueue(items);
+      void emitNotificationEvent({ type: "skills.queue.imported", dedupeKey: `${active.characterId}:${items.map((item) => item.skillId).join(",")}`, payload: {
+        character: active.characterName, skillCount: items.length,
+      } });
       try {
         setAttrs(await fetchAttributes(active.characterId));
       } catch {

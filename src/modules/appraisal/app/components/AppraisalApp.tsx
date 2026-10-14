@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { typeIconUrl } from "@/core/images";
 import { isTauri } from "@/core/runtime";
 import { useT } from "@/core/i18n";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import { appraise, HUBS, type AppraisalResult } from "../api";
 import { useAppraisal, type SavedAppraisal } from "../store";
 import { computeTotals, hubTotals, lineValue, pricedLines, summaryText, unitPrice, type Basis } from "../lib/compute";
@@ -32,6 +33,12 @@ export function AppraisalApp() {
     try {
       const result = await appraise(input, vwap);
       setStatus({ kind: "done", result });
+      const quotes = result.quotes[hubId] ?? {};
+      const totals = computeTotals(pricedLines(result.items, quotes));
+      void emitNotificationEvent({ type: "appraisal.completed", dedupeKey: `${hubId}:${input.trim()}:${totals.sell}`, payload: {
+        lineCount: totals.lines, totalBuy: totals.buy, totalSell: totals.sell,
+        hub: HUBS.find((hub) => hub.id === hubId)?.label ?? hubId,
+      } });
     } catch (e) {
       setStatus({
         kind: "error",

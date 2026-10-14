@@ -1,5 +1,6 @@
 import {
   Gauge,
+  Bell,
   LayoutGrid,
   Plus,
   Settings as SettingsIcon,
@@ -34,6 +35,7 @@ export function TabStrip() {
           onClose={tab.id === "dashboard" ? undefined : () => closeTab(tab.id)}
           settingsLabel={t("nav.settings")}
           toolsLabel={t("nav.apps")}
+          notificationsLabel={t("nav.notifications")}
         />
       ))}
       <button
@@ -55,6 +57,7 @@ function TabButton({
   onClose,
   settingsLabel,
   toolsLabel,
+  notificationsLabel,
 }: {
   tab: Tab;
   active: boolean;
@@ -62,6 +65,7 @@ function TabButton({
   onClose?: () => void;
   settingsLabel: string;
   toolsLabel: string;
+  notificationsLabel: string;
 }) {
   const loc = useLocalized();
   const mod = tab.kind === "module" && tab.moduleId ? getModule(tab.moduleId) : null;
@@ -70,6 +74,8 @@ function TabButton({
       ? Gauge
       : tab.kind === "tools"
         ? LayoutGrid
+        : tab.kind === "notifications"
+          ? Bell
         : tab.kind === "settings"
           ? SettingsIcon
           : mod?.icon ?? LayoutGrid;
@@ -78,6 +84,8 @@ function TabButton({
       ? "Dashboard"
       : tab.kind === "tools"
         ? toolsLabel
+        : tab.kind === "notifications"
+          ? notificationsLabel
         : tab.kind === "settings"
           ? settingsLabel
           : mod ? loc(mod.name) : (tab.moduleId ?? "—");

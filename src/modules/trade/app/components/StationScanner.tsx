@@ -20,6 +20,7 @@ import {
 import { typeIconUrl } from "@/core/images";
 import { cn } from "@/lib/utils";
 import { useT } from "@/core/i18n";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import { useMarket } from "@/modules/market/app/store";
 import { useTrade } from "../store";
 import { runStationScan, type Progress } from "../run";
@@ -70,8 +71,14 @@ export function StationScanner({
         return;
       }
       setStatus({ kind: "done", deals });
+      void emitNotificationEvent({ type: "trade.station.completed", payload: {
+        opportunityCount: deals.length, n: deals.length,
+        totalProfit: deals.reduce((sum, deal) => sum + (deal.expectedDailyProfit ?? 0), 0),
+        hub: HUBS[stationHub].label,
+      } });
     } catch (e) {
       setStatus({ kind: "error", message: e instanceof Error ? e.message : String(e) });
+      void emitNotificationEvent({ type: "trade.scan.failed", payload: { scan: "station" } });
     }
   }
 

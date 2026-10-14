@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { typeIconUrl } from "@/core/images";
 import { isTauri } from "@/core/runtime";
 import { useT } from "@/core/i18n";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import { useMarket } from "../store";
 import { fetchHistory, fetchMarket, fetchRoute, fetchTypeInfo } from "../api";
 import { computeStats, filterOrders } from "../lib/compute";
@@ -56,7 +57,15 @@ export function MarketView() {
           fetchTypeInfo(selectedTypeId),
           fetchMarket(scope, selectedTypeId),
         ]);
-        if (alive) setLoad({ kind: "done", orders, info });
+        if (alive) {
+          setLoad({ kind: "done", orders, info });
+          const quote = computeStats(orders);
+          void emitNotificationEvent({ type: "market.quote.updated", dedupeKey: `${selectedTypeId}:${scope}:${quote.avgSell ?? 0}:${quote.avgBuy ?? 0}`, payload: {
+            item: info.name ?? selectedName ?? String(selectedTypeId), typeId: selectedTypeId,
+            avgSell: quote.avgSell ?? 0, avgBuy: quote.avgBuy ?? 0,
+            marginPct: quote.marginPct ?? 0, scope,
+          } });
+        }
       } catch (e) {
         if (alive)
           setLoad({
@@ -68,7 +77,7 @@ export function MarketView() {
     return () => {
       alive = false;
     };
-  }, [selectedTypeId, scope, reloadKey]);
+  }, [selectedTypeId, selectedName, scope, reloadKey]);
 
   // Historique à la demande.
   useEffect(() => {

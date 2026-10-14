@@ -186,6 +186,11 @@ const fr: Dict = {
   "settings.notif.denied.title": "Notifications refusées",
   "settings.notif.denied.body":
     "Autorise l'application dans les réglages système.",
+  "settings.notif.test.action": "Tester",
+  "settings.notif.test.sent": "Notification de test envoyée",
+  "settings.notif.test.failed": "Impossible d'envoyer la notification de test",
+  "settings.notif.test.notification.title": "EVE Tools Suite",
+  "settings.notif.test.notification.body": "Les notifications fonctionnent correctement.",
 
   // AccountDialog
   "account.title": "Comptes EVE",
@@ -757,6 +762,11 @@ const en: Dict = {
   "settings.about.repo": "Repository",
   "settings.notif.denied.title": "Notifications denied",
   "settings.notif.denied.body": "Allow the app in your system settings.",
+  "settings.notif.test.action": "Test",
+  "settings.notif.test.sent": "Test notification sent",
+  "settings.notif.test.failed": "Unable to send the test notification",
+  "settings.notif.test.notification.title": "EVE Tools Suite",
+  "settings.notif.test.notification.body": "Notifications are working correctly.",
 
   // AccountDialog
   "account.title": "EVE accounts",

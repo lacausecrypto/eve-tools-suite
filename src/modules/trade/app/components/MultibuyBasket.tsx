@@ -22,6 +22,7 @@ import { typeIconUrl } from "@/core/images";
 import { toast } from "@/core/toast";
 import { cn } from "@/lib/utils";
 import { useT } from "@/core/i18n";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import { useMarket } from "@/modules/market/app/store";
 import { useTrade } from "../store";
 import {
@@ -78,8 +79,13 @@ export function MultibuyBasket() {
         if (token.cancelled) return setStatus({ kind: "idle" });
       }
       setStatus({ kind: "done", result, compare });
+      void emitNotificationEvent({ type: "trade.multibuy.completed", payload: {
+        lineCount: result.lines.length, n: result.lines.length,
+        totalBuy: result.totalBuy, totalSell: result.totalSell,
+      } });
     } catch (e) {
       setStatus({ kind: "error", message: e instanceof Error ? e.message : String(e) });
+      void emitNotificationEvent({ type: "trade.scan.failed", payload: { scan: "multibuy" } });
     }
   }
 

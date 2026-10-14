@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Gauge, LayoutGrid, Settings as SettingsIcon } from "lucide-react";
+import { Bell, Gauge, LayoutGrid, Settings as SettingsIcon } from "lucide-react";
 import { getModule } from "@/core/module/registry";
 import { useWorkspace } from "@/core/workspace";
 import { useAccounts } from "@/core/account";
@@ -9,6 +9,7 @@ import { portraitUrl } from "@/core/images";
 import { AccountDialog } from "@/shell/AccountDialog";
 import { SHELL_ANCHOR } from "@/core/tour/anchors";
 import { cn } from "@/lib/utils";
+import { useNotificationCenter } from "@/core/notifications/store";
 
 /** Rail latéral (façon Odoo) : favoris épinglés + Apps + Réglages + Compte. */
 export function Sidebar() {
@@ -19,7 +20,9 @@ export function Sidebar() {
   const openModule = useWorkspace((s) => s.openModule);
   const openDashboard = useWorkspace((s) => s.openDashboard);
   const openTools = useWorkspace((s) => s.openTools);
+  const openNotifications = useWorkspace((s) => s.openNotifications);
   const openSettings = useWorkspace((s) => s.openSettings);
+  const unread = useNotificationCenter((s) => s.history.filter((item) => item.unread).length);
 
   const sessions = useAccounts((s) => s.sessions);
   const charId = useAccounts((s) => s.activeId);
@@ -73,6 +76,19 @@ export function Sidebar() {
           );
         })}
       </div>
+
+      <RailButton
+        active={activeId === "notifications"}
+        onClick={openNotifications}
+        label={t("nav.notifications")}
+      >
+        <Bell className="h-5 w-5" />
+        {unread > 0 && (
+          <span className="absolute right-0.5 top-0.5 grid min-h-4 min-w-4 place-items-center rounded-full bg-destructive px-1 text-[9px] font-bold leading-none text-destructive-foreground">
+            {unread > 99 ? "99+" : unread}
+          </span>
+        )}
+      </RailButton>
 
       <RailButton
         active={activeId === "settings"}

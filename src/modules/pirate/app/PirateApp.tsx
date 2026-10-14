@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { listen } from "@tauri-apps/api/event";
 import { isTauri } from "@/core/runtime";
 import { useT } from "@/core/i18n";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import { usePirateInput } from "./store";
 import {
   Star,
@@ -345,7 +346,14 @@ export function PirateApp() {
       try {
         const result = await analyzeLocal(text);
         setElapsed(Math.round(performance.now() - start));
-        setPilots(applyTags(result, watchlist));
+        const tagged = applyTags(result, watchlist);
+        setPilots(tagged);
+        void emitNotificationEvent({ type: "pirate.analysis.completed", dedupeKey: tagged.map((pilot) => String(pilot.character_id ?? pilot.name)).sort().join(","), payload: {
+          pilotCount: tagged.length,
+          dangerousCount: tagged.filter((pilot) => pilot.threat === "dangerous").length,
+          deadlyCount: tagged.filter((pilot) => pilot.threat === "deadly").length,
+          watchlistCount: tagged.filter((pilot) => pilot.watch_tag != null).length,
+        } });
       } catch (e) {
         setErrorMsg(String(e));
       } finally {

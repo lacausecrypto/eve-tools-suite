@@ -9,7 +9,7 @@ import { track } from "@/core/analytics";
  * présent, et un onglet **réglages** à la demande. Les outils **épinglés**
  * alimentent le rail de favoris. État **persisté** (namespace `shell`).
  */
-export type TabKind = "dashboard" | "tools" | "settings" | "module";
+export type TabKind = "dashboard" | "tools" | "notifications" | "settings" | "module";
 
 export interface Tab {
   /** Id unique d'onglet : `dashboard`, `settings`, ou `m:<moduleId>`. */
@@ -32,6 +32,8 @@ interface WorkspaceState {
   openDashboard: () => void;
   /** Ouvre (ou focalise) l'onglet catalogue d'outils. */
   openTools: () => void;
+  /** Ouvre (ou focalise) le centre de notifications intelligentes. */
+  openNotifications: () => void;
   /** Ouvre (ou focalise) l'onglet réglages. */
   openSettings: () => void;
   /** Ferme un onglet (le dashboard n'est pas fermable). */
@@ -74,6 +76,16 @@ export const useWorkspace = create<WorkspaceState>()(
           return {
             tabs: [...s.tabs, { id: "tools", kind: "tools" }],
             activeId: "tools",
+          };
+        }),
+
+      openNotifications: () =>
+        set((s) => {
+          if (s.tabs.some((t) => t.id === "notifications"))
+            return { activeId: "notifications" };
+          return {
+            tabs: [...s.tabs, { id: "notifications", kind: "notifications" }],
+            activeId: "notifications",
           };
         }),
 

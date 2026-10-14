@@ -7,6 +7,7 @@ import { TabStrip } from "./TabStrip";
 import { Dashboard } from "./Dashboard";
 import { ToolsCatalog } from "./ToolsCatalog";
 import { Settings } from "./Settings";
+import { NotificationCenter } from "./NotificationCenter";
 import { ModuleBoundary } from "./ModuleBoundary";
 import { ComplianceFooter } from "./ComplianceFooter";
 import { TourFab } from "./TourFab";
@@ -49,6 +50,7 @@ function TabContent({ tab }: { tab: Tab }) {
   const loc = useLocalized();
   if (tab.kind === "dashboard") return <Dashboard />;
   if (tab.kind === "tools") return <ToolsCatalog />;
+  if (tab.kind === "notifications") return <NotificationCenter />;
   if (tab.kind === "settings") return <Settings />;
 
   const mod = tab.moduleId ? getModule(tab.moduleId) : undefined;

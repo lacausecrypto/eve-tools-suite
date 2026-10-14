@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { typeIconUrl } from "@/core/images";
 import { isTauri } from "@/core/runtime";
 import { useT } from "@/core/i18n";
+import { emitNotificationEvent } from "@/core/notifications/engine";
 import { loadQuotes, type Quote } from "../api";
 import { useRefine, type MatBasis } from "../store";
 import { CORE_MINERALS, MATERIALS, ORES } from "../data/ore";
@@ -87,6 +88,9 @@ export function RefineApp() {
       const rawValue = items.reduce((sum, i) => sum + i.qty * price(i.ore.id), 0);
       const refinedValue = materialsValue(materials, price);
       setStatus({ kind: "rep", r: { materials, matValue, unmatched, rawValue, refinedValue, volume: totalVolume(items), rate } });
+      void emitNotificationEvent({ type: "refine.calculation.completed", dedupeKey: `${rawValue}:${refinedValue}:${rate}`, payload: {
+        rawValue, refinedValue, gain: refinedValue - rawValue, rate,
+      } });
     } catch (e) {
       fail(e);
     }
