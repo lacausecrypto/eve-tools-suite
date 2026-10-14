@@ -245,7 +245,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release edit "${{ env.RELEASE_TAG }}" \
+          set -euo pipefail
+          # A preceding unsuccessful run may have created the draft from an older
+          # commit. Align the final Git tag with this tested build before publishing.
+          id=$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json databaseId -q .databaseId)
+          gh api --method PATCH "repos/$GITHUB_REPOSITORY/releases/$id" \
+            -f target_commitish="$GITHUB_SHA" >/dev/null
+          gh release edit "$RELEASE_TAG" \
             --repo "$GITHUB_REPOSITORY" --draft=false --latest
 
       # Annonce la release sur Discord (embed propre). Le webhook est un SECRET
