@@ -22,13 +22,55 @@ on:
   push:
     tags:
       - "v*"
+    branches:
+      - "release/v*"
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: desktop-release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check aligned release versions
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs = require("fs");
+          const pkg = require("./package.json");
+          const lock = require("./package-lock.json");
+          const tauri = require("./src-tauri/tauri.conf.json");
+          const cargo = fs.readFileSync("./src-tauri/Cargo.toml", "utf8");
+          if (!(pkg.version === lock.version && pkg.version === lock.packages[""].version &&
+                pkg.version === tauri.version && cargo.includes('version = "' + pkg.version + '"'))) {
+            process.exitCode = 1;
+            console.error("Release versions do not match");
+          }
+          NODE
+      - name: Install dependencies
+        run: npm ci
+      - name: Frontend unit tests
+        run: npm test
+      - name: Production frontend build
+        run: npm run build
+
   release:
+    needs: validate
     timeout-minutes: 60
     strategy:
       fail-fast: false
@@ -68,6 +110,17 @@ jobs:
 
       - name: Install frontend dependencies
         run: npm ci
+
+      - name: Resolve release tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v$(node -p 'require("./package.json").version')"
+          if [[ "$GITHUB_REF" != "refs/tags/$tag" && "$GITHUB_REF" != "refs/heads/release/$tag" ]]; then
+            echo "::error::Ref $GITHUB_REF does not match release $tag"
+            exit 1
+          fi
+          echo "RELEASE_TAG=$tag" >> "$GITHUB_ENV"
 
       - name: Validate updater signing secret
         shell: bash
@@ -111,9 +164,16 @@ jobs:
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
-          tagName: ${{ github.ref_name }}
-          releaseName: "EVE Tools Suite ${{ github.ref_name }}"
-          releaseBody: "Download the installer for your OS below. Once installed, the app auto-updates (cryptographically signed updates)."
+          tagName: ${{ env.RELEASE_TAG }}
+          releaseCommitish: ${{ github.sha }}
+          releaseName: "EVE Tools Suite ${{ env.RELEASE_TAG }}"
+          releaseBody: |
+            v0.1.5 introduces the smart notification center: configurable multi-condition alerts,
+            threshold and crossing triggers, cooldowns, quick templates and local notification history.
+            Alerts cover Trade, Market, Pirate, Loss, Appraisal, Industry, Skills, LP, Abyssal
+            and Reprocessing. Hardened Tauri permissions, CSP and dependencies.
+            Download the installer for your OS below. Existing installations
+            can update automatically using cryptographically signed updater artifacts.
           releaseDraft: true
           prerelease: false
           includeUpdaterJson: true
@@ -136,7 +196,7 @@ jobs:
           fi
           echo "installer: $src → ${{ matrix.stable }}"
           cp "$src" "${{ matrix.stable }}"
-          gh release upload "${{ github.ref_name }}" "${{ matrix.stable }}" --clobber --repo "$GITHUB_REPOSITORY"
+          gh release upload "${{ env.RELEASE_TAG }}" "${{ matrix.stable }}" --clobber --repo "$GITHUB_REPOSITORY"
 
   # Tous les builds OK → on publie le brouillon et on le marque « latest »
   # (sinon la release reste en draft et nécessite une publication manuelle).
@@ -147,11 +207,21 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Resolve release tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME#release/}"
+          if [[ "$tag" != v* || "$tag" == *"/"* ]]; then
+            echo "::error::Invalid release tag: $tag"; exit 1
+          fi
+          echo "RELEASE_TAG=$tag" >> "$GITHUB_ENV"
+
       - name: Publish the release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release edit "${{ github.ref_name }}" \
+          gh release edit "${{ env.RELEASE_TAG }}" \
             --repo "$GITHUB_REPOSITORY" --draft=false --latest
 
       # Annonce la release sur Discord (embed propre). Le webhook est un SECRET
@@ -161,7 +231,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           DISCORD_WEBHOOK_FR: ${{ secrets.DISCORD_WEBHOOK_FR }}
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ env.RELEASE_TAG }}
           REPO: ${{ github.repository }}
         run: |
           set -eo pipefail
