@@ -44,7 +44,7 @@
 
 ---
 
-> ⬆️ **Auto-update & signé.** Clique un bouton de téléchargement ci-dessus — installation en un clic, puis l'app se met à jour automatiquement (releases signées). Au premier lancement, SmartScreen (Windows) / Gatekeeper (macOS) peuvent avertir (« éditeur inconnu ») car l'app n'est pas encore signée au niveau OS — choisis *Informations complémentaires → Exécuter quand même* (Windows) ou clic-droit → *Ouvrir* (macOS). Build macOS Intel à venir (compiler depuis les sources en attendant).
+> ⬆️ **Mises à jour Tauri signées.** Les fichiers de mise à jour automatique sont protégés par la signature cryptographique Tauri. Sur macOS, l'application Apple Silicon possède une signature **ad hoc gratuite**, mais n'est **pas notarisée par Apple** : Gatekeeper peut refuser son premier lancement. Après une tentative d'ouverture, va dans **Réglages Système → Confidentialité et sécurité → Ouvrir quand même**, puis confirme. N'autorise cette ouverture que si tu as téléchargé l'application depuis les releases officielles de ce dépôt. Sur Windows, SmartScreen peut demander **Informations complémentaires → Exécuter quand même**. Pas d'installeur macOS Intel pour l'instant.
 
 ---
 
