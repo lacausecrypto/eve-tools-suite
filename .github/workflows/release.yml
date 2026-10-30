@@ -144,8 +144,8 @@ jobs:
           releaseCommitish: ${{ github.sha }}
           releaseName: "EVE Tools Suite ${{ env.RELEASE_TAG }}"
           releaseBody: |
-            v0.1.5 introduces the smart notification center: configurable multi-condition alerts,
-            threshold and crossing triggers, cooldowns, quick templates and local notification history.
+            v0.1.6 improves privacy-safe analytics, first-value tracking and reliable market measurements.
+            It adds secure browser-to-desktop links, goal-based onboarding, Appraisal workflows and optional feedback.
             Alerts cover Trade, Market, Pirate, Loss, Appraisal, Industry, Skills, LP, Abyssal
             and Reprocessing. Hardened Tauri permissions, CSP and dependencies.
             Download the installer for your OS below. Existing installations
@@ -220,7 +220,7 @@ jobs:
           for pattern in \
             'EVE-Tools-Suite-Windows-Setup.exe' \
             'EVE-Tools-Suite-macOS-AppleSilicon.dmg' \
-            'EVE.Tools.Suite_0.1.5_x64-setup.exe.sig' \
+            "EVE.Tools.Suite_${RELEASE_TAG#v}_x64-setup.exe.sig" \
             'EVE.Tools.Suite_aarch64.app.tar.gz.sig' \
             'latest.json'; do
             if ! grep -Fxq "$pattern" release-assets.txt; then
