@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useT } from "@/core/i18n";
+import { track as trackAnalytics } from "@/core/analytics";
 import { useAcademy } from "../store";
 import { TRACKS, LESSON_INDEX, questionsForLesson, questionsForTrack } from "../data/curriculum";
 import { LESSON_MEDIA } from "../data/lessonMedia";
@@ -193,6 +194,10 @@ function LessonView({
   const t = useT();
   const completeLesson = useAcademy((s) => s.completeLesson);
   const [quiz, setQuiz] = useState(false);
+  const markRead = () => {
+    completeLesson(lesson.id);
+    trackAnalytics("academy_lesson_completed");
+  };
 
   const lessonTitle = t(`academy.lesson.${lesson.id}.title`);
   const blocks = useMemo<KeyedBlock[]>(() => {
@@ -234,7 +239,7 @@ function LessonView({
             <Check className="h-3.5 w-3.5" /> {t("academy.cur.read")}
           </Badge>
         ) : (
-          <Button size="sm" onClick={() => completeLesson(lesson.id)}>
+          <Button size="sm" onClick={markRead}>
             <Check className="h-4 w-4" /> {t("academy.cur.markRead")}
           </Button>
         )}

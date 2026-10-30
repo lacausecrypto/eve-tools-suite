@@ -19,7 +19,7 @@ interface PrivacyDoc {
  */
 export const PRIVACY_CONTENT: Record<Language, PrivacyDoc> = {
   fr: {
-    updated: "Dernière mise à jour : 7 juin 2026",
+    updated: "Dernière mise à jour : 30 octobre 2026",
     controller: [
       "Responsable du traitement : lacausecrypto.",
       "Contact : lacausecrypto@gmail.com",
@@ -33,9 +33,9 @@ export const PRIVACY_CONTENT: Record<Language, PrivacyDoc> = {
           "Si, et seulement si, vous acceptez la bannière de consentement, l'application envoie des statistiques d'usage anonymes via PostHog :",
         ],
         bullets: [
-          "ouverture de l'application (version, plateforme, langue, durée de session) ;",
+          "ouverture de l'application (version, plateforme, langue et numéro de session) ;",
           "quels outils sont ouverts et à quelle fréquence ;",
-          "actions clés (ex. « fit généré ») — sans aucun contenu.",
+          "première action utile, outil concerné et temps pour l'atteindre — sans aucun contenu.",
         ],
       },
       {
@@ -74,7 +74,7 @@ export const PRIVACY_CONTENT: Record<Language, PrivacyDoc> = {
     ],
   },
   en: {
-    updated: "Last updated: 7 June 2026",
+    updated: "Last updated: 30 October 2026",
     controller: [
       "Data controller: lacausecrypto.",
       "Contact: lacausecrypto@gmail.com",
@@ -88,9 +88,9 @@ export const PRIVACY_CONTENT: Record<Language, PrivacyDoc> = {
           "If, and only if, you accept the consent banner, the app sends anonymous usage statistics via PostHog:",
         ],
         bullets: [
-          "app launch (version, platform, language, session length);",
+          "app launch (version, platform, language, and session number);",
           "which tools are opened and how often;",
-          "key actions (e.g. “fit generated”) — without any content.",
+          "first useful action, related tool, and time to reach it — without any content.",
         ],
       },
       {

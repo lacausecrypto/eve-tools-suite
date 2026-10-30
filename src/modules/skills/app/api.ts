@@ -18,7 +18,6 @@ interface QueueEntry {
 export async function fetchSkillQueue(
   characterId: number,
 ): Promise<PlanItem[]> {
-  track("skills_esi_import");
   const q = await esiGetAuth<QueueEntry[]>(
     `/characters/${characterId}/skillqueue/`,
     characterId,
@@ -35,7 +34,9 @@ export async function fetchSkillQueue(
         to: Math.max(cur.to, to),
       });
   }
-  return [...map].map(([skillId, { from, to }]) => ({ skillId, from, to }));
+  const plan = [...map].map(([skillId, { from, to }]) => ({ skillId, from, to }));
+  track("skills_esi_import");
+  return plan;
 }
 
 interface AttrResponse {

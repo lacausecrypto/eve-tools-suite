@@ -228,7 +228,7 @@ export function MarketTickerWidget({ config }: WidgetProps) {
           value={metricFmt(metric, v)}
           sub={name}
           tone={metricTone(metric, v)}
-          hint={SCOPES[scope as string]?.label}
+          hint={SCOPES[scope].label}
         />
       </div>
     </div>
@@ -422,7 +422,7 @@ export function MarketWatchlistWidget({ config }: WidgetProps) {
   const t = useT();
   const watchlist = useMarket((s) => s.watchlist);
   const scope = useMarket((s) => s.scope);
-  const scopeLabel = SCOPES[scope as string]?.label;
+  const scopeLabel = SCOPES[scope].label;
   return (
     <WidgetStat
       value={String(watchlist.length)}

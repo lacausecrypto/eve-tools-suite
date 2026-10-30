@@ -1,6 +1,6 @@
 # Politique de confidentialité — EVE Tools Suite
 
-_Dernière mise à jour : 7 juin 2026_
+_Dernière mise à jour : 30 octobre 2026_
 
 > 🇬🇧 English version below.
 
@@ -26,9 +26,12 @@ Code source : https://github.com/lacausecrypto/eve-tools-suite
 Si — et seulement si — vous acceptez la bannière de consentement, l'application
 envoie des **statistiques d'usage anonymes** via **PostHog** :
 
-- ouverture de l'application (version, plateforme, langue, durée de session) ;
+- ouverture de l'application (version, environnement desktop/web, langue et numéro de session) ;
 - quels outils sont ouverts et à quelle fréquence ;
-- actions clés (ex. « fit généré », « appraisal lancé ») — **sans aucun contenu**.
+- actions clés et leur résultat technique (ex. « fit généré », chargement marché
+  réussi/échoué, durée et nombre d'ordres) — **sans aucun contenu ni message d'erreur**.
+- première valeur obtenue (outil, type d'action, numéro de session et délai depuis
+  le début de la mesure consentie).
 
 Chaque événement est associé à un **identifiant aléatoire** généré localement,
 **non rattaché à votre identité**. Aucun cookie, aucune capture automatique
@@ -81,7 +84,7 @@ statistique, quel que soit le consentement.
 
 # Privacy Policy — EVE Tools Suite
 
-_Last updated: 7 June 2026_
+_Last updated: 30 October 2026_
 
 ## Data controller
 
@@ -104,9 +107,12 @@ Source code: https://github.com/lacausecrypto/eve-tools-suite
 If — and only if — you accept the consent banner, the app sends **anonymous usage
 statistics** via **PostHog**:
 
-- app launch (version, platform, language, session length);
+- app launch (version, desktop/web runtime, language, and session number);
 - which tools are opened and how often;
-- key actions (e.g. "fit generated", "appraisal run") — **without any content**.
+- key actions and their technical outcome (e.g. "fit generated", market load
+  succeeded/failed, duration and order count) — **without content or error messages**.
+- first value reached (tool, action type, session number, and delay since the
+  consented measurement began).
 
 Each event is tied to a **random identifier** generated locally, **not linked to
 your identity**. No cookies, no automatic screen/input capture, no session

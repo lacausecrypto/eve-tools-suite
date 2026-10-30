@@ -6,7 +6,6 @@
  */
 import { esi, esiGet, esiPost } from "@/core/esi/client";
 import { kv } from "@/core/storage";
-import { track } from "@/core/analytics";
 import { resolveNames } from "@/core/universe";
 import { logger } from "@/core/log";
 import type { HistoryDay, MarketOrder, TypeInfo } from "./lib/types";
@@ -236,7 +235,6 @@ async function enrichOrders(orders: MarketOrder[]): Promise<MarketOrder[]> {
 
 /** Charge et enrichit tout le carnet d'un type pour une portée de marché. */
 export async function fetchMarket(scopeId: ScopeId, typeId: number): Promise<MarketOrder[]> {
-  track("market_item_viewed", { scope: scopeId });
   const scope = SCOPES[scopeId];
   const perRegion = await Promise.all(
     scope.regions.map((r) => regionOrders(r, typeId)),

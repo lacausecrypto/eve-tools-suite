@@ -137,8 +137,6 @@ const mapToObj = (m: Map<number, Quote>): HubQuotes => Object.fromEntries(m);
 export async function appraise(text: string, vwap: boolean): Promise<AppraisalResult> {
   const parsed = parseItems(text);
   if (!parsed.length) return { items: [], unresolved: [], quotes: {} };
-  track("appraisal_run", { vwap, items: parsed.length });
-
   const names = distinctNames(parsed);
   const idMap = await resolveTypeIds(names);
   const unresolved = names.filter((n) => !idMap.has(n.toLowerCase()));
@@ -174,5 +172,6 @@ export async function appraise(text: string, vwap: boolean): Promise<AppraisalRe
   const quotes: Record<string, HubQuotes> = {};
   HUBS.forEach((h, i) => (quotes[h.id] = hubQuotes[i]));
 
+  if (items.length > 0) track("appraisal_run", { vwap, items: parsed.length });
   return { items, unresolved, quotes };
 }

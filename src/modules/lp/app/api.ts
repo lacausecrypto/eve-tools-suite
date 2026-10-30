@@ -87,7 +87,6 @@ export interface LpResult {
 
 /** Charge et valorise toutes les offres d'un LP store. */
 export async function loadLpStore(corpId: number, outBasis: OutBasis, fees: FeeConfig): Promise<LpResult> {
-  track("lp_store_computed", { basis: outBasis });
   const offers = await fetchOffers(corpId);
   if (!offers.length) return { offers: [], unpriced: 0 };
 
@@ -100,5 +99,6 @@ export async function loadLpStore(corpId: number, outBasis: OutBasis, fees: FeeC
 
   const priced = priceOffers(offers, quotes, names, outBasis, fees);
   const unpriced = priced.filter((o) => o.outUnit <= 0).length;
+  track("lp_store_computed", { basis: outBasis });
   return { offers: priced, unpriced };
 }

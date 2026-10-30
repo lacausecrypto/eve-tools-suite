@@ -36,16 +36,17 @@ export interface IndustryJob {
 }
 
 /** Jobs d'industrie d'un personnage (en cours, et terminés si demandé). */
-export function fetchIndustryJobs(
+export async function fetchIndustryJobs(
   characterId: number,
   includeCompleted = false,
 ): Promise<IndustryJob[]> {
-  track("industry_esi_import", { kind: "jobs" });
-  return esiGetAuth<IndustryJob[]>(
+  const jobs = await esiGetAuth<IndustryJob[]>(
     `/characters/${characterId}/industry/jobs/`,
     characterId,
     { include_completed: String(includeCompleted) },
   );
+  track("industry_esi_import", { kind: "jobs" });
+  return jobs;
 }
 
 export interface AssetItem {
@@ -65,7 +66,6 @@ const MAX_ASSET_PAGES = 25; // borne de sécurité (~25k lignes)
  * la première page courte (ou à la borne de sécurité).
  */
 export async function fetchAssets(characterId: number): Promise<AssetItem[]> {
-  track("industry_esi_import", { kind: "assets" });
   const all: AssetItem[] = [];
   for (let page = 1; page <= MAX_ASSET_PAGES; page++) {
     const batch = await esiGetAuth<AssetItem[]>(
@@ -76,6 +76,7 @@ export async function fetchAssets(characterId: number): Promise<AssetItem[]> {
     all.push(...batch);
     if (batch.length < ESI_PAGE_SIZE) break;
   }
+  track("industry_esi_import", { kind: "assets" });
   return all;
 }
 
@@ -92,16 +93,17 @@ interface RawWalletTx {
  * calcul de **coût réel FIFO**. Scope `esi-wallet.read_character_wallet.v1`.
  */
 export async function fetchWalletTransactions(characterId: number): Promise<WalletTx[]> {
-  track("industry_esi_import", { kind: "wallet" });
   const raw = await esiGetAuth<RawWalletTx[]>(
     `/characters/${characterId}/wallet/transactions/`,
     characterId,
   );
-  return raw.map((r) => ({
+  const transactions = raw.map((r) => ({
     date: r.date,
     typeId: r.type_id,
     quantity: r.quantity,
     unitPrice: r.unit_price,
     isBuy: r.is_buy,
   }));
+  track("industry_esi_import", { kind: "wallet" });
+  return transactions;
 }

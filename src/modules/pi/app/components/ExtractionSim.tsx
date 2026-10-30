@@ -34,6 +34,7 @@ import { CYCLE_TIMES, MAX_HEADS, cyclesForDuration } from "../lib/extractor";
 import { balancedFactories, simulate, type OutputChoice } from "../lib/simulate";
 import { fmtHours, fmtIsk, fmtNum } from "../lib/format";
 import { usePiSetups } from "../store";
+import { track } from "@/core/analytics";
 import type { ExtractionConfig } from "../lib/setup";
 import { jitaSell } from "../lib/prices";
 import { buildCcpTemplate } from "../lib/template";
@@ -80,6 +81,7 @@ export function ExtractionSim() {
   function onSave() {
     if (!rawId) return;
     saveSetup(setupName || commodityName(rawId), setupOwner, currentConfig());
+    track("pi_setup_saved");
     toast.success(t("pi.setup.saved"), setupName || commodityName(rawId));
     setSetupName("");
   }

@@ -18,8 +18,6 @@ export interface ValueResult {
 export async function valueLoot(text: string): Promise<ValueResult> {
   const lines = parseLoot(text);
   if (!lines.length) return { loot: [], unresolved: [] };
-  track("activity_loot_valued", { lines: lines.length });
-
   const names = [...new Set(lines.map((l) => l.name))];
   const idMap = await resolveTypeIds(names);
 
@@ -41,5 +39,6 @@ export async function valueLoot(text: string): Promise<ValueResult> {
     const q = quotes.get(e.id) ?? { buy: 0, sell: 0 };
     loot = mergeLoot(loot, [{ typeId: e.id, name: e.name, qty: l.qty, unitBuy: q.buy, unitSell: q.sell }]);
   }
+  if (loot.length > 0) track("activity_loot_valued", { lines: lines.length });
   return { loot, unresolved };
 }

@@ -16,7 +16,9 @@ export interface MarketScope {
 }
 
 /** Portées de marché proposées (hubs majeurs + agrégat). */
-export const SCOPES: Record<string, MarketScope> = {
+export type ScopeId = "forge" | "domain" | "sinq" | "heimatar" | "metropolis" | "hubs";
+
+export const SCOPES: Record<ScopeId, MarketScope> = {
   forge: {
     label: "Jita · The Forge",
     regions: [10000002],
@@ -55,7 +57,6 @@ export const SCOPES: Record<string, MarketScope> = {
   },
 };
 
-export type ScopeId = keyof typeof SCOPES;
 export const DEFAULT_SCOPE: ScopeId = "hubs";
 
 /** Noms des régions interrogées (pour l'affichage, sans appel ESI). */

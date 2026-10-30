@@ -9,6 +9,7 @@ import { typeIconUrl } from "@/core/images";
 import { isTauri } from "@/core/runtime";
 import { useT } from "@/core/i18n";
 import { emitNotificationEvent } from "@/core/notifications/engine";
+import { track } from "@/core/analytics";
 import { loadQuotes, type Quote } from "../api";
 import { useRefine, type MatBasis } from "../store";
 import { CORE_MINERALS, MATERIALS, ORES } from "../data/ore";
@@ -88,6 +89,7 @@ export function RefineApp() {
       const rawValue = items.reduce((sum, i) => sum + i.qty * price(i.ore.id), 0);
       const refinedValue = materialsValue(materials, price);
       setStatus({ kind: "rep", r: { materials, matValue, unmatched, rawValue, refinedValue, volume: totalVolume(items), rate } });
+      track("refine_calculated", { mode: "reprocess" });
       void emitNotificationEvent({ type: "refine.calculation.completed", dedupeKey: `${rawValue}:${refinedValue}:${rate}`, payload: {
         rawValue, refinedValue, gain: refinedValue - rawValue, rate,
       } });
@@ -111,6 +113,7 @@ export function RefineApp() {
       const candidates = buildCandidates(pool, rate, cost);
       const plan = solveCompression(targets, candidates, price);
       setStatus({ kind: "comp", r: { plan, rate } });
+      track("refine_calculated", { mode: "compress" });
     } catch (e) {
       fail(e);
     }

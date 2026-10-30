@@ -149,7 +149,6 @@ export class AbyssalError extends Error {
 }
 
 export async function evaluateLink(text: string): Promise<EvalResult> {
-  track("abyssal_evaluated");
   const ref = parseItemRef(text);
   if (!ref) throw new AbyssalError(t("abyssal.error.invalidLink"));
 
@@ -172,7 +171,7 @@ export async function evaluateLink(text: string): Promise<EvalResult> {
     estimatorFor(ref.typeId),
   ]);
 
-  return {
+  const result = {
     score,
     resultName: nm.get(ref.typeId) ?? `#${ref.typeId}`,
     baseName: nm.get(res.data.source_type_id) ?? `#${res.data.source_type_id}`,
@@ -183,6 +182,8 @@ export async function evaluateLink(text: string): Promise<EvalResult> {
     estimator,
     itemId: ref.itemId,
   };
+  track("abyssal_evaluated");
+  return result;
 }
 
 // ───────────────────────── Mode « Explorer les plages » ─────────────────────

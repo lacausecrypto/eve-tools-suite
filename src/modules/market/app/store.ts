@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { namespacedStorage } from "@/core/storage/persist";
+import { track } from "@/core/analytics";
 import { DEFAULT_FILTERS, type OrderFilters } from "./lib/types";
 import { DEFAULT_SCOPE, type ScopeId } from "./lib/regions";
 
@@ -25,14 +26,17 @@ interface MarketState {
 /** État du Market Browser — persisté dans le namespace `market`. */
 export const useMarket = create<MarketState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       selectedTypeId: null,
       selectedName: null,
       scope: DEFAULT_SCOPE,
       filters: DEFAULT_FILTERS,
       watchlist: [],
 
-      select: (selectedTypeId, selectedName) => set({ selectedTypeId, selectedName }),
+      select: (selectedTypeId, selectedName) => {
+        track("market_item_selected", { scope: get().scope });
+        set({ selectedTypeId, selectedName });
+      },
       setScope: (scope) => set({ scope }),
       setFilters: (patch) =>
         set((s) => ({ filters: { ...s.filters, ...patch } })),
