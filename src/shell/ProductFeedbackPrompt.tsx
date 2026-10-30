@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Check, ClipboardCopy, ExternalLink, MessageCircle, Star, ThumbsDown, ThumbsUp, X } from "lucide-react";
 import { APP } from "@/core/app";
-import { analyticsTool, track, type AnalyticsTool } from "@/core/analytics";
+import { analyticsConfigured, analyticsTool, track, type AnalyticsTool } from "@/core/analytics";
 import { openExternal } from "@/core/external";
 import { useSettings, useSettingsHydrated } from "@/core/settings";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,19 @@ export function feedbackDue(lastShown: string | null, now = Date.now()): boolean
 export function feedbackDismissDelay(answer: boolean | null, failedToOpen = false): number | null {
   if (answer === null) return null;
   return failedToOpen ? FEEDBACK_ERROR_CLOSE_MS : FEEDBACK_AUTO_CLOSE_MS;
+}
+
+/** Report opener failures to the UI; no automatic external navigation or data transfer. */
+export async function attemptFeedbackLink(
+  destination: FeedbackLink,
+  opener: (url: string) => Promise<void> = openExternal,
+): Promise<boolean> {
+  try {
+    await opener(FEEDBACK_LINKS[destination]);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -58,7 +71,7 @@ export function ProductFeedbackPrompt() {
       if (tool || !useSettings.persist.hasHydrated() || useTour.getState().tour) return;
       // Do not compete with the first-run consent dialog or onboarding invitation.
       const settings = useSettings.getState();
-      if (settings.analyticsConsent === "unset" || !settings.onboardingDone) return;
+      if (analyticsConfigured() && (settings.analyticsConsent === "unset" || !settings.onboardingDone)) return;
       try {
         if (!feedbackDue(localStorage.getItem(SHOWN_KEY))) return;
         const nextTool = analyticsTool((event as CustomEvent<{ tool?: string }>).detail?.tool ?? "");
@@ -102,16 +115,12 @@ export function ProductFeedbackPrompt() {
     setOpening(true);
     setFailedLink(null);
     setCopyFailed(false);
-    try {
-      await openExternal(FEEDBACK_LINKS[destination]);
-      dismiss();
-    } catch {
-      // Tauri opener, OS browser association and GitHub sign-in can all fail.
-      // Keep the exact URL available for copying instead of silently ignoring the click.
-      setFailedLink(destination);
-    } finally {
-      setOpening(false);
-    }
+    // The Tauri opener API confirms the call, not whether the user is signed into GitHub.
+    // If the native open fails, surface a copyable public URL.
+    const didOpen = await attemptFeedbackLink(destination);
+    if (didOpen) dismiss();
+    else setFailedLink(destination);
+    setOpening(false);
   };
 
   const copyLink = async () => {
