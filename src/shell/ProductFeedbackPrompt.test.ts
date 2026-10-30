@@ -7,6 +7,7 @@ import {
   FEEDBACK_LINKS,
   feedbackDismissDelay,
   feedbackDue,
+  scheduleFeedbackDismiss,
 } from "./ProductFeedbackPrompt";
 
 describe("feedbackDue — 30-day cooldown", () => {
@@ -33,6 +34,38 @@ describe("feedback popup dismissal", () => {
     expect(feedbackDismissDelay(true, true)).toBe(FEEDBACK_ERROR_CLOSE_MS);
     expect(feedbackDismissDelay(false, true)).toBe(FEEDBACK_ERROR_CLOSE_MS);
     expect(FEEDBACK_ERROR_CLOSE_MS).toBeGreaterThan(FEEDBACK_AUTO_CLOSE_MS);
+  });
+});
+
+describe("auto-dismiss timer behavior", () => {
+  it("dismisses after the configured delay for either answer", () => {
+    vi.useFakeTimers();
+    try {
+      for (const answer of [true, false]) {
+        const dismiss = vi.fn();
+        const cancel = scheduleFeedbackDismiss(answer, false, dismiss);
+        vi.advanceTimersByTime(FEEDBACK_AUTO_CLOSE_MS - 1);
+        expect(dismiss).not.toHaveBeenCalled();
+        vi.advanceTimersByTime(1);
+        expect(dismiss).toHaveBeenCalledTimes(1);
+        cancel();
+      }
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+  it("cancels on unmount/reply reset and does not schedule before an answer", () => {
+    vi.useFakeTimers();
+    try {
+      const dismiss = vi.fn();
+      scheduleFeedbackDismiss(null, false, dismiss);
+      const cancel = scheduleFeedbackDismiss(true, false, dismiss);
+      cancel();
+      vi.runAllTimers();
+      expect(dismiss).not.toHaveBeenCalled();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });
 
