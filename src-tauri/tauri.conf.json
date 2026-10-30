@@ -37,6 +37,11 @@
     ]
   },
   "plugins": {
+    "deep-link": {
+      "desktop": {
+        "schemes": ["eve-tools-suite"]
+      }
+    },
     "updater": {
       "endpoints": [
         "https://github.com/lacausecrypto/eve-tools-suite/releases/latest/download/latest.json"

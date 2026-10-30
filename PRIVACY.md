@@ -32,6 +32,8 @@ envoie des **statistiques d'usage anonymes** via **PostHog** :
   réussi/échoué, durée et nombre d'ordres) — **sans aucun contenu ni message d'erreur**.
 - première valeur obtenue (outil, type d'action, numéro de session et délai depuis
   le début de la mesure consentie).
+- objectif d'onboarding, ouverture d'un deep link, étapes de workflow et réponse
+  oui/non au feedback — uniquement sous forme de catégories prédéfinies.
 
 Chaque événement est associé à un **identifiant aléatoire** généré localement,
 **non rattaché à votre identité**. Aucun cookie, aucune capture automatique
@@ -113,6 +115,8 @@ statistics** via **PostHog**:
   succeeded/failed, duration and order count) — **without content or error messages**.
 - first value reached (tool, action type, session number, and delay since the
   consented measurement began).
+- onboarding goal, deep-link opens, workflow steps, and yes/no feedback — only
+  as predefined categories.
 
 Each event is tied to a **random identifier** generated locally, **not linked to
 your identity**. No cookies, no automatic screen/input capture, no session

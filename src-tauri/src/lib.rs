@@ -31,7 +31,23 @@ pub fn run() {
         )
         .try_init();
 
-    let mut builder = tauri::Builder::default()
+    let mut builder = tauri::Builder::default();
+
+    // Sur Windows/Linux, une URL de protocole reçue pendant que l'app tourne
+    // est relayée à l'instance existante avant d'être traitée par deep-link.
+    #[cfg(desktop)]
+    {
+        builder = builder
+            .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+                if let Some(window) = app.get_webview_window("main") {
+                    let _ = window.show();
+                    let _ = window.set_focus();
+                }
+            }))
+            .plugin(tauri_plugin_deep_link::init());
+    }
+
+    builder = builder
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_notification::init())

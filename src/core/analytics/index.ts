@@ -30,6 +30,8 @@ export type ActivationAction =
   | "industry_esi_import" | "pirate_analyzed" | "loss_analyzed"
   | "skills_esi_import" | "trade_station_scanned" | "market_load_succeeded"
   | "pi_setup_saved" | "refine_calculated" | "academy_lesson_completed";
+export type OnboardingGoal = "market" | "industry" | "combat" | "progression";
+export type WorkflowAction = "compare_hubs" | "watchlist" | "create_alert" | "open_trade" | "open_industry";
 
 export interface AnalyticsEventMap {
   app_opened: { language: "fr" | "en" };
@@ -68,6 +70,10 @@ export interface AnalyticsEventMap {
     activation_session: number;
     time_to_value_ms: number;
   };
+  deep_link_opened: { tool: Tool; action: "open" | "compare" | "watch" | "alert" };
+  onboarding_goal_selected: { goal: OnboardingGoal; tool: Tool };
+  workflow_step_completed: { source: "appraisal" | "deep_link"; action: WorkflowAction };
+  feedback_submitted: { helpful: boolean; tool: Tool };
 }
 
 export type AnalyticsEventName = keyof AnalyticsEventMap;
@@ -131,6 +137,16 @@ const EVENT_RULES: Record<AnalyticsEventName, Rules> = {
     activation_session: boundedNumber(100_000),
     time_to_value_ms: boundedNumber(31_536_000_000),
   },
+  deep_link_opened: { tool: tools, action: oneOf("open", "compare", "watch", "alert") },
+  onboarding_goal_selected: {
+    goal: oneOf("market", "industry", "combat", "progression"),
+    tool: tools,
+  },
+  workflow_step_completed: {
+    source: oneOf("appraisal", "deep_link"),
+    action: oneOf("compare_hubs", "watchlist", "create_alert", "open_trade", "open_industry"),
+  },
+  feedback_submitted: { helpful: bool, tool: tools },
 };
 
 const ACTIVATION_BY_EVENT: Partial<Record<AnalyticsEventName, {
@@ -264,11 +280,17 @@ export function track<E extends AnalyticsEventName>(
     ? [props?: AnalyticsEventMap[E]]
     : [props: AnalyticsEventMap[E]]
 ): void {
+  const successfulAction = activationForEvent(event);
+  if (successfulAction && typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("ets:successful-action", {
+      detail: { tool: successfulAction.tool },
+    }));
+  }
   if (!started || posthog.has_opted_out_capturing()) return;
   try {
     const props = args[0] as Record<string, unknown> | undefined;
     posthog.capture(event, props ? sanitizeEventProps(event, props) : undefined);
-    const activation = activationForEvent(event);
+    const activation = successfulAction;
     if (activation) trackActivation(activation.tool, activation.action);
   } catch (e) {
     log.warn("capture échouée", e);
