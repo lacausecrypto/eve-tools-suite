@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Check, Copy, Coins, Loader2, Receipt, Save, Sparkles, Trash2 } from "lucide-react";
+import { BarChart3, Bell, Check, Copy, Coins, Factory, Loader2, Receipt, Save, Sparkles, Star, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
@@ -9,6 +9,12 @@ import { typeIconUrl } from "@/core/images";
 import { isTauri } from "@/core/runtime";
 import { useT } from "@/core/i18n";
 import { emitNotificationEvent } from "@/core/notifications/engine";
+import { useWorkspace } from "@/core/workspace";
+import { useMarket } from "@/modules/market/app/store";
+import { useNotificationCenter } from "@/core/notifications/store";
+import { track } from "@/core/analytics";
+import { toast } from "@/core/toast";
+import { useSettings } from "@/core/settings";
 import { appraise, HUBS, type AppraisalResult } from "../api";
 import { useAppraisal, type SavedAppraisal } from "../store";
 import { computeTotals, hubTotals, lineValue, pricedLines, summaryText, unitPrice, type Basis } from "../lib/compute";
@@ -301,6 +307,8 @@ function Results({
         </div>
       </div>
 
+      {sorted[0] && <MarketWorkflow item={sorted[0]} />}
+
       {unresolved.length > 0 && (
         <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">
           {t("appraisal.unresolved", {
@@ -353,6 +361,61 @@ function Results({
         <span className="font-medium text-foreground">{fmtIskFull(totalForBasis)}</span>{t("appraisal.footer.note")}
       </div>
     </div>
+  );
+}
+
+function MarketWorkflow({ item }: { item: { typeId: number; name: string } }) {
+  const fr = useSettings((s) => s.language) === "fr";
+  const openMarket = () => {
+    useMarket.getState().select(item.typeId, item.name);
+    useWorkspace.getState().openModule("market");
+    track("workflow_step_completed", { source: "appraisal", action: "compare_hubs" });
+  };
+  const watch = () => {
+    useMarket.getState().select(item.typeId, item.name);
+    useMarket.getState().addToWatchlist(item.typeId);
+    useWorkspace.getState().openModule("market");
+    track("workflow_step_completed", { source: "appraisal", action: "watchlist" });
+    toast.success(fr ? "Ajouté à la watchlist" : "Added to watchlist", item.name);
+  };
+  const alert = () => {
+    const id = `market-type-${item.typeId}`;
+    const center = useNotificationCenter.getState();
+    if (!center.rules.some((rule) => rule.id === id)) {
+      center.addRule({
+        id,
+        name: `Market · ${item.name}`,
+        enabled: true,
+        eventType: "market.quote.updated",
+        conditions: [{ field: "typeId", operator: "eq", value: item.typeId }],
+        cooldownMinutes: 30,
+        onlyWhenHidden: true,
+        createdAt: Date.now(),
+      });
+    }
+    useMarket.getState().addToWatchlist(item.typeId);
+    useWorkspace.getState().openNotifications();
+    track("workflow_step_completed", { source: "appraisal", action: "create_alert" });
+    toast.success(fr ? "Alerte créée" : "Alert created", item.name);
+  };
+  const open = (moduleId: "trade" | "industry") => {
+    useWorkspace.getState().openModule(moduleId);
+    track("workflow_step_completed", { source: "appraisal", action: moduleId === "trade" ? "open_trade" : "open_industry" });
+  };
+
+  return (
+    <section className="rounded-xl border border-primary/25 bg-primary/5 p-3">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-primary">
+        {fr ? `Continuer avec ${item.name}` : `Continue with ${item.name}`}
+      </p>
+      <div className="flex flex-wrap gap-2">
+        <Button size="sm" onClick={openMarket}><BarChart3 className="h-4 w-4" />{fr ? "Comparer les hubs" : "Compare hubs"}</Button>
+        <Button size="sm" variant="outline" onClick={watch}><Star className="h-4 w-4" />Watchlist</Button>
+        <Button size="sm" variant="outline" onClick={alert}><Bell className="h-4 w-4" />{fr ? "Créer une alerte" : "Create alert"}</Button>
+        <Button size="sm" variant="ghost" onClick={() => open("trade")}><Coins className="h-4 w-4" />Trade</Button>
+        <Button size="sm" variant="ghost" onClick={() => open("industry")}><Factory className="h-4 w-4" />{fr ? "Industrie" : "Industry"}</Button>
+      </div>
+    </section>
   );
 }
 

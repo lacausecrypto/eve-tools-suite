@@ -2,12 +2,15 @@ import { useEffect } from "react";
 import { useSettings } from "@/core/settings";
 import { useAccounts } from "@/core/account";
 import { bootAnalytics, trackAppOpened } from "@/core/analytics";
+import { bootDeepLinks } from "@/core/deepLink";
+import { useWorkspace } from "@/core/workspace";
 import { Workspace } from "@/shell/Workspace";
 import { ConsentDialog } from "@/shell/ConsentDialog";
 import { PrivacyDialog } from "@/shell/PrivacyDialog";
 import { UpdateBanner } from "@/shell/UpdateBanner";
 import { TourOverlay } from "@/shell/TourOverlay";
 import { OnboardingInvite } from "@/shell/OnboardingInvite";
+import { ProductFeedbackPrompt } from "@/shell/ProductFeedbackPrompt";
 import { Toaster } from "@/components/ui/toaster";
 import "@/modules"; // enregistre tous les modules-outils
 import "@/shell/coreWidgets"; // enregistre les widgets transverses (personnage…)
@@ -20,6 +23,12 @@ export default function App() {
   // Recharge les sessions EVE connectées (depuis le trousseau, via le backend).
   useEffect(() => {
     void useAccounts.getState().refresh();
+    let cleanup: (() => void) | undefined;
+    const boot = () => void bootDeepLinks().then((unlisten) => { cleanup = unlisten; });
+    const unsubscribe = useWorkspace.persist.hasHydrated()
+      ? (boot(), undefined)
+      : useWorkspace.persist.onFinishHydration(boot);
+    return () => { unsubscribe?.(); cleanup?.(); };
   }, []);
 
   // Analytics : on attend l'hydratation des réglages (persistance async) avant
@@ -55,6 +64,7 @@ export default function App() {
       <Toaster />
       <TourOverlay />
       <OnboardingInvite />
+      <ProductFeedbackPrompt />
     </div>
   );
 }

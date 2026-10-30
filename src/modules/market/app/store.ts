@@ -21,6 +21,8 @@ interface MarketState {
   setFilters: (patch: Partial<OrderFilters>) => void;
   resetFilters: () => void;
   toggleWatch: (typeId: number) => void;
+  /** Ajout idempotent, adapté aux workflows et aux deep links. */
+  addToWatchlist: (typeId: number) => void;
 }
 
 /** État du Market Browser — persisté dans le namespace `market`. */
@@ -46,6 +48,10 @@ export const useMarket = create<MarketState>()(
           watchlist: s.watchlist.includes(typeId)
             ? s.watchlist.filter((id) => id !== typeId)
             : [...s.watchlist, typeId],
+        })),
+      addToWatchlist: (typeId) =>
+        set((s) => ({
+          watchlist: s.watchlist.includes(typeId) ? s.watchlist : [...s.watchlist, typeId],
         })),
     }),
     {
