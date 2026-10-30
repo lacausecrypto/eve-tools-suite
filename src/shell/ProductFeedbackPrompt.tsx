@@ -30,6 +30,18 @@ export function feedbackDismissDelay(answer: boolean | null, failedToOpen = fals
   return failedToOpen ? FEEDBACK_ERROR_CLOSE_MS : FEEDBACK_AUTO_CLOSE_MS;
 }
 
+/** Safe, cancellable timer; never leave the answered prompt pinned on screen. */
+export function scheduleFeedbackDismiss(
+  answer: boolean | null,
+  failedToOpen: boolean,
+  onDismiss: () => void,
+): () => void {
+  const delay = feedbackDismissDelay(answer, failedToOpen);
+  if (delay === null) return () => {};
+  const timer = setTimeout(onDismiss, delay);
+  return () => clearTimeout(timer);
+}
+
 /** Report opener failures to the UI; no automatic external navigation or data transfer. */
 export async function attemptFeedbackLink(
   destination: FeedbackLink,
@@ -96,10 +108,7 @@ export function ProductFeedbackPrompt() {
   // Allow more time to copy a URL when native external navigation failed.
   useEffect(() => {
     if (!tool) return;
-    const delay = feedbackDismissDelay(answer, failedLink !== null);
-    if (delay === null) return;
-    const timer = window.setTimeout(() => dismiss(), delay);
-    return () => window.clearTimeout(timer);
+    return scheduleFeedbackDismiss(answer, failedLink !== null, dismiss);
   }, [tool, answer, failedLink]);
 
   if (!hydrated || !tool || activeTour) return null;
