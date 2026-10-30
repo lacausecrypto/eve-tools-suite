@@ -44,7 +44,7 @@
 
 ---
 
-> ⬆️ **Auto-updating & signed.** Use a download button above — installs in one click, then the app updates itself automatically (signed releases). On first launch, Windows SmartScreen / macOS Gatekeeper may warn ("unknown publisher") since the app isn't OS-code-signed yet — choose *More info → Run anyway* (Windows) or right-click → *Open* (macOS). macOS Intel build coming soon (build from source meanwhile).
+> ⬆️ **Cryptographically signed Tauri updates.** Automatic updates are verified using the existing Tauri signing key. The Apple Silicon macOS app uses free **ad-hoc code signing** and is **not Apple-notarized**. Gatekeeper may block its first launch: after trying to open it, visit **System Settings → Privacy & Security → Open Anyway**, then confirm. Only allow this when the installer came from this repository's official GitHub Releases. On Windows, SmartScreen may require **More info → Run anyway**. No macOS Intel installer at present.
 
 ---
 
