@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { readFileSync } from "node:fs";
 import { APP } from "@/core/app";
 import {
   attemptFeedbackLink,
@@ -91,5 +92,21 @@ describe("static, public destinations", () => {
     const opener = vi.fn(async () => { throw new Error("opener blocked"); });
     expect(await attemptFeedbackLink("issue", opener)).toBe(false);
     expect(opener).toHaveBeenCalledWith(FEEDBACK_LINKS.issue);
+  });
+});
+
+describe("Tauri native browser opener capability", () => {
+  it("allows the public links used by feedback, privacy and existing zKillboard features", () => {
+    const capabilities = JSON.parse(readFileSync(new URL("../../src-tauri/capabilities/default.json", import.meta.url), "utf8"));
+    const opener = capabilities.permissions.find((permission: string | { identifier: string }) =>
+      typeof permission !== "string" && permission.identifier === "opener:allow-open-url"
+    ) as { identifier: string; allow: { url: string }[] } | undefined;
+    expect(opener).toBeDefined();
+    const allowed = opener?.allow.map((rule) => rule.url);
+    expect(allowed).toContain(FEEDBACK_LINKS.star);
+    expect(allowed).toContain(FEEDBACK_LINKS.discord);
+    expect(allowed).toContain("https://github.com/lacausecrypto/eve-tools-suite/**");
+    expect(allowed).toContain("https://zkillboard.com/**");
+    expect(capabilities.permissions).not.toContain("opener:allow-default-urls");
   });
 });
