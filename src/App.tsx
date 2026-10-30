@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSettings } from "@/core/settings";
 import { useAccounts } from "@/core/account";
-import { bootAnalytics, track } from "@/core/analytics";
+import { bootAnalytics, trackAppOpened } from "@/core/analytics";
 import { Workspace } from "@/shell/Workspace";
 import { ConsentDialog } from "@/shell/ConsentDialog";
 import { PrivacyDialog } from "@/shell/PrivacyDialog";
@@ -29,7 +29,7 @@ export default function App() {
   useEffect(() => {
     const boot = () => {
       bootAnalytics();
-      track("app_opened", { language: useSettings.getState().language });
+      trackAppOpened(useSettings.getState().language);
     };
     if (useSettings.persist.hasHydrated()) {
       boot();

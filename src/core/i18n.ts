@@ -152,9 +152,9 @@ const fr: Dict = {
   "consent.intro":
     "Avec ton accord, l'app envoie des statistiques d'utilisation anonymes pour comprendre quels outils sont utiles et prioriser les améliorations. Rien n'est envoyé sans ton consentement.",
   "consent.collected.title": "Ce qui est collecté (anonyme) :",
-  "consent.bullet.lifecycle": "Lancement de l'app, version, plateforme, langue, durée de session.",
+  "consent.bullet.lifecycle": "Lancement de l'app, version, plateforme, langue et numéro de session.",
   "consent.bullet.tools": "Quels outils tu ouvres et leur fréquence.",
-  "consent.bullet.actions": "Actions clés (ex. « fit généré ») — sans aucun contenu.",
+  "consent.bullet.actions": "Première action utile et temps pour l'atteindre — sans aucun contenu.",
   "consent.never.title": "Jamais collecté :",
   "consent.never.body":
     "Nom/ID de personnage EVE, e-mail, jetons SSO, valeurs ISK, ni rien de ce que tu saisis. Identifiant aléatoire, pas de cookies, données hébergées dans l'Union européenne (PostHog Cloud EU, RGPD).",
@@ -729,9 +729,9 @@ const en: Dict = {
   "consent.intro":
     "With your permission, the app sends anonymous usage statistics to understand which tools are useful and prioritize improvements. Nothing is sent without your consent.",
   "consent.collected.title": "What is collected (anonymous):",
-  "consent.bullet.lifecycle": "App launch, version, platform, language, session length.",
+  "consent.bullet.lifecycle": "App launch, version, platform, language, and session number.",
   "consent.bullet.tools": "Which tools you open and how often.",
-  "consent.bullet.actions": "Key actions (e.g. “fit generated”) — without any content.",
+  "consent.bullet.actions": "First useful action and time to reach it — without any content.",
   "consent.never.title": "Never collected:",
   "consent.never.body":
     "EVE character name/ID, e-mail, SSO tokens, ISK values, or anything you type. Random identifier, no cookies, data hosted in the EU (PostHog Cloud EU, GDPR).",

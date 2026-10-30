@@ -89,21 +89,23 @@ export interface PostMortem {
 }
 
 /** Post-mortem d'un killmail par id (+ hash optionnel d'un lien ESI). */
-export function analyzeKillmail(
+export async function analyzeKillmail(
   killmailId: number,
   hash?: string,
 ): Promise<PostMortem> {
-  track("loss_analyzed", { source: "killmail" });
-  return invoke<PostMortem>("loss_analyze_killmail", {
+  const result = await invoke<PostMortem>("loss_analyze_killmail", {
     killmailId,
     hash: hash ?? null,
   });
+  track("loss_analyzed", { source: "killmail" });
+  return result;
 }
 
 /** Post-mortem de la dernière perte d'un personnage (null s'il n'en a aucune). */
-export function analyzeLatest(characterId: number): Promise<PostMortem | null> {
-  track("loss_analyzed", { source: "latest" });
-  return invoke<PostMortem | null>("loss_analyze_latest", { characterId });
+export async function analyzeLatest(characterId: number): Promise<PostMortem | null> {
+  const result = await invoke<PostMortem | null>("loss_analyze_latest", { characterId });
+  if (result) track("loss_analyzed", { source: "latest" });
+  return result;
 }
 
 /** Résout un nom de personnage en id (null si ESI ne le connaît pas). */

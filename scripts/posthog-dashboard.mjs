@@ -21,6 +21,12 @@ const KEY = process.env.POSTHOG_PERSONAL_KEY;
 const DASH_NAME = process.env.POSTHOG_DASH_NAME ?? "Eve-Tools — Vue produit";
 const FORCE = process.env.FORCE === "1";
 const RANGE = "-30d";
+const PRODUCT_FILTER = [{
+  key: "product",
+  type: "event",
+  operator: "exact",
+  value: ["eve_tools_suite"],
+}];
 
 if (!KEY) {
   console.error("✖ POSTHOG_PERSONAL_KEY manquante (Personal API Key phx_…, scopes insight+dashboard).");
@@ -46,11 +52,11 @@ async function api(path, init = {}) {
 
 // --- helpers de construction (schéma « query » moderne : InsightVizNode) ------
 /** Une série d'événement pour TrendsQuery/FunnelsQuery. */
-const ev = (event, math = "total") => ({ kind: "EventsNode", event, name: event, math });
+const ev = (event, math = "total", extra = {}) => ({ kind: "EventsNode", event, name: event, math, ...extra });
 
 /** TrendsQuery enveloppée. `events` = tableau de séries `ev(...)`. */
 const trend = (events, opts = {}) => {
-  const { display = "ActionsLineGraph", breakdown, interval = "day" } = opts;
+  const { display = "ActionsLineGraph", breakdown, interval = "day", format } = opts;
   return {
     kind: "InsightVizNode",
     source: {
@@ -58,9 +64,11 @@ const trend = (events, opts = {}) => {
       series: events,
       interval,
       dateRange: { date_from: RANGE },
-      trendsFilter: { display },
+      properties: PRODUCT_FILTER,
+      filterTestAccounts: true,
+      trendsFilter: { display, ...(format ? { aggregationAxisFormat: format } : {}) },
       ...(breakdown
-        ? { breakdownFilter: { breakdown, breakdown_type: "event" } }
+        ? { breakdownFilter: { breakdowns: [{ property: breakdown, type: "event" }] } }
         : {}),
     },
   };
@@ -73,21 +81,25 @@ const funnel = (events) => ({
     kind: "FunnelsQuery",
     series: events,
     dateRange: { date_from: RANGE },
+    properties: PRODUCT_FILTER,
+    filterTestAccounts: true,
     funnelsFilter: { funnelVizType: "steps" },
   },
 });
 
 /** RetentionQuery hebdomadaire sur un événement. */
-const retention = (event) => ({
+const retention = (event, returningEvent = event) => ({
   kind: "InsightVizNode",
   source: {
     kind: "RetentionQuery",
     dateRange: { date_from: RANGE },
+    properties: PRODUCT_FILTER,
+    filterTestAccounts: true,
     retentionFilter: {
       period: "Week",
       retentionType: "retention_first_time",
       targetEntity: { id: event, type: "events", name: event },
-      returningEntity: { id: event, type: "events", name: event },
+      returningEntity: { id: returningEvent, type: "events", name: returningEvent },
     },
   },
 });
@@ -126,7 +138,8 @@ async function main() {
     "fit_generated", "fit_analyzed", "appraisal_run", "abyssal_evaluated",
     "lp_store_computed", "activity_loot_valued", "mining_session_started",
     "trade_station_scanned", "loss_analyzed", "pirate_analyzed",
-    "market_item_viewed", "skills_esi_import", "industry_esi_import",
+    "market_item_selected", "market_load_succeeded", "skills_esi_import", "industry_esi_import",
+    "pi_setup_saved", "refine_calculated", "academy_lesson_completed",
   ];
 
   const insights = [
@@ -181,19 +194,69 @@ async function main() {
       query: trend([ev("fit_generated")], { display: "ActionsBarValue", breakdown: "role" }),
     },
     {
+      name: "Chargements marché — succès / échecs",
+      description: "Fiabilité des chargements du carnet de marché, sans contenu ni message d'erreur.",
+      query: trend([ev("market_load_succeeded"), ev("market_load_failed")]),
+    },
+    {
+      name: "Pages du site consultées",
+      description: "Pages catégorisées du site après consentement, sans URL ni paramètres.",
+      query: trend([ev("site_page_viewed")], { display: "ActionsBarValue", breakdown: "page" }),
+    },
+    {
+      name: "Téléchargements cliqués",
+      description: "Clics vers les installateurs, par plateforme.",
+      query: trend([ev("desktop_download_clicked")], { display: "ActionsBarValue", breakdown: "platform" }),
+    },
+    {
+      name: "Calculateurs web — succès / échecs",
+      description: "Résultats des calculateurs web, par issue.",
+      query: trend([ev("web_tool_result_succeeded"), ev("web_tool_result_failed")]),
+    },
+    {
       name: "Imports ESI authentifiés / jour",
       description: "Engagement des fonctions connectées (skills + industry).",
       query: trend([ev("skills_esi_import"), ev("industry_esi_import")]),
     },
     {
-      name: "Funnel d'activation",
-      description: "Lancer l'app → ouvrir un outil → générer un fit.",
-      query: funnel([ev("app_opened"), ev("tool_opened"), ev("fit_generated")]),
+      name: "Funnel acquisition web",
+      description: "Page du site → clic vers un installeur. Mesuré par visiteur web anonyme.",
+      query: funnel([ev("site_page_viewed"), ev("desktop_download_clicked")]),
+    },
+    {
+      name: "Funnel valeur des calculateurs web",
+      description: "Page du site → démarrage d'un calculateur → résultat réussi.",
+      query: funnel([ev("site_page_viewed"), ev("web_tool_started"), ev("web_tool_result_succeeded")]),
+    },
+    {
+      name: "Passage téléchargement → première ouverture (proxy)",
+      description: "Comparaison agrégée des clics de téléchargement et premières ouvertures. Ce n'est pas un funnel utilisateur : le navigateur et l'app ne partagent aucun identifiant.",
+      query: trend([ev("desktop_download_clicked"), ev("app_first_opened")]),
+    },
+    {
+      name: "Funnel activation desktop",
+      description: "Première ouverture → ouverture d'un outil → première valeur métier obtenue.",
+      query: funnel([ev("app_first_opened"), ev("tool_opened"), ev("activation_completed")]),
+    },
+    {
+      name: "Outil de première valeur",
+      description: "Quel outil produit le premier résultat métier d'un nouvel utilisateur.",
+      query: trend([ev("activation_completed")], { display: "ActionsBarValue", breakdown: "tool" }),
+    },
+    {
+      name: "Session de première valeur",
+      description: "Numéro de session auquel la première valeur métier est atteinte.",
+      query: trend([ev("activation_completed")], { display: "ActionsBarValue", breakdown: "activation_session" }),
+    },
+    {
+      name: "Temps moyen jusqu'à la première valeur",
+      description: "Temps entre le début de la mesure consentie et la première action métier réussie.",
+      query: trend([ev("activation_completed", "avg", { math_property: "time_to_value_ms" })], { display: "BoldNumber", format: "duration_ms" }),
     },
     {
       name: "Rétention hebdomadaire",
-      description: "Les utilisateurs reviennent-ils semaine après semaine ?",
-      query: retention("app_opened"),
+      description: "Les utilisateurs activés reviennent-ils ouvrir l'app les semaines suivantes ?",
+      query: retention("activation_completed", "app_opened"),
     },
   ];
 

@@ -13,6 +13,7 @@ import { typeIconUrl } from "@/core/images";
 import { isTauri } from "@/core/runtime";
 import { useT } from "@/core/i18n";
 import { emitNotificationEvent } from "@/core/notifications/engine";
+import { track } from "@/core/analytics";
 import { useMarket } from "../store";
 import { fetchHistory, fetchMarket, fetchRoute, fetchTypeInfo } from "../api";
 import { computeStats, filterOrders } from "../lib/compute";
@@ -48,6 +49,7 @@ export function MarketView() {
       return;
     }
     let alive = true;
+    const startedAt = performance.now();
     setLoad({ kind: "loading" });
     setHistory(null);
     setShowHistory(false);
@@ -59,6 +61,11 @@ export function MarketView() {
         ]);
         if (alive) {
           setLoad({ kind: "done", orders, info });
+          track("market_load_succeeded", {
+            scope,
+            duration_ms: Math.round(performance.now() - startedAt),
+            count: orders.length,
+          });
           const quote = computeStats(orders);
           void emitNotificationEvent({ type: "market.quote.updated", dedupeKey: `${selectedTypeId}:${scope}:${quote.avgSell ?? 0}:${quote.avgBuy ?? 0}`, payload: {
             item: info.name ?? selectedName ?? String(selectedTypeId), typeId: selectedTypeId,
@@ -67,11 +74,16 @@ export function MarketView() {
           } });
         }
       } catch (e) {
-        if (alive)
+        if (alive) {
+          track("market_load_failed", {
+            scope,
+            duration_ms: Math.round(performance.now() - startedAt),
+          });
           setLoad({
             kind: "error",
             message: e instanceof Error ? e.message : String(e),
           });
+        }
       }
     })();
     return () => {

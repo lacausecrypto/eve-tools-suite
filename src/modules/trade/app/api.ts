@@ -213,7 +213,6 @@ export async function scanStation(
   onProgress: (done: number, total: number) => void,
   token: ScanToken,
 ): Promise<StationAgg[]> {
-  track("trade_station_scanned");
   const agg = new Map<number, StationAgg>();
   const first = await esi<RawOrder[]>({
     path: `/markets/${region}/orders/`,
@@ -242,7 +241,9 @@ export async function scanStation(
     }
   });
 
-  return [...agg.values()];
+  const result = [...agg.values()];
+  track("trade_station_scanned");
+  return result;
 }
 
 /** Ladders complets (vente + achat) **par type**, à une station. */

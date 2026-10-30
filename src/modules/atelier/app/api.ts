@@ -98,8 +98,7 @@ export interface LoadResult {
  * Pipeline complet : parse EFT → résout les ids → charge les types → place les
  * modules → analyse. Lève si l'en-tête EFT est invalide ou la vaisseau introuvable.
  */
-export async function loadFit(text: string, opts: AnalyzeOptions): Promise<LoadResult> {
-  track("fit_analyzed");
+export async function loadFit(text: string, opts: AnalyzeOptions, shouldTrack = true): Promise<LoadResult> {
   const fit = parseEft(text);
   if (!fit) throw new Error(t("atelier.err.eftFormat"));
 
@@ -121,6 +120,7 @@ export async function loadFit(text: string, opts: AnalyzeOptions): Promise<LoadR
   // Bonus de vaisseau appliqués au niveau V (cohérent avec l'option PV niveau V).
   const hullBonus = opts.allFiveHp ? hullBonusFor(ship.name) : null;
   const analysis = analyzeFit(ship, fit.fitName, items, { ...opts, hullBonus });
+  if (shouldTrack) track("fit_analyzed");
   return { analysis, unresolved };
 }
 
@@ -178,7 +178,6 @@ function swapDamageLow(lo: Loadout, to: string): boolean {
  * corrige les dépassements CPU/grille jusqu'à le rendre montable (ou au mieux).
  */
 export async function generateFit(need: GenNeed, opts: AnalyzeOptions): Promise<GenerateResult> {
-  track("fit_generated", { role: need.role, weapon: need.weapon, tank: need.tank, range: need.range });
   const ids = await resolveNames([need.hull]);
   const hullId = ids.get(need.hull.toLowerCase());
   if (hullId == null) throw new Error(t("atelier.err.hullNotFound", { name: need.hull }));
@@ -203,7 +202,7 @@ export async function generateFit(need: GenNeed, opts: AnalyzeOptions): Promise<
   const genOpts = { ...opts, allFiveHp: true };
 
   let eft = assembleEft(hull.name, fitName, lo);
-  let result = await loadFit(eft, genOpts);
+  let result = await loadFit(eft, genOpts, false);
   const mitigations: string[] = [];
 
   for (let step = 0; step < 8 && result.analysis.fitting.overflow; step++) {
@@ -238,8 +237,9 @@ export async function generateFit(need: GenNeed, opts: AnalyzeOptions): Promise<
     }
     if (!changed) break;
     eft = assembleEft(hull.name, fitName, lo);
-    result = await loadFit(eft, genOpts);
+    result = await loadFit(eft, genOpts, false);
   }
 
+  track("fit_generated", { role: need.role, weapon: need.weapon, tank: need.tank, range: need.range });
   return { ...result, eft, loadout: lo, mitigations };
 }

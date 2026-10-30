@@ -18,9 +18,11 @@ export interface TourStep {
   placement?: TourPlacement;
 }
 
+export type ModuleTourId = "shell" | "mining" | "pirate" | "pi" | "loss" | "skills" | "industry" | "market" | "trade" | "atelier" | "activity" | "abyssal" | "appraisal" | "lp" | "refine" | "academy";
+
 export interface ModuleTour {
   /** Id stable du tour (= id du module, ou "shell" pour l'accueil). */
-  id: string;
+  id: ModuleTourId;
   /** Étapes ordonnées. */
   steps: TourStep[];
   /**

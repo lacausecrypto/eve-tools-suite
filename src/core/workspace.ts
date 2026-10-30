@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { namespacedStorage } from "@/core/storage/persist";
-import { track } from "@/core/analytics";
+import { analyticsTool, track } from "@/core/analytics";
 
 /**
  * Espace de travail du shell — façon **navigateur** : plusieurs outils ouverts
@@ -54,7 +54,7 @@ export const useWorkspace = create<WorkspaceState>()(
         set((s) => {
           const id = moduleTabId(moduleId);
           // Analytics (no-op sans opt-in) : quel outil est ouvert/focalisé.
-          track("tool_opened", { tool: moduleId });
+          track("tool_opened", { tool: analyticsTool(moduleId) });
           if (s.tabs.some((t) => t.id === id)) return { activeId: id };
           return {
             tabs: [...s.tabs, { id, kind: "module", moduleId }],

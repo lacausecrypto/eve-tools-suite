@@ -136,9 +136,10 @@ export interface NetworkAnalysis {
 }
 
 /** Analyse avec qui un pilote vole le plus souvent (réseau de gang). */
-export function analyzeNetwork(characterId: number): Promise<NetworkAnalysis> {
+export async function analyzeNetwork(characterId: number): Promise<NetworkAnalysis> {
+  const result = await invoke<NetworkAnalysis>("pirate_analyze_network", { characterId });
   track("pirate_analyzed", { mode: "network" });
-  return invoke<NetworkAnalysis>("pirate_analyze_network", { characterId });
+  return result;
 }
 
 /**
@@ -158,9 +159,10 @@ export function predictFit(
 }
 
 /** Analyse un blob de local-chat / liste de membres collé. */
-export function analyzeLocal(text: string): Promise<PilotIntel[]> {
-  track("pirate_analyzed", { mode: "local" });
-  return invoke<PilotIntel[]>("pirate_analyze_local", { text });
+export async function analyzeLocal(text: string): Promise<PilotIntel[]> {
+  const result = await invoke<PilotIntel[]>("pirate_analyze_local", { text });
+  if (result.length > 0) track("pirate_analyzed", { mode: "local" });
+  return result;
 }
 
 /**
