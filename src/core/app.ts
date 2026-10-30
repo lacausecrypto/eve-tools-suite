@@ -1,3 +1,5 @@
+import { version as packageVersion } from "../../package.json";
+
 /**
  * Métadonnées de l'application — centralisées pour la conformité CCP.
  *
@@ -12,7 +14,7 @@
 export const APP = {
   name: "EVE Tools Suite",
   slug: "eve-tools-suite",
-  version: "0.1.4",
+  version: packageVersion,
   /** Contact obligatoire dans le User-Agent ESI (CCP). À renseigner. */
   contactEmail: "lacausecrypto@gmail.com",
   repository: "https://github.com/lacausecrypto/eve-tools-suite",
