@@ -144,10 +144,11 @@ jobs:
           releaseCommitish: ${{ github.sha }}
           releaseName: "EVE Tools Suite ${{ env.RELEASE_TAG }}"
           releaseBody: |
-            v0.1.6 improves privacy-safe analytics, first-value tracking and reliable market measurements.
-            It adds secure browser-to-desktop links, goal-based onboarding, Appraisal workflows and optional feedback.
-            Alerts cover Trade, Market, Pirate, Loss, Appraisal, Industry, Skills, LP, Abyssal
-            and Reprocessing. Hardened Tauri permissions, CSP and dependencies.
+            v0.1.7 fixes the feedback popup and improves community links.
+            Feedback now closes automatically after Yes/No, with a clear dismiss option.
+            Optional shortcuts open GitHub Issues, Star on GitHub and the official Discord.
+            Native browser permissions now explicitly allow these destinations, with
+            a copyable link if opening fails. Includes the accurate version label in Settings.
             Download the installer for your OS below. Existing installations
             can update automatically using cryptographically signed updater artifacts.
           releaseDraft: true
